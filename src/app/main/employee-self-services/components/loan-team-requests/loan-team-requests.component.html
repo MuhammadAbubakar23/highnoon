@@ -1,0 +1,986 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-jelly-box"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+<div class="content-box-wrapper d-flex w-100">
+  <div class="middle-content d-flex">
+    <div class="page-content-wrapper">
+      <div
+        class="agent-page-main-content px-4 page-scroll"
+        data-scrollbar="true"
+        tabindex="-1"
+        style="overflow: hidden; outline: none"
+      >
+        <div class="scroll-content">
+          <div class="tab-content" id="myTabContent">
+            <div
+              class="tab-pane fade active show"
+              id="teamrequests"
+              role="tabpanel"
+              aria-labelledby="teamrequests-tab"
+            >
+              <div class="row mt-4">
+                <div class="col-lg-3 col-md-6">
+                  <div class="card dashboard-card">
+                    <div class="card-body d-flex align-items-center">
+                      <div class="iconButton medium me-3 skyTransBg">
+                        <i class="fa-light fa-calendar-star"></i>
+                      </div>
+                      <div>
+                        <p class="silver mb-1 text-uppercase">Total Requests</p>
+                        <h5 class="m-0">{{ totalRequest }}</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                  <div class="card dashboard-card">
+                    <div class="card-body d-flex align-items-center">
+                      <div class="iconButton medium me-3 successbg night">
+                        <i class="fa-light fa-calendar-check"></i>
+                      </div>
+                      <div>
+                        <p class="silver mb-1 text-uppercase">Approved</p>
+                        <h5 class="m-0">{{ approved }}</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                  <div class="card dashboard-card">
+                    <div class="card-body d-flex align-items-center">
+                      <div class="iconButton medium me-3 grayfilled night">
+                        <i class="fa-light fa-calendar-exclamation"></i>
+                      </div>
+                      <div>
+                        <p class="silver mb-1 text-uppercase">Pending</p>
+                        <h5 class="m-0">{{ pending }}</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                  <div class="card dashboard-card">
+                    <div class="card-body d-flex align-items-center">
+                      <div class="iconButton medium me-3 errorbg night">
+                        <i class="fa-light fa-calendar-xmark"></i>
+                      </div>
+                      <div>
+                        <p class="silver mb-1 text-uppercase">Rejected</p>
+                        <h5 class="m-0">{{ rejected }}</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="filter-container">
+                <div class="row justify-content-between">
+                  <div class="col-md-7">
+                    <ul class="list-group list-group-horizontal border-0">
+                      <!-- <li class="list-group-item border-0 p-0 me-2">
+                        <div class="icon-input">
+                          <i class="fa-light fa-magnifying-glass"></i>
+                          <input
+                            class="form-control"
+                            placeholder="Search.. "
+                            [(ngModel)]="text"
+                            (input)="generalFilter()"
+                          />
+                        </div>
+                      </li>
+                      <li class="list-group-item border-0 p-0 me-2">
+                        <div class="iconholder ms-2">
+                          <input
+                            [(ngModel)]="startDate"
+                            class="form-control timepicker flatpickr-input"
+                            type="date"
+                            (change)="resetEndDate()"
+                          />
+                        </div>
+                      </li>
+                      <li class="list-group-item border-0 p-0 me-2">
+                        <div class="iconholder ms-2">
+                          <input
+                            [(ngModel)]="endDate"
+                            class="form-control timepicker flatpickr-input"
+                            type="date"
+                            (change)="filterByDate()"
+                          />
+                        </div>
+                      </li> -->
+                      <li class="list-group-item border-0 p-0 me-2">
+                        <div class="icon-input search_field">
+                          <i class="fa-light fa-magnifying-glass"></i>
+                          <input
+                            class="form-control"
+                            placeholder="Search.. "
+                            [(ngModel)]="text"
+                            (input)="generalFilter()"
+                          />
+                        </div>
+                      </li>
+                      <li class="list-group-item border-0 ms-2 pe-0">
+                        <span class="coal">From</span>
+                      </li>
+                      <li class="list-group-item border-0 p-0 me-2">
+                        <div class="ms-2">
+                          <input
+                            [(ngModel)]="startDate"
+                            class="form-control timepicker flatpickr-input"
+                            value="From"
+                            type="date"
+                            (change)="resetEndDate()"
+                          />
+                        </div>
+                      </li>
+                      <li class="list-group-item border-0 ms-2 pe-0">
+                        <span class="coal">To</span>
+                      </li>
+                      <li class="list-group-item border-0 p-0 mx-2">
+                        <div class="ms-2">
+                          <input
+                            [(ngModel)]="endDate"
+                            class="form-control timepicker flatpickr-input"
+                            type="date"
+                            (change)="filterByDate()"
+                          />
+                        </div>
+                      </li>
+                      <li class="list-group-item border-0 p-0 me-2">
+                        <div class="dropdown w-auto">
+                          <button
+                            class="btn dropdown-toggle"
+                            type="button"
+                            id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+                            {{ selectedLoanType || "Loan Type" }}
+                          </button>
+                          <ul
+                            class="dropdown-menu custom-dropdown"
+                            aria-labelledby="dropdownMenuButton1"
+                          >
+                            <li *ngFor="let loanType of loanTypes">
+                              <a
+                                class="dropdown-item"
+                                (click)="
+                                  filterByLoanType(loanType.name, loanType.loanTypeId)
+                                "
+                                >{{ loanType.name }}</a
+                              >
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+
+                      <li class="list-group-item border-0 p-0 me-2">
+                        <div class="dropdown w-auto">
+                          <button
+                            class="btn dropdown-toggle"
+                            type="button"
+                            id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+                            {{ selectedLoanStatus || "Status" }}
+                          </button>
+                          <ul
+                            class="dropdown-menu custom-dropdown"
+                            aria-labelledby="dropdownMenuButton1"
+                          >
+                            <li *ngFor="let ls of loanStatusKeys">
+                              <a class="dropdown-item" (click)="filterByStatus(ls)">{{
+                                ls
+                              }}</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+
+                      <li
+                        class="list-group-item border-0 iconButton iconHover medium"
+                        aria-label="..."
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        data-bs-original-title="Refresh"
+                        (click)="refreshPage()"
+                      >
+                        <i class="fal fa-redo-alt"></i>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-md-5">
+                    <div
+                      class="filters-opt d-flex align-items-center justify-content-end"
+                    >
+                      <div class="dropdown w-auto rounded">
+                        <button
+                          class="btn iconButton iconHover medium"
+                          type="button"
+                          id="sorting1"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <i class="fa-regular fa-arrow-down-short-wide"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="sorting1">
+                          <li class="saltBg p-2 charcoal">
+                            <strong> Sort By</strong>
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item d-flex align-items-center"
+
+                            >
+                              Leave Date
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item d-flex align-items-center"
+
+                            >
+                              Leave Type
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item d-flex align-items-center"
+
+                            >
+                              Leave Duration
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item d-flex align-items-center"
+
+                            >
+                              Attachment
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item d-flex align-items-center"
+
+                            >
+                              Leave Status
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="dropdown w-auto mx-2">
+                        <button
+                          class="btn iconButton iconHover medium"
+                          type="button"
+                          id="columnssort"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <i class="fa-light fa-table-columns"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="columnssort">
+                          <li class="saltBg p-2 charcoal">
+                            <strong> Adjust Columns</strong>
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item d-flex align-items-center"
+
+                            >
+                              <div class="form-check">
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                  id="flexCheckDefault"
+                                />
+                                <label
+                                  class="form-check-label"
+                                  for="flexCheckDefault"
+                                >
+                                  Leave Date
+                                </label>
+                              </div>
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item d-flex align-items-center"
+
+                            >
+                              <div class="form-check">
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                  id="flexCheckDefault"
+                                />
+                                <label
+                                  class="form-check-label"
+                                  for="flexCheckDefault"
+                                >
+                                  Leave Type
+                                </label>
+                              </div>
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item d-flex align-items-center"
+
+                            >
+                              <div class="form-check">
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                  id="flexCheckDefault"
+                                />
+                                <label
+                                  class="form-check-label"
+                                  for="flexCheckDefault"
+                                >
+                                  Leave Duration
+                                </label>
+                              </div>
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item d-flex align-items-center"
+
+                            >
+                              <div class="form-check">
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                  id="flexCheckDefault"
+                                />
+                                <label
+                                  class="form-check-label"
+                                  for="flexCheckDefault"
+                                >
+                                  Attachment
+                                </label>
+                              </div>
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item d-flex align-items-center"
+
+                            >
+                              <div class="form-check">
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                  id="flexCheckDefault"
+                                />
+                                <label
+                                  class="form-check-label"
+                                  for="flexCheckDefault"
+                                >
+                                  Leave Status
+                                </label>
+                              </div>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="dropdown w-auto">
+                        <button
+                          class="btn iconButton medium"
+                          type="button"
+                          id="dropdownMenuButton1"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <i class="fa-regular fa-ellipsis"></i>
+                        </button>
+                        <ul
+                          class="dropdown-menu"
+                          aria-labelledby="dropdownMenuButton1"
+                        >
+                          <li>
+                            <a class="dropdown-item p-1" (click)="exportData()">
+                              <button
+                                class="iconButton dropdown-iconBtn small"
+                                id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                              >
+                                <i class="fa-solid fa-file-export"></i></button
+                              >Export to CSV
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="query-container perfect-scrollbar"
+                data-scrollbar="true"
+                tabindex="-1"
+                style="overflow-y: auto; outline: none"
+              >
+                <div class="scroll-content">
+                  <div class="table-section">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th *ngFor="let column of columnNames">
+                            {{ column }}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of loanTeamItems; let i = index">
+                          <td *ngIf="pageNumber == 1">
+                            <a (click)="getLoanSummary(item, summarycontent)">{{ i + 1 }}</a>
+                          </td>
+                          <td *ngIf="pageNumber > 1">
+                            <a (click)="getLoanSummary(item, summarycontent)">{{
+                              i + 1 + pageSize * (pageNumber - 1)
+                            }}</a>
+                          </td>
+
+                          <td *ngFor="let column of desColumns" (click)="getLoanSummary(item, summarycontent)">
+                            <a>
+                            <span
+                            [ngClass]="{
+                              'badge badge-md rounded-pill':
+                                item[column] === 'Pending' ||
+                                item[column] === 'Approved' ||
+                                item[column] === 'Rejected' ||
+                                item[column] === 'Canceled',
+                              grayfilled: item[column] === 'Pending',
+                              successbg: item[column] === 'Approved',
+                              errorbg: item[column] === 'Rejected',
+                              warningbg: item[column] === 'Canceled',
+                              '':
+                                item[column] !== 'Pending' &&
+                                item[column] !== 'Approved' &&
+                                item[column] !== 'Rejected' &&
+                                item[column] !== 'Canceled'
+                            }"
+                            >
+                            {{ column === "pfDate" ? (item[column] | date : "MMM d, y") : (column === "amount" ? (item[column] | number) : item[column]) }}
+                            </span>
+                            </a>
+                          </td>
+                          <ng-container
+                            *ngIf="item.requestStage.isActive; else addemptytd"
+                          >
+                            <td>
+                              <ul class="list-inline m-0">
+                                <li class="list-inline-item">
+                                  <button
+                                    class="btn iconButton small mintBg night leaveapprove"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#approveleave"
+                                    data-bs-title="Apprvove"
+                                    (click)="
+                                      updateRequestStageId(
+                                        item.requestStage?.requestStageId
+                                      )
+                                    "
+                                  >
+                                    <i class="fa-light fa-check"></i>
+                                  </button>
+                                </li>
+                                <li
+                                  class="list-inline-item"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#rejectleave"
+                                >
+                                  <button
+                                    class="btn iconButton small radicalBg night"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    data-bs-title="Reject"
+                                    (click)="
+                                      updateRequestStageId(
+                                        item.requestStage?.requestStageId
+                                      )
+                                    "
+                                  >
+                                    <i class="fa-light fa-times"></i>
+                                  </button>
+                                </li>
+                              </ul>
+                            </td>
+                          </ng-container>
+                          <ng-template #addemptytd>
+                            <td></td>
+                          </ng-template>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <ng-container *ngIf="totalRecords > pageSize">
+                  <div class="me-5">
+                    <ul class="pagination justify-content-end">
+                      <li class="page-item">
+                        <a
+                          class="page-link"
+                          (click)="prevPage()"
+                          [attr.disabled]="pageNumber === 1"
+                          >Previous</a
+                        >
+                      </li>
+                      <ng-container *ngFor="let page of visiblePages()">
+                        <li
+                          class="page-item"
+                          [ngClass]="{ disabled: page === -1 }"
+                        >
+                          <a
+                            class="page-link"
+                            (click)="changePage(page)"
+                            [class.active]="pageNumber === page"
+                            >{{ page === -1 ? "..." : page }}</a
+                          >
+                        </li>
+                      </ng-container>
+                      <li class="page-item">
+                        <a
+                          class="page-link"
+                          (click)="nextPage()"
+                          [attr.disabled]="pageNumber === totalPages"
+                          >Next</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div
+  [class.show]="summaryToggle"
+  class="offcanvas w-50 offcanvas-end"
+  tabindex="-1"
+  id="loandetails"
+  aria-labelledby="loandetailsLabel"
+> -->
+<ng-template #summarycontent let-offcanvas>
+  <div class="offcanvas-header bg-light">
+    <div class="row g-0 w-100">
+      <div class="col-md-6 d-flex align-items-center">
+        <h5 class="mb-0">Loan Details</h5>
+      </div>
+      <div class="col-md-6 justify-content-end d-flex align-items-center pe-0">
+        <span class="iconButton iconHower medium" (click)="closeOffset(summarycontent)"
+          ><i class="fa-light fa-times"></i
+        ></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="offcanvas-body p-0">
+    <div class="list-group-section mb-3">
+      <ul class="list-group list-group-flush">
+        <li
+          class="list-group-item d-flex align-items-center justify-content-between px-4"
+        >
+          <span class="night90">Date </span>
+          {{requesterDetails.appliedAt}}
+        </li>
+        <li
+          class="list-group-item d-flex align-items-center justify-content-between px-4"
+        >
+          <span class="night90">Loan Type </span>
+          <strong> {{requesterDetails.loanType}}</strong>
+        </li>
+        <li
+          class="list-group-item d-flex align-items-center justify-content-between px-4"
+        >
+          <span class="night90"> Loan Amount</span>
+          <strong>Rs.  {{requesterDetails.loanAmount}}</strong>
+        </li>
+        <!-- <li
+          class="list-group-item d-flex align-items-center justify-content-between px-4"
+        >
+          <span class="night90"> Loan Returned Amount</span>
+          <strong>Rs. 20,000</strong>
+        </li>
+
+        <li
+          class="list-group-item d-flex align-items-center justify-content-between px-4"
+        >
+          <span class="night90">Loan Balance</span>
+          <strong>Rs. 80,000</strong>
+        </li> -->
+        <li
+          class="list-group-item d-flex align-items-center justify-content-between px-4"
+        >
+          <ul class="list-inline mb-3">
+            <li
+          class="list-inline-item bg-light border rounded d-inline-flex align-items-center py-2 px-4"
+          *ngFor="let attachment of requesterDetails.loanAttachments"
+        >
+          <span class="text-primary"><i class="fa-light fa-file"></i> </span>
+          <a
+            class="btn btn-link"
+            [href]="imageBaseUrl + '/' + attachment.attachmentUrl"
+            target="_blank"
+            download="{{ attachment.attachmentName }}"
+          >
+            <span class="mx-2">{{ attachment.attachmentName }}</span>
+          </a>
+
+          <!-- <span>
+            <i class="fa-light fa-times"></i>
+          </span> -->
+        </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="mx-4 p-3 skyTransBg night rounded d-flex align-items-center">
+      <span class="iconButton medium skyTrans20 night me-2">
+        <i class="fa-light fa-info"></i>
+      </span>
+      <p class="m-0">
+        You have requested <strong>Loan </strong> request on
+        {{ requesterDetails.pfDate }}
+      </p>
+    </div>
+
+    <div class="list-group-section p-4">
+      <div class="main_timeline">
+        <div class="pb-3 d-flex align-items-start timeline_item">
+          <div class="timeline_icon iconButton medium border">
+            <i class="fa-light coal fa-user"></i>
+          </div>
+          <div class="ps-5 timeline_content">
+            <div class="float-end d-flex align-items-center">
+              <span class="iconButton iconHover medium me-2"
+                ><i class="fa-light fa-message-lines"></i>
+              </span>
+              <span class="badge badge-md rounded-pill skyTransBg night"
+                >Applied</span
+              >
+            </div>
+            <strong>{{ requesterDetails.requester }} </strong>
+            <p class="mb-1 metal">
+              <small>{{ requesterDetails.appliedAt }}</small>
+            </p>
+            <div
+              class="bg-light border p-3 rounded"
+              *ngIf="requesterDetails.notes !== ''"
+            >
+              <strong>Note</strong>
+              <p class="m-0">
+                {{ requesterDetails.notes }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-3 d-flex align-items-start timeline_item"
+          *ngFor="let stage of requestStages"
+        >
+          <div
+            class="timeline_icon iconButton medium border"
+            [ngClass]="{ mintBg: stage.status === 1 }"
+          >
+            <i class="fa-light fa-user-tie"></i>
+          </div>
+          <div class="ps-5 timeline_content">
+            <div class="float-end d-flex align-items-center">
+              <span class="iconButton iconHover medium me-2"
+                ><i class="fa-light fa-message-lines"></i>
+              </span>
+              <span
+                *ngIf="stage.status === 1"
+                class="badge badge-md rounded-pill grayfilled"
+              >
+                Pending
+              </span>
+              <span
+                *ngIf="stage.status === 2"
+                class="badge badge-md rounded-pill successbg"
+                >Approved</span
+              >
+
+              <span
+                *ngIf="stage.status === 3"
+                class="badge badge-md rounded-pill errorbg"
+              >
+                Rejected
+              </span>
+              <span
+              *ngIf="stage.status === 5"
+              class="badge badge-md rounded-pill badgebg"
+            >
+              On Hold
+            </span>
+            </div>
+            <strong>{{ stage.approver }}<small></small> </strong>
+            <p class="mb-1 metal">
+              <small>{{ stage.modifiedDate }}</small>
+            </p>
+            <div
+              class="bg-light border p-3 rounded"
+              *ngIf="stage.description !== ''"
+            >
+              {{ stage.description }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="isActive">
+    <footer
+      class="bg-light p-3 text-end pe-5"
+    >
+      <button
+        class="btn btn-primary leaveapprove btn-small"
+        style="margin-right: 10px"
+        data-bs-toggle="modal"
+        data-bs-placement="top"
+        data-bs-target="#approveleave"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      >
+        Approve
+      </button>
+      <button
+        class="btn btn-outline-danger btn-small"
+        style="margin-right: 10px"
+        data-bs-toggle="modal"
+        data-bs-placement="top"
+        data-bs-target="#rejectleave"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      >
+        Reject
+      </button>
+      <button *ngIf="status != 5"
+      class="btn btn-small button2"
+      data-bs-toggle="modal"
+      data-bs-placement="top"
+      data-bs-target="#Holdleave"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    >
+        Hold
+    </button>
+    </footer>
+  </ng-container>
+</ng-template>
+<!-- </div> -->
+
+<div
+  class="modal fade"
+  id="approveleave"
+  tabindex="-1"
+  aria-labelledby="approveleaveLabel"
+  aria-modal="true"
+  role="dialog"
+>
+  <form [formGroup]="teamRequestForm">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="edittagsLabel">Comment</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="py-5 px-4">
+            <div class="mb-3">
+              <label for="" class="col-form-label">Add Notes</label>
+              <textarea
+                class="form-control"
+                placeholder="Write Note here"
+                style="height: 100px"
+                spellcheck="false"
+                formControlName="description"                
+                [class.is-invalid]="
+                rF['description'].invalid && rF['description'].touched
+              "
+              [class.is-valid]="
+                rF['description'].valid && rF['description'].touched
+              "
+              >
+              </textarea>
+              <div class="invalid-feedback">
+                <div *ngIf="rF['description'].errors?.['maxlength']">
+                  Description cannot be more than 200 characters.
+                </div>
+                <div *ngIf="rF['description'].errors?.['required']">
+                  Description is required.
+                </div>
+              </div>
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer saltBg">
+          <button
+            type="button"
+            class="btn btn-outline-secondary approveleave"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            (click)="updateRequest(currentRequestStageId, 2, summarycontent)"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div
+  class="modal fade"
+  id="rejectleave"
+  tabindex="-1"
+  aria-labelledby="rejectleaveLabel"
+  aria-modal="true"
+  role="dialog"
+>
+  <form [formGroup]="teamRequestForm">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="edittagsLabel">Rejection Comment</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="py-5 px-4">
+            <div class="mb-3">
+              <label for="" class="col-form-label">Add Notes</label>
+              <textarea
+                class="form-control"
+                placeholder="Write Note here"
+                style="height: 100px"
+                spellcheck="false"
+                formControlName="description"
+                [class.is-invalid]="
+                rF['description'].invalid && rF['description'].touched
+              "
+              [class.is-valid]="
+                rF['description'].valid && rF['description'].touched
+              "
+              >
+              </textarea>
+              <div class="invalid-feedback">
+                <div *ngIf="rF['description'].errors?.['maxlength']">
+                  Description cannot be more than 200 characters.
+                </div>
+                <div *ngIf="rF['description'].errors?.['required']">
+                  Description is required.
+                </div>
+              </div>
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer saltBg">
+          <button
+            type="button"
+            class="btn btn-outline-secondary closerejectleave"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            (click)="updateRequest(currentRequestStageId, 3, summarycontent)"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div
+  class="modal fade"
+  id="Holdleave"
+  tabindex="-1"
+  aria-labelledby="HoldleaveLabel"
+  aria-modal="true"
+  role="dialog"
+>
+  <form [formGroup]="teamRequestForm">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="edittagsLabel">On Hold Comment</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="py-5 px-4">
+            <div class="mb-3">
+              <label for="" class="col-form-label">Add Notes</label>
+              <textarea
+                class="form-control"
+                placeholder="Write Note here"
+                style="height: 100px"
+                spellcheck="false"
+                formControlName="description"
+                [class.is-invalid]="
+                rF['description'].invalid && rF['description'].touched
+              "
+              [class.is-valid]="
+                rF['description'].valid && rF['description'].touched
+              "
+              >
+              </textarea>
+              <div class="invalid-feedback">
+                <div *ngIf="rF['description'].errors?.['maxlength']">
+                  Description cannot be more than 200 characters.
+                </div>
+                <div *ngIf="rF['description'].errors?.['required']">
+                  Description is required.
+                </div>
+              </div>
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer saltBg">
+          <button
+            type="button"
+            class="btn btn-outline-secondary closerejectleave"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            (click)="updateRequest(currentRequestStageId, 5, summarycontent)"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- <div [ngClass]="summaryToggle ? 'modal-backdrop fade show' : ''"></div> -->
+<app-toaster></app-toaster>

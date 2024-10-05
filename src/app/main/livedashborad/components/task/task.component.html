@@ -1,0 +1,502 @@
+<div class="content-box-wrapper d-flex w-100">
+  <div class="middle-content d-flex">
+
+<div class="page-content-wrapper dashboard">
+<div class="w-100 inbox-container px-3">
+
+<div class="filter-container candidate-left-filter-opt">
+<div class="row">
+<div class="col-md-7">
+<ul class="nav nav-tabs tasktabs" id="myTab" role="tablist">
+<li class="nav-item" role="presentation">
+  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">To-Do
+    <span class="badge bg-white rounded-pill darkblue border">10</span>
+   </button>
+</li>
+<li class="nav-item" role="presentation">
+  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" tabindex="-1">Done
+    <span class="badge bg-white rounded-pill darkblue border">10</span>
+  </button>
+</li>
+</ul>
+</div>
+<div class="col-md-5">
+  <div class="d-flex align-items-center justify-content-end">
+    <div class="dropdown w-auto">
+      <div class="dropdown bg-white border rounded">
+        <button class="btn w-100" type="button" id="sorting1" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fa-regular fa-arrow-down-short-wide"></i> My Tasks
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="sorting1">
+
+          <li>
+            <a class="dropdown-item d-flex align-items-center" href="#">
+              My Tasks
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item d-flex align-items-center" href="#">
+             Everyone's tasks
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item d-flex align-items-center" href="#">
+             Task without assignees
+            </a>
+          </li>
+          <li class="saltBg p-2 charcoal">
+            <strong> People</strong>
+          </li>
+          <li>
+            <a class="dropdown-item d-flex align-items-center" href="#">
+             <span class="iconButton small me-2">
+              <img src="../images/avatar-3.png" class="rounded-circle img-fluid" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Taimoor Kasi " alt="">
+            </span>
+            Taimoor Kasi
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item d-flex align-items-center" href="#">
+             <span class="iconButton small me-2">
+              <img src="../images/avatar-2.png" class="rounded-circle img-fluid" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title=" Tahir Ahmed " alt="">
+            </span>
+           Tahir Ahmed
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+
+
+
+    <div class="iconholder ms-2">
+      <!-- <i class="fa-light fa-calendar-plus iconleft"></i> -->
+        <input  id="datepicker" class="form-control flatpickr-input"   placeholder="Due date"
+        [type]="inputType"
+        (focus)="onFocus()"
+        (blur)="onBlur()">
+    </div>
+
+  </div>
+</div>
+</div>
+
+
+
+</div>
+<div class="query-container perfect-scrollbar" data-scrollbar="true" tabindex="-1" style="overflow: hidden; outline: none;"><div class="scroll-content">
+
+<div class="tab-content" id="myTabContent">
+<div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+<div class="list-group-section mt-3 pe-3 mb-3">
+<div class="taskholder">
+  <div class="taskinput iconholder">
+      <i class="fa-light fa-clipboard-check iconleft"></i>
+      <input class="form-control bg-white border-0" placeholder="Add a task">
+  </div>
+  <div class="d-none taskactions bg-light p-3 rounded" id="taskreply">
+    <form action="">
+      <div class="row mx-0 align-items-center">
+      <div class="col-8 ps-0">
+        <div class="d-flex align-items-center me-3">
+          <div class="iconholder">
+            <i class="fa-light fa-calendar-plus iconleft"></i>
+              <input name="" id="datepicker" class="form-control bg-transparent border-0 rounded-0 flatpickr-input" placeholder="Set due date" type="text" readonly="readonly">
+          </div>
+          <div class="iconholder">
+            <i class="fa-light fa-bell iconleft"></i>
+              <input name="" id="datepicker" class="form-control bg-transparent border-0 rounded-0 flatpickr-input" placeholder="Set Reminder" type="text" readonly="readonly">
+          </div>
+          <div class="iconholder">
+            <i class="fa-light fa-repeat iconleft"></i>
+              <input name="" id="datepicker" class="form-control bg-transparent border-0 rounded-0 flatpickr-input" placeholder="Set Repeat" type="text" readonly="readonly">
+          </div>
+        </div>
+      </div>
+      <div class="col-2 p-0 text-center">
+        <ul class="userlist list d-flex align-items-center">
+          <li>
+            <span class="iconButton small">
+              <img src="../images/avatar-3.png" class="rounded-circle img-fluid" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Taimoor Kasi " alt="">
+            </span>
+          </li>
+
+          <li data-bs-toggle="modal" data-bs-target="#addassignee">
+            <span class="iconButton small ms-2 add-circle border border-dark night" data-bs-toggle="modal" data-bs-target="#addteammember"><i class="fa-regular fa-plus"></i> </span>
+          </li>
+        </ul>
+      </div>
+      <div class="col-2 text-end p-0">
+        <button class="btn btn-light me-2">Cancel</button>
+        <button class="btn btn-outline-secondary">Add </button>
+      </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+<div class="p-3 mt-3 viewdetail w-100 mb-3 bg-white rounded">
+  <div class="form-check mb-1 border-bottom pb-2 theme-check">
+    <input class="form-check-input" type="checkbox" id="task1">
+    <label class="form-check-label d-block w-100 fw-semibold" for="task1">submit daily report to ahmed ali khan</label>
+  </div>
+  <div class="row align-items-center w-100 me-0">
+    <div class="col-6">
+      <ul class="list-inline mb-0">
+        <li class="list-inline-item d-inline-flex align-items-center">
+          <span class="iconButton medium"><i class="fa-light fa-calendar-plus"></i></span> <span>Tomorrow</span>
+        </li>
+        <li class="list-inline-item d-inline-flex align-items-center">
+          <span class="iconButton medium"><i class="fa-light fa-bell"></i></span> <span>21:00, Today</span>
+        </li>
+        <li class="list-inline-item d-inline-flex align-items-center">
+          <span class="iconButton medium"><i class="fa-light fa-repeat"></i></span> <span>Weekly, Thursday</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col">
+      <ul class="userlist d-flex align-items-center list">
+        <li>
+          <span class="iconButton bg-primary small" data-bs-placement="top" data-bs-title=" Farooq Shad">
+            FS
+          </span>
+        </li>
+        <li>
+          <span class="iconButton small ms-2 bg-white border border-dark night" data-bs-toggle="modal" data-bs-target="#addteammember" data-bs-placement="right" data-bs-title=" Add New"><i class="fa-regular fa-plus"></i> </span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-2 ms-auto text-end pe-0">
+      <span class="coal ms-auto">21 mins ago</span>
+    </div>
+  </div>
+</div>
+<div class="p-3 viewdetail w-100 mb-3 bg-white rounded">
+  <div class="form-check mb-1 border-bottom pb-2 theme-check">
+    <input class="form-check-input" type="checkbox" id="task2">
+    <label class="form-check-label d-block w-100 fw-semibold" for="task2">submit daily report to ahmed ali khan</label>
+  </div>
+  <div class="row align-items-center w-100 me-0">
+    <div class="col-6">
+      <ul class="list-inline mb-0">
+        <li class="list-inline-item d-inline-flex align-items-center">
+          <span class="iconButton medium iconHover"><i class="fa-light fa-calendar-plus"></i></span> <span>Tomorrow</span>
+        </li>
+        <li class="list-inline-item d-inline-flex align-items-center">
+          <span class="iconButton medium iconHover"><i class="fa-light fa-bell"></i></span> <span>21:00, Today</span>
+        </li>
+        <li class="list-inline-item d-inline-flex align-items-center">
+          <span class="iconButton medium iconHover"><i class="fa-light fa-repeat"></i></span> <span>Weekly, Thursday</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col">
+      <ul class="userlist d-flex align-items-center list">
+        <li>
+          <span class="iconButton charcoalBg small" data-bs-placement="top" data-bs-title="Tahir Ahmed">
+            TA
+          </span>
+        </li>
+        <li>
+          <span class="iconButton small ms-3 bg-white border border-dark night" data-bs-toggle="modal" data-bs-target="#addteammember" data-bs-placement="right" data-bs-title=" Add New"><i class="fa-regular fa-plus"></i> </span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-2 ms-auto text-end pe-0">
+      <span class="coal ms-auto">21 mins ago</span>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">...
+</div>
+</div>
+
+
+
+</div><div class="scrollbar-track scrollbar-track-x"><div class="scrollbar-thumb scrollbar-thumb-x" style="width: 1530px; transform: translate3d(0px, 0px, 0px);"></div></div><div class="scrollbar-track scrollbar-track-y" style="display: none;"><div class="scrollbar-thumb scrollbar-thumb-y" style="height: 330px; transform: translate3d(0px, 0px, 0px);"></div></div></div>
+</div>
+</div>
+
+  </div>
+
+</div>
+<div
+  class="modal fade"
+  id="addteammember"
+  tabindex="-1"
+  aria-labelledby="addteammemberLabel"
+  aria-modal="true"
+  role="dialog"
+>
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addteammemberLabel">
+          Add team members
+        </h1>
+        <button
+          type="button"
+          class="btn-close ice"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="icon-input mb-3">
+          <i class="fa-light fa-magnifying-glass"></i>
+          <input class="form-control" placeholder="Search for team members " />
+        </div>
+        <div class="selected-users selectors">
+          <ul class="list-group list-group-horizontal">
+            <li class="list-group-item" id="selector1">
+              <div class="avatar small me-2">
+                <img
+                  src="../images/avatar-2.jpg"
+                  alt="-"
+                  class="rounded-circle w-100"
+                />
+              </div>
+              <small>Zain</small>
+              <span class="remove-selected-user" value="1">
+                <i class="far fa-times"></i>
+              </span>
+            </li>
+            <li class="list-group-item" id="selector2">
+              <div class="iconButton medium fw-bolder cherryTransBg me-2">
+                SA
+              </div>
+              <small>Sajjad</small>
+              <span class="remove-selected-user" value="2">
+                <i class="far fa-times"></i>
+              </span>
+            </li>
+            <li class="list-group-item" id="selector3">
+              <div class="avatar large me-2">
+                <img
+                  src="../images/avatar-11.jpg"
+                  alt="-"
+                  class="rounded-circle w-100"
+                />
+              </div>
+              <small>Farooq</small>
+              <span class="remove-selected-user" value="3">
+                <i class="far fa-times"></i>
+              </span>
+            </li>
+            <li class="list-group-item" id="selector4">
+              <div class="avatar large me-2">
+                <img
+                  src="../images/avatar-2.jpg"
+                  alt="-"
+                  class="rounded-circle w-100"
+                />
+              </div>
+              <small>Daniyal</small>
+              <span class="remove-selected-user" value="4">
+                <i class="far fa-times"></i>
+              </span>
+            </li>
+            <li class="list-group-item" id="selector3">
+              <div class="avatar large me-2">
+                <img
+                  src="../images/avatar-11.jpg"
+                  alt="-"
+                  class="rounded-circle w-100"
+                />
+              </div>
+              <small>Farooq</small>
+              <span class="remove-selected-user" value="3">
+                <i class="far fa-times"></i>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="list-group list-group-flush">
+          <a
+
+            class="list-group-item d-flex align-items-center form-check w-100 theme-check"
+          >
+            <label
+              class="form-check-label coal d-flex align-items-center w-100"
+              for="check1"
+            >
+              <div>
+                <img
+                  src="../images/avatar-2.jpg"
+                  alt="-"
+                  class="rounded-circle iconButton medium"
+                />
+              </div>
+              <div class="w-100 ms-2">
+                <p class="mb-0 darkblue">Zain Haider</p>
+              </div>
+            </label>
+            <input
+              class="form-check-input float-end"
+              type="checkbox"
+              id="check1"
+              target="1"
+            />
+          </a>
+          <a
+
+            class="list-group-item d-flex align-items-center form-check w-100 theme-check"
+          >
+            <label
+              class="form-check-label coal d-flex align-items-center w-100"
+              for="check2"
+            >
+              <div class="iconButton medium fw-bolder cherryTransBg">SA</div>
+              <div class="w-100 ms-2">
+                <p class="mb-0 darkblue">Sajjad Akber</p>
+              </div>
+            </label>
+            <input
+              class="form-check-input float-end"
+              type="checkbox"
+              id="check2"
+              target="2"
+            />
+          </a>
+          <a
+
+            class="list-group-item d-flex align-items-center form-check w-100 theme-check"
+          >
+            <label
+              class="form-check-label coal d-flex align-items-center w-100"
+              for="check3"
+              value="farooq-shad"
+            >
+              <div>
+                <img
+                  src="../images/avatar-11.jpg"
+                  alt="-"
+                  class="rounded-circle iconButton medium"
+                />
+              </div>
+              <div class="w-100 ms-2">
+                <p class="mb-0 darkblue">Farooq Shad</p>
+              </div>
+            </label>
+            <input
+              class="form-check-input float-end"
+              type="checkbox"
+              id="check3"
+              target="3"
+            />
+          </a>
+          <a
+
+            class="list-group-item d-flex align-items-center form-check w-100 theme-check user-selected"
+          >
+            <label
+              class="form-check-label coal d-flex align-items-center w-100"
+              for="check4"
+            >
+              <div>
+                <img
+                  src="../images/avatar-2.jpg"
+                  alt="-"
+                  class="rounded-circle iconButton medium"
+                />
+              </div>
+              <div class="w-100 ms-2">
+                <p class="mb-0 darkblue">Daniyal Ahmed</p>
+              </div>
+            </label>
+            <input
+              class="form-check-input float-end"
+              type="checkbox"
+              id="check4"
+              target="4"
+            />
+          </a>
+          <a
+
+            class="list-group-item d-flex align-items-center form-check w-100 theme-check"
+          >
+            <label
+              class="form-check-label coal d-flex align-items-center w-100"
+              for="check5"
+            >
+              <div class="iconButton medium fw-bolder cherryTransBg">AA</div>
+              <div class="w-100 ms-2">
+                <p class="mb-0 darkblue">Ahmed Ali</p>
+              </div>
+            </label>
+            <input
+              class="form-check-input float-end"
+              type="checkbox"
+              id="check5"
+            />
+          </a>
+          <a
+
+            class="list-group-item d-flex align-items-center form-check w-100 theme-check"
+          >
+            <label
+              class="form-check-label coal d-flex align-items-center w-100"
+              for="check6"
+            >
+              <div class="iconButton medium fw-bolder cherryTransBg">SR</div>
+              <div class="w-100 ms-2">
+                <p class="mb-0 darkblue">Saif Raza</p>
+              </div>
+            </label>
+            <input
+              class="form-check-input float-end"
+              type="checkbox"
+              id="check6"
+            />
+          </a>
+          <a
+
+            class="list-group-item d-flex align-items-center form-check w-100 theme-check"
+          >
+            <label
+              class="form-check-label coal d-flex align-items-center w-100"
+              for="check6"
+            >
+              <div class="iconButton medium fw-bolder cherryTransBg">FH</div>
+              <div class="w-100 ms-2">
+                <p class="mb-0 darkblue">Faizan Haq</p>
+              </div>
+            </label>
+            <input
+              class="form-check-input float-end"
+              type="checkbox"
+              id="check6"
+            />
+          </a>
+          <a
+
+            class="list-group-item d-flex align-items-center form-check w-100 theme-check"
+          >
+            <label
+              class="form-check-label coal d-flex align-items-center w-100"
+              for="check6"
+            >
+              <div class="iconButton medium fw-bolder cherryTransBg">SA</div>
+              <div class="w-100 ms-2">
+                <p class="mb-0 darkblue">Shahid Ali</p>
+              </div>
+            </label>
+            <input
+              class="form-check-input float-end"
+              type="checkbox"
+              id="check6"
+            />
+          </a>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          Add
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

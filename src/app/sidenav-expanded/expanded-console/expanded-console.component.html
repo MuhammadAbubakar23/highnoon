@@ -1,0 +1,58 @@
+<nav id="left-sidebar-expand" class="">
+  <div
+    class="query-container perfect-scrollbar"
+    data-scrollbar="true"
+    tabindex="-1"
+    style="overflow-y: auto; outline: none"
+  >
+    <div class="leftbar-console-expanded">
+      <div class="sidebar-header pe-3 ps-3">
+        <h5 class="fw-bold mt-3 ms-1">
+          <a>{{ headerTitle }}</a>
+        </h5>
+      </div>
+      <ul class="list-group console-list mt-2" data-scrollbar="true">
+        <li class="list-group-item list-group-item-action"
+        [ngClass]="!menu.expanded?'collapsed':''"
+        *ngFor="let menu of subMenus; let i = index">
+          <a [routerLink]="menu['RouteName']" class="d-flex  align-items-center" [ngClass]="menu.isChild?'chevron-icon':''" type="button" (click)="toggleCollapse(menu)">
+            <!-- <i class="fal fa-clone pe-2"></i> -->
+            {{ menu["DisplayName"] }}
+        </a>
+
+          <ul
+            *ngIf="menu.Children"
+            class="list-unstyled-inner collapse"
+            [ngClass]="menu.expanded?'show':''"
+          >
+            <li
+              *ngFor="let child of menu.Children"
+              class="list-group-item list-group-item-action"
+            >
+              <a
+                [routerLinkActive]="'active'"
+                [routerLink]="child['RouteName']"
+                class="d-flex align-items-center"
+              >
+                {{ child["DisplayName"] }}
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <!-- <ul class="list-group console-list mt-2" data-scrollbar="data-scrollbar">
+          <li  class="list-group-item list-group-item-action" *ngFor="let menu of subMenus;let i=index"
+        [ngClass]="{'active':activeIndex===i}">
+          <a
+            (click)="activeMenu(i)"
+            class="d-flex align-items-center"
+            [routerLink]="[menu['RouteName']]"
+          >
+            {{ menu['DisplayName'] }}
+          </a>
+        </li>
+      </ul> -->
+    </div>
+  </div>
+  <a class="panelToggle" (click)="toggleNavTest()"></a>
+</nav>

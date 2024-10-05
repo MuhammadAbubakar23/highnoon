@@ -1,0 +1,889 @@
+<div class="content-box-wrapper d-flex w-100">
+    <div class="middle-content d-flex">
+      <div class="page-content-wrapper">
+        <div class="agent-page-main-content px-4">
+          <div class="tab-content" id="myTabContent">
+            <div
+              class="tab-pane fade show active"
+              id="myovertime"
+              role="tabpanel"
+              aria-labelledby="myovertime-tab"
+            >
+            <div class="row mt-4">
+                <div class="col-md-6">
+                  <div class="card dashboard-card">
+                    <div class="card-body">
+                      <div class="d-flex align-items-center mb-3">
+                        <div class="iconButton medium me-3 successbg">
+                          <i class="fa-light fa-calendar-clock"></i>
+                        </div>
+                        <div>
+                          <p class="silver mb-1 text-uppercase">
+                            OVEr-time this month
+                          </p>
+                          <h5 class="m-0">{{ totalMonthsHours }} Hours</h5>
+                        </div>
+                        <span class="badge rounded-pill skyTransBg night ms-auto"
+                          >Un-Planned
+                        </span>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <h6 class="m-0">{{ rejected }} Hours</h6>
+                          <p class="silver mb-0 text-uppercase">Rejected</p>
+                        </div>
+                        <div class="col">
+                          <h6 class="m-0">{{ pending }} Hours</h6>
+                          <p class="silver mb-0 text-uppercase">pending Hours</p>
+                        </div>
+                        <div class="col">
+                          <h6 class="m-0">{{ approved }} Hours</h6>
+                          <p class="silver mb-0 text-uppercase">approved</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card dashboard-card">
+                    <div class="card-body">
+                      <div class="d-flex align-items-center mb-3">
+                        <div class="iconButton medium me-3 skyTransBg night">
+                          <i class="fa-light fa-calendar-clock"></i>
+                        </div>
+                        <div>
+                          <p class="silver mb-1 text-uppercase">
+                            {{dateRange}}
+                          </p>
+                          <h5 class="m-0">{{totalOvertime}} Hours</h5>
+                        </div>
+                        <span
+                          class="badge rounded-pill bg-primary10 night ms-auto"
+                          >Planned
+                        </span>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <h6 class="m-0">{{plannedOvertime}} Hours</h6>
+                          <p class="silver mb-0 text-uppercase">
+                            Planned Overtime
+                          </p>
+                        </div>
+                        <div class="col">
+                          <h6 class="m-0">{{remainingOvertime}} Hours</h6>
+                          <p class="silver mb-0 text-uppercase">
+                            Remaining overtime
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="filter-container">
+                <div class="row justify-content-between">
+                  <div class="col-md-7">
+                    <ul class="list-group list-group-horizontal border-0">
+                      <li class="list-group-item border-0 p-0 me-2">
+                        <div class="icon-input search_field">
+                          <i class="fa-light fa-magnifying-glass"></i>
+                          <input
+                            class="form-control"
+                            placeholder="Search.. "
+                            [(ngModel)]="searchText"
+                          />
+                        </div>
+                      </li>
+                      <li class="list-group-item border-0 ms-2 pe-0">
+                        <span class="coal">From</span>
+                      </li>
+                      <li class="list-group-item border-0 p-0 me-2">
+                        <div class="ms-2">
+                          <input
+                            [(ngModel)]="startDate"
+                            class="form-control timepicker flatpickr-input"
+                            value="From"
+                            type="date"
+                            (change)="resetEndDate()"
+                          />
+                        </div>
+                      </li>
+                      <li class="list-group-item border-0 ms-2 pe-0">
+                        <span class="coal">To</span>
+                      </li>
+                      <li class="list-group-item border-0 p-0 mx-2">
+                        <div class="ms-2">
+                          <input
+                            [(ngModel)]="endDate"
+                            class="form-control timepicker flatpickr-input"
+                            type="date"
+                            (change)="filterByDate()"
+                          />
+                        </div>
+                      </li>
+                      <li class="list-group-item border-0 p-0 me-2">
+                        <div class="dropdown w-auto">
+                          <button
+                            class="btn dropdown-toggle"
+                            type="button"
+                            id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+                            {{ selectedOverTimeStatus || "Status" }}
+                          </button>
+                          <ul
+                            class="dropdown-menu custom-dropdown"
+                            aria-labelledby="dropdownMenuButton1"
+                          >
+                            <li *ngFor="let ls of leaveStatusKeys">
+                              <a
+                                class="dropdown-item"
+                                (click)="filterByStatus(ls)"
+                                >{{ ls }}</a
+                              >
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+                      <li
+                        class="list-group-item border-0 iconButton iconHover medium"
+                        aria-label="..."
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        data-bs-original-title="Refresh"
+                        (click)="refreshPage()"
+                      >
+                        <i class="fal fa-redo-alt"></i>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-md-5">
+                    <div
+                      class="filters-opt d-flex align-items-center justify-content-end"
+                    >
+                      <a
+                        class="btn btn-success me-2"
+                        role="button"
+                        aria-controls="editscheular1"
+                        (click)="resetForm(addcontent)"
+                      >
+                        Add Overtime
+                      </a>
+                      <div class="dropdown w-auto rounded">
+                        <button
+                          class="btn iconButton iconHover medium"
+                          type="button"
+                          id="sorting1"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <i class="fa-regular fa-arrow-down-short-wide"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="sorting1">
+                          <li class="saltBg p-2 charcoal">
+                            <strong> Sort By</strong>
+                          </li>
+                          <li *ngFor="let column of desColumns">
+                            <a
+                            class="dropdown-item d-flex align-items-center"
+                            (click)="sortDataBy(column)"
+                            >
+                            {{ column }}
+                          </a>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="dropdown w-auto">
+                        <button
+                          class="btn iconButton medium"
+                          type="button"
+                          id="dropdownMenuButton1"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <i class="fa-regular fa-ellipsis"></i>
+                        </button>
+                        <ul
+                          class="dropdown-menu"
+                          aria-labelledby="dropdownMenuButton1"
+                        >
+                          <li>
+                            <a class="dropdown-item p-1" (click)="exportData()">
+                              <button
+                                class="iconButton dropdown-iconBtn small"
+                                id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                              >
+                                <i class="fa-solid fa-file-export"></i></button
+                              >Export to CSV
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="query-container perfect-scrollbar"
+                data-scrollbar="true"
+                tabindex="-1"
+                style="overflow-y: auto; outline: none"
+              >
+                <div class="scroll-content">
+                  <div class="table-section">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th *ngFor="let column of columnNames">
+                            {{ column }}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of overtTimeItems; let i = index" (click)="getOvertimeSummary(item,contentsummary)">
+                          <td *ngIf="pageNumber == 1">
+                            <a
+                              role="button"
+                              aria-controls="overtimereqdetail"
+                              >{{ i + 1 }}</a
+                            >
+                          </td>
+                          <td *ngIf="pageNumber > 1">
+                            <a
+                              role="button"
+                              aria-controls="overtimereqdetail"
+                              >{{ i + 1 + pageSize * (pageNumber - 1) }}</a
+                            >
+                          </td>
+
+                          <td *ngFor="let column of desColumns">
+                            <a>
+                              <span
+                                [ngClass]="{
+                                  'badge badge-md rounded-pill':
+                                    item[column] === 'Pending' ||
+                                    item[column] === 'Approved' ||
+                                    item[column] === 'Rejected' ||
+                                    item[column] === 'Planned' ||
+                                    item[column] === 'Un-Planned',
+                                  grayfilled: item[column] === 'Pending',
+                                  successbg: item[column] === 'Approved',
+                                  errorbg: item[column] === 'Rejected',
+                                  'bg-primary10 night text-dark':
+                                    item[column] === 'Planned',
+                                  'skyTransBg night': item[column] === 'Un-Planned',
+                                  '':
+                                    item[column] !== 'Pending' &&
+                                    item[column] !== 'Approved' &&
+                                    item[column] !== 'Rejected' &&
+                                    item[column] !== 'Planned' &&
+                                    item[column] !== 'Un-Planned'
+                                }"
+                              >
+                                {{ item[column] }}
+                              </span>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <ng-container *ngIf="totalRecords > pageSize">
+                  <div class="me-5">
+                    <ul class="pagination justify-content-end">
+                      <li class="page-item">
+                        <a class="page-link" (click)="prevPage()" [attr.disabled]="pageNumber === 1">Previous</a>
+                      </li>
+                      <ng-container *ngFor="let page of visiblePages()">
+                        <li class="page-item" [ngClass]="{ 'disabled': page === -1 }">
+                          <a class="page-link" (click)="changePage(page)" [class.active]="pageNumber === page">{{ page === -1 ? '...' : page }}</a>
+                        </li>
+                      </ng-container>
+                      <li class="page-item">
+                        <a class="page-link" (click)="nextPage()" [attr.disabled]="pageNumber === totalPages">Next</a>
+                      </li>
+                    </ul>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #addcontent let-offcanvas>
+
+    <div class="offcanvas-header bg-light">
+      <div class="row g-0 w-100">
+        <div class="col-md-6 d-flex align-items-center">
+          <h5 class="mb-0">Overtime Request</h5>
+        </div>
+        <div class="col-md-6 justify-content-end d-flex align-items-center pe-0">
+          <span
+            class="iconButton iconHower medium"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+            (click)="closeOffset(addcontent)"
+            ><i class="fa-light fa-times"></i
+          ></span>
+        </div>
+      </div>
+    </div>
+    <div class="offcanvas-body px-4">
+      <form [formGroup]="overTimeForm" class="px-4">
+        <div class="mb-3">
+            <div class="mb-3">
+              <label for="" class="col-form-label">Shift</label>
+              <select class="form-select" aria-label="" formControlName="shiftId">
+                <option [value]="null" selected disabled>Select shift</option>
+                <option *ngFor="let shift of shiftItems" [ngValue]="shift.shiftIdId">
+                  {{shift.shiftName}}
+                </option>
+              </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                <label for="" class="col-form-label">Check-In</label>
+                <input class="form-control" type="text" [value]="getShiftProperty('checkIn', true)" readonly>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="mb-3">
+                <label for="" class="col-form-label">Check-Out</label>
+                <input class="form-control" type="text" [value]="getShiftProperty('checkOut', true)" readonly>
+              </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="row">
+              <div class="col">
+                <div class="mb-3">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <label for="" class="col-form-label">From</label>
+                  </div>
+                  <div class="iconholder">
+                    <input
+                      formControlName="otStartDate"
+                      class="form-control timepicker flatpickr-input"
+                      type="datetime-local"
+                      [class.is-invalid]="
+                      oF['otStartDate'].invalid && oF['otStartDate'].touched
+                    "
+                    [class.is-valid]="
+                      oF['otStartDate'].valid && oF['otStartDate'].touched
+                    "
+                  />
+                  <div class="invalid-feedback">
+                    <div *ngIf="oF['otStartDate'].errors?.['required']">
+                      Overtime Start Date is required.
+                    </div>
+                  </div>
+                  <div class="valid-feedback">Looks good!</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="mb-3">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <label for="" class="col-form-label">To</label>
+                  </div>
+                  <div class="iconholder">
+                    <input
+                      formControlName="otEndDate"
+                      class="form-control timepicker flatpickr-input"
+                      type="datetime-local"
+                      (change)="getUsers()"
+                      [class.is-invalid]="
+                      oF['otEndDate'].invalid && oF['otEndDate'].touched
+                    "
+                    [class.is-valid]="
+                      oF['otEndDate'].valid && oF['otEndDate'].touched
+                    "
+                  />
+                  <div class="invalid-feedback">
+                    <div *ngIf="oF['otEndDate'].errors?.['required']">
+                      Overtime End Date is required.
+                    </div>
+                  </div>
+                  <div class="valid-feedback">Looks good!</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <!-- <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="pickuprequired" (change)="getUsers()"
+            [(ngModel)]="isHr">
+            <label class="form-check-label" for="pickuprequired">
+            IsHR
+            </label>
+        </div><br> -->
+        <div class="form-floating mb-2"  *ngIf="employees && employees[0] != undefined">
+            <ng-select
+            [multiple]=true
+            placeholder="Select Employee"
+            formControlName="userId"
+            [class.is-invalid]="
+            oF['userId'].invalid && oF['userId'].touched
+          "
+          [class.is-valid]="
+            oF['userId'].valid &&
+            oF['userId'].touched
+          "
+            >
+            <ng-option
+                *ngFor="let employee of employees"
+                [value]="employee.userId"
+                >{{ employee.userId }} : {{ employee.userName }} - {{ employee.dptName }}</ng-option
+            >
+            </ng-select>
+            <div class="invalid-feedback">
+              <div *ngIf="sF['userId'].errors?.['required']">
+                Employee is required.
+              </div>
+            </div>
+            <div class="valid-feedback">Looks good!</div>
+        </div><br>
+        <div class="toggle-button" *ngIf="employees && employees[0] != undefined">
+          <input type="radio" id="unplanned" name="type" value="2" checked>
+          <label class="toggle-option" for="unplanned" (click)="setType(1)">Planned</label>
+
+          <input type="radio" id="planned" name="type" value="1">
+          <label class="toggle-option" for="planned" (click)="setType(2)">UnPlanned</label>
+        </div><br>
+        <div class="mb-3" *ngIf="employees && employees[0] != undefined">
+            <div class="row">
+              <div class="col">
+                <div class="mb-3">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <label for="" class="col-form-label">Overtime Check-In</label>
+                  </div>
+                  <div class="iconholder">
+                    <input
+                      (click)="addCustomValidator()"
+                      formControlName="otCheckIn"
+                      class="form-control timepicker flatpickr-input"
+                      type="time"
+                      [class.is-invalid]="
+                      oF['otCheckIn'].invalid && oF['otCheckIn'].touched
+                    "
+                    [class.is-valid]="
+                      oF['otCheckIn'].valid &&
+                      oF['otCheckIn'].touched &&
+                      !isCheckoutGreater
+                    "
+                      step = 1
+                    />
+                  </div>
+                </div>
+                <div *ngIf="isCheckoutGreater" class="text-danger">
+                    Overtime Check In Time must be greater than Shift Checkout Time.
+                  </div>
+                <!-- <div class="invalid-feedback"> -->
+                  <!-- <div *ngIf="oF['otCheckIn'].errors?.['required']">
+                    Overtime check in Date is required.
+                  </div> -->
+                <!-- </div> -->
+              </div>
+              <div class="col">
+                <div class="mb-3">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <label for="" class="col-form-label">Overtime Check-Out</label>
+                  </div>
+                  <div class="iconholder">
+                    <input
+                      formControlName="otCheckOut"
+                      class="form-control timepicker flatpickr-input"
+                      type="time"
+                      step = 1
+                      [class.is-invalid]="
+                      oF['otCheckOut'].invalid && oF['otCheckOut'].touched
+                    "
+                    [class.is-valid]="
+                      oF['otCheckOut'].valid && oF['otCheckOut'].touched
+                    "
+                  />
+                  <div class="invalid-feedback">
+                    <div *ngIf="oF['otCheckOut'].errors?.['required']">
+                      Overtime checkout out Date is required.
+                    </div>
+                  </div>
+                  <div class="valid-feedback">Looks good!</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="employees && employees[0] != undefined">
+            <div class="col">
+              <div class="mb-3">
+                <label for="" class="col-form-label">Total</label>
+                <input class="form-control" type="text" formControlName="overTimeHours" [value]="calculateTotaltime(-1)" readonly>
+              </div>
+            </div>
+        </div>
+        <!-- <div class="col">
+            <div class="mb-3">
+              <label for="" class="d-block">&nbsp;</label>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="pickuprequired"
+                  formControlName="isWeekend">
+                <label class="form-check-label" for="pickuprequired">
+                  isWeekend
+                </label>
+              </div>
+            </div>
+        </div> -->
+        <div class="mb-3" *ngIf="employees && employees[0] != undefined">
+            <label for="" class="col-form-label">Check-In Location</label>
+            <select
+              name=""
+              class="form-select"
+              formControlName="otCheckInLoc"
+              [class.is-invalid]="sF['otCheckInLoc'].invalid && sF['otCheckInLoc'].touched"
+              [class.is-valid]="sF['otCheckInLoc'].valid && sF['otCheckInLoc'].touched"
+            >
+              <option [value]="null" disabled selected>Select Location</option>
+              <option
+                [value]="location.description"
+                *ngFor="let location of locations"
+              >
+                {{ location.description }}
+              </option>
+            </select>
+            <div class="invalid-feedback">
+              <div *ngIf="sF['otCheckInLoc'].errors?.['required']">
+                Location is required.
+              </div>
+            </div>
+            <div class="valid-feedback">Looks good!</div>
+
+            <label for="" class="col-form-label">Check-Out Location</label>
+            <select
+              name=""
+              class="form-select"
+              formControlName="otCheckOutLoc"
+              [class.is-invalid]="sF['otCheckOutLoc'].invalid && sF['otCheckOutLoc'].touched"
+              [class.is-valid]="sF['otCheckOutLoc'].valid && sF['otCheckOutLoc'].touched"
+            >
+              <option [value]="null" disabled selected>Select Location</option>
+              <option
+                [value]="location.description"
+                *ngFor="let location of locations"
+              >
+                {{ location.description }}
+              </option>
+            </select>
+            <div class="invalid-feedback">
+              <div *ngIf="sF['otCheckOutLoc'].errors?.['required']">
+                Location is required.
+              </div>
+            </div>
+            <div *ngIf="!sF['otCheckOutLoc'].errors?.['required']" class="valid-feedback">Looks good!</div>
+          </div>
+        <div class="mb-3" *ngIf="employees && employees[0] != undefined">
+          <label for="" class="col-form-label">Notes</label>
+          <textarea
+            class="form-control"
+            placeholder="Write a note"
+            style="height: 100px"
+            formControlName="notes"
+            [class.is-invalid]="oF['notes'].invalid && oF['notes'].touched"
+            [class.is-valid]="oF['notes'].valid && oF['notes'].touched"
+          ></textarea>
+          <div class="invalid-feedback">
+            <div *ngIf="oF['notes'].errors?.['required']">
+              Reason is required.
+            </div>
+            <div *ngIf="oF['notes'].errors?.['maxlength']">
+              Reason must be less than 200 characters.
+            </div>
+          </div>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+        <!-- <div
+        class="accordion mb-4"
+        id="accordionExample"
+        formArrayName="overTimeDaysDtos"
+        >
+          <div *ngFor="let day of overTimeDaysDtos.controls; let i = index">
+            <div class="accordion-item" [formGroupName]="i">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  [attr.data-bs-target]="'#collapse' + i"
+                  aria-expanded="false"
+                  [attr.aria-controls]="'collapse' + i"
+                >
+                  {{ day.value.dayName }}
+                </button>
+              </h2>
+              <div
+                [id]="'collapse' + i"
+                class="accordion-collapse collapse"
+                data-bs-parent="#accordionExample"
+              >
+                <div class="accordion-body">
+                  <div class="row">
+                    <div class="mb-3">
+                        <label for="" class="col-form-label">Check In Location</label>
+                        <select
+                          name=""
+                          class="form-select"
+                          formControlName="otCheckInLoc"
+                          [class.is-invalid]="overTimeDaysDtosCurrent(day)['otCheckInLoc'].invalid && overTimeDaysDtosCurrent(day)['otCheckInLoc'].touched"
+                          [class.is-valid]="overTimeDaysDtosCurrent(day)['otCheckInLoc'].valid && overTimeDaysDtosCurrent(day)['otCheckInLoc'].touched"
+                        >
+                          <option [value]="null" disabled selected>Select Location</option>
+                          <option
+                            [value]="location.description"
+                            *ngFor="let location of locations"
+                          >
+                            {{ location.description }}
+                          </option>
+                        </select>
+                        <div class="invalid-feedback">
+                          <div *ngIf="overTimeDaysDtosCurrent(day)['otCheckInLoc'].errors?.['required']">
+                            Location is required.
+                          </div>
+                        </div>
+                        <div class="valid-feedback">Looks good!</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="" class="col-form-label">Check Out Location</label>
+                        <select
+                          name=""
+                          class="form-select"
+                          formControlName="otCheckOutLoc"
+                          [class.is-invalid]="overTimeDaysDtosCurrent(day)['otCheckOutLoc'].invalid && overTimeDaysDtosCurrent(day)['otCheckOutLoc'].touched"
+                          [class.is-valid]="overTimeDaysDtosCurrent(day)['otCheckOutLoc'].valid && overTimeDaysDtosCurrent(day)['otCheckOutLoc'].touched"
+                        >
+                          <option [value]="null" disabled selected>Select Location</option>
+                          <option
+                            [value]="location.description"
+                            *ngFor="let location of locations"
+                          >
+                            {{ location.description }}
+                          </option>
+                        </select>
+                        <div class="invalid-feedback">
+                          <div *ngIf="overTimeDaysDtosCurrent(day)['otCheckOutLoc'].errors?.['required']">
+                            Location is required.
+                          </div>
+                        </div>
+                        <div class="valid-feedback">Looks good!</div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="row">
+                          <div class="col">
+                            <div class="mb-3">
+                              <div class="d-flex align-items-center justify-content-between">
+                                <label for="" class="col-form-label">Overtime Check-In</label>
+                              </div>
+                              <div class="iconholder">
+                                <input
+                                  formControlName="otCheckIn"
+                                  class="form-control timepicker flatpickr-input"
+                                  type="time"
+                                  step = 1
+                                  (change)="addCustomValidator2(day)"
+
+                                />
+                              </div>
+                              <div *ngIf="isDurationOk2(day)" class="text-danger">
+                                Overtime Check In Time must be greater than Schedule Checkout Time.
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="mb-3">
+                              <div class="d-flex align-items-center justify-content-between">
+                                <label for="" class="col-form-label">Overtime Check-Out</label>
+                              </div>
+                              <div class="iconholder">
+                                <input
+                                  formControlName="otCheckOut"
+                                  class="form-control timepicker flatpickr-input"
+                                  type="time"
+                                  (change)="getUsers()"
+                                  step = 1
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                          <div class="mb-3">
+                            <label for="" class="col-form-label">Total</label>
+                            <input class="form-control" type="text" formControlName="overTimeHours" [value]="calculateTotaltime(i)" readonly>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                      <div class="mb-3">
+                        <label for="" class="d-block">&nbsp;</label>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="pickuprequired"
+                            formControlName="isWeekend">
+                          <label class="form-check-label" for="pickuprequired">
+                            isWeekend
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </form>
+    </div>
+    <footer class="bg-light p-3 text-end pe-5">
+      <button *ngIf="employees && employees[0] != undefined"
+        type="button"
+        class="btn btn-primary btn-small sendleave"
+        (click)="submitForm(addcontent)"
+        [class.disabled]="isButtonDisabled"
+        style="margin-right: 10px"
+      >
+        Submit
+      </button>
+      <button *ngIf="employees && employees[0] != undefined" class="btn btn-outline-danger btn-small" (click)="closeOffset(addcontent)">
+        Cancel
+      </button>
+    </footer>
+  </ng-template>
+
+  <ng-template #contentsummary let-offcanvas>
+
+    <div class="offcanvas-header bg-light">
+      <div class="row g-0 w-100">
+        <div class="col-md-9">
+          <h5 class="mb-0">Overtime Details</h5>
+        </div>
+        <div class="col-md-3 justify-content-end d-flex align-items-center pe-0">
+          <span
+            class="iconButton iconHower medium"
+          (click)="closeOffset(contentsummary)"
+            ><i class="fa-light fa-times"></i
+          ></span>
+        </div>
+      </div>
+    </div>
+    <div class="offcanvas-body px-4">
+      <h6 class="my-3 coal">May 17, 2023</h6>
+      <div class="p-3 skyTransBg night rounded d-flex align-items-center">
+        <span class="iconButton medium skyTrans20 night me-2">
+          <i class="fa-light fa-info"></i>
+        </span>
+        <p class="m-0">
+          You have applied <strong>Overtime</strong> on
+          {{ requesterDetails.appliedDate }}
+          {{ requesterDetails.hours }} Hr
+        </p>
+      </div>
+      <div class="list-group-section pe-3 pt-4">
+        <div class="main_timeline">
+          <div class="pb-3 d-flex align-items-start timeline_item">
+            <div class="timeline_icon iconButton medium border">
+              <i class="fa-light coal fa-user"></i>
+            </div>
+            <div class="ps-5 timeline_content">
+              <div class="float-end d-flex align-items-center">
+                <span class="iconButton iconHover medium me-2"
+                  ><i class="fa-light fa-message-lines"></i>
+                </span>
+                <span class="badge badge-md rounded-pill skyTransBg night"
+                  >Applied</span
+                >
+              </div>
+              <strong>{{ requesterDetails.requester }} </strong>
+              <p class="mb-1 metal"><small>{{ requesterDetails.appliedDate }}</small></p>
+              <div
+                class="bg-light border p-3 rounded"
+                *ngIf="requesterDetails.reason !== ''"
+              >
+                <strong>Note</strong>
+                <p class="m-0">
+                  {{ requesterDetails.reason }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="pb-3 d-flex align-items-start timeline_item"
+            *ngFor="let stage of requestStages"
+          >
+            <div
+              class="timeline_icon iconButton medium border"
+              [ngClass]="{ mintBg: stage.status === 1 }"
+            >
+              <i class="fa-light fa-user-tie"></i>
+            </div>
+            <div class="ps-5 timeline_content">
+              <div class="float-end d-flex align-items-center">
+                <span class="iconButton iconHover medium me-2"
+                  ><i class="fa-light fa-message-lines"></i>
+                </span>
+                <span
+                  *ngIf="stage.status === 1"
+                  class="badge badge-md rounded-pill grayfilled"
+                >
+                  Pending
+                </span>
+                <span
+                  *ngIf="stage.status === 2"
+                  class="badge badge-md rounded-pill successbg"
+                  >Approved</span
+                >
+
+                <span
+                  *ngIf="stage.status === 3"
+                  class="badge badge-md rounded-pill errorbg"
+                >
+                  Rejected
+                </span>
+              </div>
+              <strong>{{ stage.approver }}<small></small> </strong>
+              <p class="mb-1 metal"><small>{{stage.modifiedDate}}</small></p>
+              <div
+                class="bg-light border p-3 rounded"
+                *ngIf="stage.description !== ''"
+              >
+                {{ stage.description }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="bg-light p-3 text-end pe-5">
+      <button
+        class="btn btn-outline-danger btn-small"
+        (click)="closeOffset(contentsummary)"
+        aria-label="Close"
+      >
+        Cancel
+      </button>
+    </footer>
+  </ng-template>
+
+  <app-toaster></app-toaster>

@@ -1,0 +1,628 @@
+<div class="agent-page-main-content">
+    <div
+      class="create-user console-body-wrapper footerheight"
+      data-scrollbar="true"
+      tabindex="-1"
+      style="overflow-y: scroll; height: 80vh; position: relative"
+    >
+      <div class="scroll-content">
+        <div class="wider-container">
+          <!-- <header class="tab-header">
+            <nav>
+              <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                <button
+                  class="nav-link active"
+                  id="user-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#user-detail"
+                  type="button"
+                  role="tab"
+                  aria-controls="user-detail"
+                  aria-selected="true"
+                >
+                  <h6>Details</h6>
+                </button>
+  
+              </div>
+            </nav>
+          </header> -->
+  
+          <div class="tab-body">
+            <div class="tab-content" id="nav-tabContent">
+              <div
+                id="user-detail"
+                class="tab-pane fade active show"
+                role="tabpanel"
+                aria-labelledby="user-tab"
+              >
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="team-detail-form-box mb-5">
+                      <form [formGroup]="TravelForm" class="user-detail-form">
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <input
+                              [class.is-invalid]="cF['travelTypeName'].invalid && cF['travelTypeName'].touched"
+                              [class.is-valid]="cF['travelTypeName'].valid && cF['travelTypeName'].touched"
+                              class="form-control"
+                              id="name"
+                              placeholder="Enter Name"
+                              formControlName="travelTypeName"
+                            />
+                            <label for="first-name">Name</label>
+                            <div class="invalid-feedback">
+                              <div *ngIf="cF['travelTypeName'].errors?.['required']">
+                                Travel Name is required.
+                              </div>
+                              <div *ngIf="cF['travelTypeName'].errors?.['maxlength']">
+                                Travel Name must be less than 100  characters.
+                              </div>
+                            </div>
+                            <div class="valid-feedback">Looks good!</div>
+                          </div>
+                        </div>
+                        <!-- <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <input
+                              class="form-control"
+                              id="lastt-name"
+                              placeholder="Enter Last Name"
+                            />
+                            <label for="lastt-name">Last Name</label>
+                          </div>
+                        </div>
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <input
+                              class="form-control is-invalid"
+                              id="phone"
+                              placeholder="enter phone"
+                              value="599882511"
+                            />
+                            <label for="phone">Phone</label>
+                            <div class="invalid-feedback">
+                              Please enter a valid phone number
+                            </div>
+                          </div>
+                        </div>
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <input
+                              type="email"
+                              class="form-control"
+                              id="email"
+                              placeholder="enter email"
+                            />
+                            <label for="email">Email address</label>
+                            <div class="example-text">e.g. xyz@domain.com</div>
+                          </div>
+                        </div>
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <select
+                              class="form-select multi-select"
+                              aria-label="Floating label select"
+                            >
+                              <option value="4">(GMT+09:00) Tokyo</option>
+                              <option value="1">(GMT+03:00) Japan</option>
+                              <option value="2">(GMT+05:00) Korea</option>
+                              <option value="3">(GMT+06:00) Tokyo</option>
+                            </select>
+                            <label for="floatingSelect">Time zone</label>
+                          </div>
+                        </div>
+                        <div class="floating-item mb-4">
+                          <div class="mb-2">
+                            <select
+                              class="form-select pt-3 pb-3"
+                              aria-label="Default select  example"
+                            >
+                              <option>Teams</option>
+                              <option value="1">Corporate Teams</option>
+                              <option value="2">Sales Teams</option>
+                              <option value="3">Add Channels</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="floating-item select-pills mb-4 bg-white">
+                          <p>Support Channels</p>
+                          <select
+                            class="js-example-theme-multiple select2-hidden-accessible"
+                            data-select2-id="select2-data-1-5brd"
+                            multiple=""
+                            tabindex="-1"
+                            aria-hidden="true"
+                          >
+                            <option
+                              value="1"
+                              data-select2-id="select2-data-3-rixa"
+                            >
+                              Corporate Teams
+                            </option>
+                            <option value="2">Sales Teams</option>
+                            <option value="3">Add Channels</option></select
+                          ><span
+                            class="select2 select2-container select2-container--classic"
+                            dir="ltr"
+                            data-select2-id="select2-data-2-y0dl"
+                            style="width: 141.438px"
+                            ><span class="selection"
+                              ><span
+                                class="select2-selection select2-selection--multiple"
+                                role="combobox"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                tabindex="-1"
+                                aria-disabled="false"
+                                ><ul
+                                  class="select2-selection__rendered"
+                                  id="select2-asct-container"
+                                >
+                                  <li
+                                    class="select2-selection__choice"
+                                    title="Corporate Teams"
+                                    data-select2-id="select2-data-4-kyd6"
+                                  >
+                                    <button
+                                      type="button"
+                                      class="select2-selection__choice__remove"
+                                      tabindex="-1"
+                                      title="Remove item"
+                                      aria-label="Remove item"
+                                      aria-describedby="select2-asct-container-choice-d8kz-1"
+                                    >
+                                      <span aria-hidden="true">×</span></button
+                                    ><span
+                                      class="select2-selection__choice__display"
+                                      id="select2-asct-container-choice-d8kz-1"
+                                      >Corporate Teams</span
+                                    >
+                                  </li>
+                                </ul>
+                                <span
+                                  class="select2-search select2-search--inline"
+                                >
+                                  <textarea
+                                    class="select2-search__field"
+                                    type="search"
+                                    tabindex="0"
+                                    autocorrect="off"
+                                    autocapitalize="none"
+                                    spellcheck="false"
+                                    role="searchbox"
+                                    aria-autocomplete="list"
+                                    autocomplete="off"
+                                    aria-label="Search"
+                                    aria-describedby="select2-asct-container"
+                                    placeholder=""
+                                    style="width: 0.75em"
+                                  ></textarea></span></span></span
+                            ><span
+                              class="dropdown-wrapper"
+                              aria-hidden="true"
+                            ></span
+                          ></span>
+                        </div>
+                        <div class="floating-item select-pills mb-4 bg-white">
+                          <div class="form-floating">
+                            <p>Language</p>
+                            <select
+                              class="js-example-theme-multiple select2-hidden-accessible"
+                              data-select2-id="select2-data-5-a502"
+                              multiple=""
+                              tabindex="-1"
+                              aria-hidden="true"
+                            >
+                              <option data-select2-id="select2-data-7-mfo5">
+                                Urdu
+                              </option>
+                              <option>English</option></select
+                            ><span
+                              class="select2 select2-container select2-container--classic"
+                              dir="ltr"
+                              data-select2-id="select2-data-6-2utb"
+                              style="width: 70.7344px"
+                              ><span class="selection"
+                                ><span
+                                  class="select2-selection select2-selection--multiple"
+                                  role="combobox"
+                                  aria-haspopup="true"
+                                  aria-expanded="false"
+                                  tabindex="-1"
+                                  aria-disabled="false"
+                                  ><ul
+                                    class="select2-selection__rendered"
+                                    id="select2-hnz6-container"
+                                  >
+                                    <li
+                                      class="select2-selection__choice"
+                                      title="Urdu"
+                                      data-select2-id="select2-data-8-xb94"
+                                    >
+                                      <button
+                                        type="button"
+                                        class="select2-selection__choice__remove"
+                                        tabindex="-1"
+                                        title="Remove item"
+                                        aria-label="Remove item"
+                                        aria-describedby="select2-hnz6-container-choice-oy2p-Urdu"
+                                      >
+                                        <span aria-hidden="true">×</span></button
+                                      ><span
+                                        class="select2-selection__choice__display"
+                                        id="select2-hnz6-container-choice-oy2p-Urdu"
+                                        >Urdu</span
+                                      >
+                                    </li>
+                                  </ul>
+                                  <span
+                                    class="select2-search select2-search--inline"
+                                  >
+                                    <textarea
+                                      class="select2-search__field"
+                                      type="search"
+                                      tabindex="0"
+                                      autocorrect="off"
+                                      autocapitalize="none"
+                                      spellcheck="false"
+                                      role="searchbox"
+                                      aria-autocomplete="list"
+                                      autocomplete="off"
+                                      aria-label="Search"
+                                      aria-describedby="select2-hnz6-container"
+                                      placeholder=""
+                                      style="width: 0.75em"
+                                    ></textarea></span></span></span
+                              ><span
+                                class="dropdown-wrapper"
+                                aria-hidden="true"
+                              ></span
+                            ></span>
+                          </div>
+                        </div>
+                        <div class="floating-item select-pills mb-4 bg-white">
+                          <div class="form-floating">
+                            <p>Roles</p>
+                            <select
+                              class="js-example-theme-multiple select2-hidden-accessible"
+                              data-select2-id="select2-data-9-db2e"
+                              multiple=""
+                              tabindex="-1"
+                              aria-hidden="true"
+                            >
+                              <option
+                                select="selected"
+                                data-select2-id="select2-data-11-tb2w"
+                              >
+                                Agent
+                              </option>
+                              <option select="selected">Accounts</option>
+                              <option>Sales</option></select
+                            ><span
+                              class="select2 select2-container select2-container--classic"
+                              dir="ltr"
+                              data-select2-id="select2-data-10-h9en"
+                              style="width: 86.4375px"
+                              ><span class="selection"
+                                ><span
+                                  class="select2-selection select2-selection--multiple"
+                                  role="combobox"
+                                  aria-haspopup="true"
+                                  aria-expanded="false"
+                                  tabindex="-1"
+                                  aria-disabled="false"
+                                  ><ul
+                                    class="select2-selection__rendered"
+                                    id="select2-hoau-container"
+                                  >
+                                    <li
+                                      class="select2-selection__choice"
+                                      title="Agent"
+                                      data-select2-id="select2-data-12-lda3"
+                                    >
+                                      <button
+                                        type="button"
+                                        class="select2-selection__choice__remove"
+                                        tabindex="-1"
+                                        title="Remove item"
+                                        aria-label="Remove item"
+                                        aria-describedby="select2-hoau-container-choice-y1dx-Agent"
+                                      >
+                                        <span aria-hidden="true">×</span></button
+                                      ><span
+                                        class="select2-selection__choice__display"
+                                        id="select2-hoau-container-choice-y1dx-Agent"
+                                        >Agent</span
+                                      >
+                                    </li>
+                                  </ul>
+                                  <span
+                                    class="select2-search select2-search--inline"
+                                  >
+                                    <textarea
+                                      class="select2-search__field"
+                                      type="search"
+                                      tabindex="0"
+                                      autocorrect="off"
+                                      autocapitalize="none"
+                                      spellcheck="false"
+                                      role="searchbox"
+                                      aria-autocomplete="list"
+                                      autocomplete="off"
+                                      aria-label="Search"
+                                      aria-describedby="select2-hoau-container"
+                                      placeholder=""
+                                      style="width: 0.75em"
+                                    ></textarea></span></span></span
+                              ><span
+                                class="dropdown-wrapper"
+                                aria-hidden="true"
+                              ></span
+                            ></span>
+                          </div>
+                        </div> -->
+                      </form>
+                    </div>
+                    <!-- <div class="toggle-wrap shadow-sm rounded border">
+                      <div class="toggle-head">
+                        <ul class="list-group list-group-flush">
+                          <li
+                            class="list-group-item d-flex justify-content-between align-items-sm-center saltBg"
+                          >
+                            <div class="ms-2 me-auto darkblue">
+                              <div class="fw-bold darkblue">Skills</div>
+                              Skills allow you to assign tickets to the agents
+                              with related skill.
+                            </div>
+                            <div class="form-switch-text d-none">
+                              <div
+                                class="icon-anchor-wrap blue sky d-flex align-items-center me-3"
+                              >
+                                <a
+                                  href="javascript:"
+                                  data-bs-toggle="offcanvas"
+                                  data-bs-target="#manageSkill"
+                                  aria-controls="manageSkill"
+                                  >Manage Skills</a
+                                >
+                              </div>
+                            </div>
+                            <div class="form-check form-switch">
+                              <input
+                                class="form-check-input"
+                                type="checkbox"
+                                id="flexSwitchCheckDefault"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#skill-selected-toggle"
+                                aria-expanded="true"
+                                aria-controls="skill-selected-toggle"
+                              />
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="collapse" id="skill-selected-toggle">
+                        <div class="card card-body darkblue">
+                          <div class="row">
+                            <div class="select-pills border-0 m-0 p-0">
+                              <select
+                                class="js-example-theme-multiple form-control select2-hidden-accessible"
+                                multiple=""
+                                data-select2-id="select2-data-13-0fws"
+                                tabindex="-1"
+                                aria-hidden="true"
+                              >
+                                <option
+                                  selected=""
+                                  data-select2-id="select2-data-15-v0n6"
+                                >
+                                  English
+                                </option>
+                                <option
+                                  selected=""
+                                  data-select2-id="select2-data-16-x3ol"
+                                >
+                                  Urdu
+                                </option>
+                                <option>Sales</option></select
+                              ><span
+                                class="select2 select2-container select2-container--classic"
+                                dir="ltr"
+                                data-select2-id="select2-data-14-j5bk"
+                                style="width: auto"
+                                ><span class="selection"
+                                  ><span
+                                    class="select2-selection select2-selection--multiple"
+                                    role="combobox"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                                    tabindex="-1"
+                                    aria-disabled="false"
+                                    ><ul
+                                      class="select2-selection__rendered"
+                                      id="select2-469i-container"
+                                    >
+                                      <li
+                                        class="select2-selection__choice"
+                                        title="English"
+                                        data-select2-id="select2-data-17-w26m"
+                                      >
+                                        <button
+                                          type="button"
+                                          class="select2-selection__choice__remove"
+                                          tabindex="-1"
+                                          title="Remove item"
+                                          aria-label="Remove item"
+                                          aria-describedby="select2-469i-container-choice-p5wy-English"
+                                        >
+                                          <span aria-hidden="true"
+                                            >×</span
+                                          ></button
+                                        ><span
+                                          class="select2-selection__choice__display"
+                                          id="select2-469i-container-choice-p5wy-English"
+                                          >English</span
+                                        >
+                                      </li>
+                                      <li
+                                        class="select2-selection__choice"
+                                        title="Urdu"
+                                        data-select2-id="select2-data-18-9fdy"
+                                      >
+                                        <button
+                                          type="button"
+                                          class="select2-selection__choice__remove"
+                                          tabindex="-1"
+                                          title="Remove item"
+                                          aria-label="Remove item"
+                                          aria-describedby="select2-469i-container-choice-nfe7-Urdu"
+                                        >
+                                          <span aria-hidden="true"
+                                            >×</span
+                                          ></button
+                                        ><span
+                                          class="select2-selection__choice__display"
+                                          id="select2-469i-container-choice-nfe7-Urdu"
+                                          >Urdu</span
+                                        >
+                                      </li>
+                                    </ul>
+                                    <span
+                                      class="select2-search select2-search--inline"
+                                    >
+                                      <textarea
+                                        class="select2-search__field"
+                                        type="search"
+                                        tabindex="0"
+                                        autocorrect="off"
+                                        autocapitalize="none"
+                                        spellcheck="false"
+                                        role="searchbox"
+                                        aria-autocomplete="list"
+                                        autocomplete="off"
+                                        aria-label="Search"
+                                        aria-describedby="select2-469i-container"
+                                        placeholder=""
+                                        style="width: 0.75em"
+                                      ></textarea></span></span></span
+                                ><span
+                                  class="dropdown-wrapper"
+                                  aria-hidden="true"
+                                ></span
+                              ></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+              <!-- <div
+                id="user-preference"
+                class="tab-pane fade list-group-section"
+                role="tabpanel"
+                aria-labelledby="team-tab"
+              >
+                <div class="row mb-5">
+                  <div class="col-lg-12">
+                    <ul class="list-group list-group-flush mb-5">
+                      <li
+                        class="list-group-item d-flex justify-content-between align-items-sm-center"
+                      >
+                        <div class="ms-2 me-auto coal">
+                          <div class="fw-bold night">Clone Setting</div>
+                          Create Shared inboxes for teammates to work together
+                        </div>
+                        <span>
+                          <i class="fal fa-user sky me-3"></i>
+                          <a  class="text-decoration-underline">
+                            Select User
+                          </a>
+                        </span>
+                      </li>
+                      <li
+                        class="list-group-item d-flex justify-content-between align-items-sm-center"
+                      >
+                        <div class="ms-2 me-auto coal">
+                          <div class="fw-bold night">Set as admin</div>
+                          Admin can add new users and edit team settings
+                        </div>
+                        <div class="form-check form-switch">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="flexSwitchCheckDefault"
+                          />
+                        </div>
+                      </li>
+                      <li
+                        class="list-group-item d-flex justify-content-between align-items-sm-center"
+                      >
+                        <div class="ms-2 me-auto coal">
+                          <div class="fw-bold night">Clone Setting</div>
+                          Create Shared inboxes for teammates to work together
+                        </div>
+                        <span>
+                          <i class="fal fa-user sky me-3"></i>
+                          <a href="javascript:" class="text-decoration-underline">
+                            Select User</a
+                          >
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+  
+  
+      <div class="scrollbar-track scrollbar-track-x" style="display: none">
+        <div
+          class="scrollbar-thumb scrollbar-thumb-x"
+          style="width: 1638px; transform: translate3d(0px, 0px, 0px)"
+        ></div>
+      </div>
+      <div class="scrollbar-track scrollbar-track-y" style="display: block"></div>
+    </div>
+    <footer class="footer">
+      <div class="ps-3 pe-3">
+        <div
+          class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4"
+        >
+          <div class="row w-100">
+            <div class="col-md-4"></div>
+            <div class="col-md-8 justify-content-end d-flex">
+              <div class="buttons-wrap d-flex">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary btn-medium me-2 px-4"
+                  routerLink="/connect/console/travel-types"
+                >
+                  Back
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-success ms-e f-saveBtn btn-large d-none"
+                ></button>
+                <button
+                  type="button"
+                  class="btn skyBg ms-2 px-4 btn-medium saveBtn"
+                  data-bs-toggle="modal"
+                  data-bs-target=""
+                  (click)="submitForm()"
+                  [class.disabled]="TravelForm.invalid"
+                >
+                Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+  

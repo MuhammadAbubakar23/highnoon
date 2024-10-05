@@ -1,0 +1,111 @@
+/* .fixed-footer {
+    position: fixed;
+    left: 70px;
+    bottom: 0;
+    padding: 1rem;
+    width: -webkit-calc(100% - 70px);
+    width: calc(100% - 70px);
+    text-align: right;
+    height: 70px;
+}
+.btn.btn-small {
+  min-width: 110px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 1rem;
+}
+.btn-success-light {
+  background-color: #8ae16b !important;
+  border-color: #8ae16b !important;
+  color: #1b1b1b;
+}
+.scrollbar-track-x {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 8px;
+}
+.scrollbar-track {
+    position: absolute;
+    opacity: 0;
+    z-index: 1;
+    background: rgba(222, 222, 222, .75);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transition: opacity 0.5s 0.5s ease-out;
+    transition: opacity 0.5s 0.5s ease-out;
+}
+.row {
+    height: 100%;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.mb-3 {
+    margin-bottom: 1rem !important;
+}
+.align-items-start {
+    -webkit-box-align: start !important;
+    -ms-flex-align: start !important;
+    align-items: flex-start !important;
+}
+.form-select {
+    display: block;
+    width: 100%;
+}
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+.selectbtns .btn {
+    border-radius: 50px;
+    font-size: 1.25rem;
+    background-color: #f0f0f0;
+    padding: 0.5rem 2rem;
+}
+.btn {
+    --bs-btn-padding-x: 0.75rem;
+    --bs-btn-padding-y: 0.375rem;
+    --bs-btn-font-size: 1rem;
+    --bs-btn-font-weight: 400;
+    --bs-btn-line-height: 1.5;
+    --bs-btn-color: #212529;
+    --bs-btn-bg: transparent;
+    --bs-btn-border-width: 1px;
+    --bs-btn-border-color: transparent;
+    --bs-btn-border-radius: 0.375rem;
+    --bs-btn-hover-border-color: transparent;
+    --bs-btn-box-shadow: inset 0 1px 0 hsla(0, 0%, 100%, .15), 0 1px 1px rgba(0, 0, 0, .075);
+    --bs-btn-disabled-opacity: 0.65;
+    --bs-btn-focus-box-shadow: 0 0 0 0.25rem rgba(var(--bs-btn-focus-shadow-rgb),.5);
+    display: inline-block;
+    font-weight: var(--bs-btn-font-weight);
+    line-height: var(--bs-btn-line-height);
+    color: var(--bs-btn-color);
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.selectbtns .btn-check:checked+.btn {
+    background-color: #e4722b;
+    color: #fff;
+}
+.fixed-footer {
+    position: fixed;
+    left: 70px;
+    bottom: 0;
+    padding: 1rem;
+    width: calc(100% - 70px);
+    text-align: right;
+    height: 70px;
+}
+
+footer {
+    border-top: 1px solid #e5e6e8;
+}
+.console-create-contact .profile table, .fixed-footer {
+    background-color: #fff;
+} */

@@ -1,0 +1,634 @@
+<!--
+<button *ngIf="checkPermission('Business Travel Requisition')">List</button> -->
+<!-- <div>
+
+  <button *ngIf="checkPermission('list', 'some_menu')" (click)="onList()">List</button>
+
+  <button *ngIf="checkPermission('create', 'some_menu')" (click)="onCreate()">Create</button>
+
+  <button *ngIf="checkPermission('add', 'some_menu')" (click)="onAdd()">Add</button>
+
+  <button *ngIf="checkPermission('delete', 'some_menu')" (click)="onDelete()">Delete</button>
+</div> -->
+
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-jelly-box"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+
+<div class="content-box-wrapper d-flex w-100">
+  <div class="middle-content d-flex">
+    <div class="page-content-wrapper">
+      <div
+        class="agent-page-main-content px-4 page-scroll"
+        data-scrollbar="true"
+        tabindex="-1"
+        style="overflow: auto"
+      >
+        <div class="scroll-content">
+          <div class="tab-content" id="myTabContent">
+            <div
+              class="tab-pane fade show active"
+              id="myleaves"
+              role="tabpanel"
+              aria-labelledby="myleaves-tab"
+            >
+              <div class="row mt-4">
+                <div class="col-lg-3 col-md-6">
+                  <div class="card dashboard-card">
+                    <div class="card-body d-flex align-items-center">
+                      <div class="iconButton medium me-3 skyTransBg">
+                        <i class="fa-light fa-calendar-xmark"></i>
+                      </div>
+                      <div>
+                        <p class="silver mb-1 text-uppercase">Total Requests</p>
+                        <h5 class="m-0">{{ totalRequest }}</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                  <div class="card dashboard-card">
+                    <div class="card-body d-flex align-items-center">
+                      <div class="iconButton medium me-3 successbg night">
+                        <i class="fa-light fa-calendar-xmark"></i>
+                      </div>
+                      <div>
+                        <p class="silver mb-1 text-uppercase">Approved</p>
+                        <h5 class="m-0">{{ approved }}</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                  <div class="card dashboard-card">
+                    <div class="card-body d-flex align-items-center">
+                      <div class="iconButton medium me-3 grayfilled night">
+                        <i class="fa-light fa-calendar-xmark"></i>
+                      </div>
+                      <div>
+                        <p class="silver mb-1 text-uppercase">Pending</p>
+                        <h5 class="m-0">{{ pending }}</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                  <div class="card dashboard-card">
+                    <div class="card-body d-flex align-items-center">
+                      <div class="iconButton medium me-3 errorbg night">
+                        <i class="fa-light fa-calendar-xmark"></i>
+                      </div>
+                      <div>
+                        <p class="silver mb-1 text-uppercase">Rejected</p>
+                        <h5 class="m-0">{{ rejected }}</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="filter-container">
+                <div class="row justify-content-between">
+                  <div class="col-md-7">
+                    <ul class="list-group list-group-horizontal border-0">
+                      <!-- <li class="list-group-item border-0 p-0 me-2">
+                        <div class="icon-input">
+                          <i class="fa-light fa-magnifying-glass"></i>
+                          <input
+                            class="form-control"
+                            placeholder="Search.. "
+                            [(ngModel)]="text"
+                            (input)="generalFilter()"
+                          />
+                        </div>
+                      </li>
+                      <li class="list-group-item border-0 p-0 me-2">
+                        <div class="iconholder ms-2">
+                          <input
+                            [(ngModel)]="startDate"
+                            class="form-control timepicker flatpickr-input"
+                            type="date"
+                            (change)="resetEndDate()"
+                          />
+                        </div>
+                      </li>
+                      <li class="list-group-item border-0 p-0 me-2">
+                        <div class="iconholder ms-2">
+                          <input
+                            [(ngModel)]="endDate"
+                            class="form-control timepicker flatpickr-input"
+                            type="date"
+                            (change)="filterByDate()"
+                          />
+                        </div>
+                      </li> -->
+                      <li class="list-group-item border-0 p-0 me-2">
+                        <div class="icon-input search_field">
+                          <i class="fa-light fa-magnifying-glass"></i>
+                          <input
+                            class="form-control"
+                            placeholder="Search.. "
+                            [(ngModel)]="text"
+                            (input)="generalFilter()"
+                          />
+                        </div>
+                      </li>
+                      <li class="list-group-item border-0 ms-2 pe-0">
+                        <span class="coal">From</span>
+                      </li>
+                      <li class="list-group-item border-0 p-0 me-2">
+                        <div class="ms-2">
+                          <input
+                            [(ngModel)]="startDate"
+                            class="form-control timepicker flatpickr-input"
+                            value="From"
+                            type="date"
+                            (change)="resetEndDate()"
+                          />
+                        </div>
+                      </li>
+                      <li class="list-group-item border-0 ms-2 pe-0">
+                        <span class="coal">To</span>
+                      </li>
+                      <li class="list-group-item border-0 p-0 mx-2">
+                        <div class="ms-2">
+                          <input
+                            [(ngModel)]="endDate"
+                            class="form-control timepicker flatpickr-input"
+                            type="date"
+                            (change)="filterByDate()"
+                          />
+                        </div>
+                      </li>
+                      <li class="list-group-item border-0 p-0 me-2">
+                        <div class="dropdown w-auto">
+                          <button
+                            class="btn dropdown-toggle"
+                            type="button"
+                            id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+                            {{ selectedfilterStatus || "Status" }}
+                          </button>
+                          <ul
+                            class="dropdown-menu custom-dropdown"
+                            aria-labelledby="dropdownMenuButton1"
+                          >
+                            <li *ngFor="let ls of statusKeys">
+                              <a
+                                class="dropdown-item"
+                                (click)="filterByStatus(ls)"
+                                >{{ ls }}</a
+                              >
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+
+                      <li
+                        class="list-group-item border-0 iconButton iconHover medium"
+                        aria-label="..."
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        data-bs-original-title="Refresh"
+                        (click)="refreshPage()"
+                      >
+                        <i class="fal fa-redo-alt"></i>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="query-container">
+                <div class="scroll-content">
+                  <div class="table-section">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th *ngFor="let column of columnNames">
+                            {{ column }}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of profileItems; let i = index">
+                          <td *ngIf="pageNumber == 1">
+                            <a
+                              (click)="
+                                redirectToSummary(
+                                  item.userRquestTempId,
+                                  item.requestStage?.requestStageId
+                                )
+                              "
+                              >{{ i + 1 }}</a
+                            >
+                          </td>
+                          <td *ngIf="pageNumber > 1">
+                            <a
+                              (click)="
+                                redirectToSummary(
+                                  item.userRquestTempId,
+                                  item.requestStage?.requestStageId
+                                )
+                              "
+                              >{{ i + 1 + pageSize * (pageNumber - 1) }}</a
+                            >
+                          </td>
+
+                          <td *ngFor="let column of desColumns">
+                            <a
+                              (click)="
+                                redirectToSummary(
+                                  item.userRquestTempId,
+                                  item.requestStage?.requestStageId
+                                )
+                              "
+                            >
+                              <span
+                                [ngClass]="{
+                                  'badge badge-md rounded-pill':
+                                    item[column] === 'Pending' ||
+                                    item[column] === 'Approved' ||
+                                    item[column] === 'Rejected' ||
+                                    item[column] === 'Canceled',
+                                  grayfilled: item[column] === 'Pending',
+                                  successbg: item[column] === 'Approved',
+                                  errorbg: item[column] === 'Rejected',
+                                  warningbg: item[column] === 'Canceled',
+                                  '':
+                                    item[column] !== 'Pending' &&
+                                    item[column] !== 'Approved' &&
+                                    item[column] !== 'Rejected' &&
+                                    item[column] !== 'Canceled'
+                                }"
+                              >
+                                {{ item[column] }}
+                              </span>
+                            </a>
+                          </td>
+                          <ng-container
+                            *ngIf="item.requestStage.isActive; else addemptytd"
+                          >
+                            <td>
+                              <ul class="list-inline m-0">
+                                <li class="list-inline-item">
+                                  <button
+                                    class="btn iconButton small mintBg night leaveapprove"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#approveleave"
+                                    data-bs-title="Apprvove"
+                                    (click)="
+                                      updateRequestStageId(
+                                        item.requestStage?.requestStageId
+                                      )
+                                    "
+                                  >
+                                    <i class="fa-light fa-check"></i>
+                                  </button>
+                                </li>
+                                <li
+                                  class="list-inline-item"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#rejectleave"
+                                >
+                                  <button
+                                    class="btn iconButton small radicalBg night"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    data-bs-title="Reject"
+                                    (click)="
+                                      updateRequestStageId(
+                                        item.requestStage?.requestStageId
+                                      )
+                                    "
+                                  >
+                                    <i class="fa-light fa-times"></i>
+                                  </button>
+                                </li>
+                              </ul>
+                            </td>
+                          </ng-container>
+                          <ng-template #addemptytd>
+                            <td></td>
+                          </ng-template>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <ng-container *ngIf="totalRecords > pageSize">
+                  <div class="me-5">
+                    <ul class="pagination justify-content-end">
+                      <li class="page-item">
+                        <a
+                          class="page-link"
+                          (click)="prevPage()"
+                          [attr.disabled]="pageNumber === 1"
+                          >Previous</a
+                        >
+                      </li>
+                      <ng-container *ngFor="let page of visiblePages()">
+                        <li
+                          class="page-item"
+                          [ngClass]="{ disabled: page === -1 }"
+                        >
+                          <a
+                            class="page-link"
+                            (click)="changePage(page)"
+                            [class.active]="pageNumber === page"
+                            >{{ page === -1 ? "..." : page }}</a
+                          >
+                        </li>
+                      </ng-container>
+                      <li class="page-item">
+                        <a
+                          class="page-link"
+                          (click)="nextPage()"
+                          [attr.disabled]="pageNumber === totalPages"
+                          >Next</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="approveleave"
+  tabindex="-1"
+  aria-labelledby="approveleaveLabel"
+  aria-modal="true"
+  role="dialog"
+>
+  <form [formGroup]="teamRequestForm">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="edittagsLabel">Comment</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="py-5 px-4">
+            <div class="mb-3">
+              <label for="" class="col-form-label">Add Notes</label>
+              <textarea
+                class="form-control"
+                placeholder="Write Note here"
+                style="height: 100px"
+                spellcheck="false"
+                formControlName="description"
+                [class.is-invalid]="
+                  rF['description'].invalid && rF['description'].touched
+                "
+                [class.is-valid]="
+                  rF['description'].valid && rF['description'].touched
+                "
+              >
+              </textarea>
+              <div class="invalid-feedback">
+                <div *ngIf="rF['description'].errors?.['maxlength']">
+                  Description cannot be more than 200 characters.
+                </div>
+                <div *ngIf="rF['description'].errors?.['required']">
+                  Description is required.
+                </div>
+              </div>
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer saltBg">
+          <button
+            type="button"
+            class="btn btn-outline-secondary approveleave"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            (click)="updateRequest(currentRequestStageId, 2)"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div
+  class="modal fade"
+  id="rejectleave"
+  tabindex="-1"
+  aria-labelledby="rejectleaveLabel"
+  aria-modal="true"
+  role="dialog"
+>
+  <form [formGroup]="teamRequestForm">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="edittagsLabel">Rejection Comment</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="py-5 px-4">
+            <div class="mb-3">
+              <label for="" class="col-form-label">Add Notes</label>
+              <textarea
+                class="form-control"
+                placeholder="Write Note here"
+                style="height: 100px"
+                spellcheck="false"
+                formControlName="description"
+                [class.is-invalid]="
+                  rF['description'].invalid && rF['description'].touched
+                "
+                [class.is-valid]="
+                  rF['description'].valid && rF['description'].touched
+                "
+              >
+              </textarea>
+              <div class="invalid-feedback">
+                <div *ngIf="rF['description'].errors?.['maxlength']">
+                  Description cannot be more than 200 characters.
+                </div>
+                <div *ngIf="rF['description'].errors?.['required']">
+                  Description is required.
+                </div>
+              </div>
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer saltBg">
+          <button
+            type="button"
+            class="btn btn-outline-secondary closerejectleave"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            (click)="updateRequest(currentRequestStageId, 3)"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div
+  class="modal fade"
+  id="approveleave"
+  tabindex="-1"
+  aria-labelledby="approveleaveLabel"
+  aria-modal="true"
+  role="dialog"
+>
+  <form [formGroup]="teamRequestForm">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="edittagsLabel">Comment</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="py-5 px-4">
+            <div class="mb-3">
+              <label for="" class="col-form-label">Add Notes</label>
+              <textarea
+                class="form-control"
+                placeholder="Write Note here"
+                style="height: 100px"
+                spellcheck="false"
+                formControlName="description"
+                [class.is-invalid]="
+                  rF['description'].invalid && rF['description'].touched
+                "
+                [class.is-valid]="
+                  rF['description'].valid && rF['description'].touched
+                "
+              >
+              </textarea>
+              <div class="invalid-feedback">
+                <div *ngIf="rF['description'].errors?.['maxlength']">
+                  Description cannot be more than 200 characters.
+                </div>
+                <div *ngIf="rF['description'].errors?.['required']">
+                  Description is required.
+                </div>
+              </div>
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer saltBg">
+          <button
+            type="button"
+            class="btn btn-outline-secondary approveleave"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            (click)="updateRequest(currentRequestStageId, 2)"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div
+  class="modal fade"
+  id="rejectleave"
+  tabindex="-1"
+  aria-labelledby="rejectleaveLabel"
+  aria-modal="true"
+  role="dialog"
+>
+  <form [formGroup]="teamRequestForm">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="edittagsLabel">Rejection Comment</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="py-5 px-4">
+            <div class="mb-3">
+              <label for="" class="col-form-label">Add Notes</label>
+              <textarea
+                class="form-control"
+                placeholder="Write Note here"
+                style="height: 100px"
+                spellcheck="false"
+                formControlName="description"
+                [class.is-invalid]="
+                  rF['description'].invalid && rF['description'].touched
+                "
+                [class.is-valid]="
+                  rF['description'].valid && rF['description'].touched
+                "
+              >
+              </textarea>
+              <div class="invalid-feedback">
+                <div *ngIf="rF['description'].errors?.['maxlength']">
+                  Description cannot be more than 200 characters.
+                </div>
+                <div *ngIf="rF['description'].errors?.['required']">
+                  Description is required.
+                </div>
+              </div>
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer saltBg">
+          <button
+            type="button"
+            class="btn btn-outline-secondary closerejectleave"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            (click)="updateRequest(currentRequestStageId, 3)"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<app-toaster></app-toaster>

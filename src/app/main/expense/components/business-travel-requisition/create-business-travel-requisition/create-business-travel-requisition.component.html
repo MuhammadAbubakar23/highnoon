@@ -1,0 +1,1115 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-jelly-box"
+  [fullScreen]="true"
+>
+  <p style="color: white">Loading...</p>
+</ngx-spinner>
+<form [formGroup]="travelRequisitionForm" action>
+  <div class="content-box-wrapper d-flex w-100">
+    <div class="middle-content d-flex">
+      <!-- <div class="scroll-container" style="max-height: 90%; width:100%; overflow-y: auto;"> -->
+
+      <div class="page-content-wrapper">
+        <div class="agent-page-main-content">
+          <div
+            class="business-scroll p-4"
+            data-scrollbar="true"
+            tab-index="-1"
+            style="overflow: hidden; outline: none"
+          >
+            <div
+              class="scroll-content"
+              style="max-height: 90%; width: 100%; overflow-y: auto"
+            >
+              <div class="mb-3 col-4">
+                <label for="reqName" class="mb-2">Business Request Name</label>
+                <input
+                  id="reqName"
+                  class="form-control form-control-lg"
+                  placeholder="e.g. HNL Meeting"
+                  formControlName="requestName"
+                  [class.is-invalid]="
+                    tRF['requestName'].invalid && tRF['requestName'].touched
+                  "
+                  [class.is-valid]="
+                    tRF['requestName'].valid && tRF['requestName'].touched
+                  "
+                />
+                <div class="invalid-feedback">
+                  <div *ngIf="tRF['requestName'].errors?.['required']">
+                    Business Request Name is required.
+                  </div>
+                </div>
+                <div class="valid-feedback">Looks good!</div>
+              </div>
+
+              <div
+                formArrayName="addTravelDetailsRequisitions"
+                class="accordion bt-accordion"
+                id="bt-mainacc"
+              >
+                <div
+                  *ngFor="
+                    let trip of getTrip(travelRequisitionForm);
+                    let i = index
+                  "
+                  [formGroupName]="i"
+                >
+                  <div
+                    data-scrollbar="true"
+                    tabindex="-1"
+                    style="overflow: hidden; outline: none"
+                  >
+                    <div
+                      class="scroll-content"
+                      style="transform: translate3d(0px, 0px, 0px)"
+                    >
+                      <div class="accordion bt-accordion" id="bt-mainacc">
+                        <div class="accordion-item mb-4">
+                          <h2 class="accordion-header">
+                            <button
+                              class="accordion-button"
+                              type="button"
+                              data-bs-toggle="collapse"
+                              [attr.data-bs-target]="'#collapseOne_' + i"
+                              aria-expanded="true"
+                              aria-controls="collapseOne"
+                            >
+                              <span class="iconButton small bg-primary20 me-2"
+                                >{{ i < 9 ? "0" : "" }}{{ i + 1 }}</span
+                              >
+                              <span class="fs-5 fw-semibold"
+                                >Business Trip</span
+                              >
+                              <span
+                                class="edd-count grayfilled"
+                                style="margin-left: 20px"
+                                (click)="deleteTripFromLast(i)"
+                              >
+                                <i class="fa-light fa-trash"></i>
+                              </span>
+                            </button>
+                          </h2>
+                          <div
+                            [id]="'collapseOne_' + i"
+                            class="accordion-collapse collapse show"
+                            data-bs-parent="#bt-mainacc"
+                          >
+                            <div class="accordion-body">
+                              <div class="mb-4 selectbtns">
+                                <input
+                                  type="radio"
+                                  class="btn-check"
+                                  [name]="'options_' + i"
+                                  id="domestic_{{ i }}"
+                                  autocomplete="off"
+                                  value="Domestic"
+                                  formControlName="tripType"
+                                  [class.is-invalid]="
+                                    tRDFCurrent(trip)['tripType'].invalid &&
+                                    tRDFCurrent(trip)['tripType'].touched
+                                  "
+                                  [class.is-valid]="
+                                    tRDFCurrent(trip)['tripType'].valid &&
+                                    tRDFCurrent(trip)['tripType'].touched
+                                  "
+                                />
+                                <label class="btn" [for]="'domestic_' + i"
+                                  >Domestic</label
+                                >
+
+                                <input
+                                  type="radio"
+                                  class="btn-check"
+                                  [name]="'options_' + i"
+                                  id="international_{{ i }}"
+                                  autocomplete="off"
+                                  value="International"
+                                  formControlName="tripType"
+                                  [class.is-invalid]="
+                                    tRDFCurrent(trip)['tripType'].invalid &&
+                                    tRDFCurrent(trip)['tripType'].touched
+                                  "
+                                  [class.is-valid]="
+                                    tRDFCurrent(trip)['tripType'].valid &&
+                                    tRDFCurrent(trip)['tripType'].touched
+                                  "
+                                />
+                                <label class="btn" [for]="'international_' + i"
+                                  >International</label
+                                >
+                                <div class="invalid-feedback">
+                                  <div
+                                    *ngIf="tRDFCurrent(trip)['tripType'].errors?.['required']"
+                                  >
+                                    Trip Type is required.
+                                  </div>
+                                </div>
+                                <div class="valid-feedback">Looks good!</div>
+                              </div>
+
+                              <div class="row align-items-start g-3 mb-3">
+                                <div class="col">
+                                  <label for="">Origin (From)</label>
+                                  <div class="row">
+                                    <div class="col-5">
+                                      <select
+                                        class="form-select"
+                                        formControlName="countryFromId"
+                                        [class.is-invalid]="
+                                          tRDFCurrent(trip)['countryFromId']
+                                            .invalid &&
+                                          tRDFCurrent(trip)['countryFromId']
+                                            .touched
+                                        "
+                                        [class.is-valid]="
+                                          tRDFCurrent(trip)['countryFromId']
+                                            .valid &&
+                                          tRDFCurrent(trip)['countryFromId']
+                                            .touched
+                                        "
+                                      >
+                                        <option
+                                          [value]="null"
+                                          selected
+                                          disabled
+                                        >
+                                          Select Country
+                                        </option>
+                                        <option
+                                          *ngFor="
+                                            let country of countryTypeItems
+                                          "
+                                          [value]="country.countryId"
+                                        >
+                                          {{ country.name }}
+                                        </option>
+                                      </select>
+                                      <div class="invalid-feedback">
+                                        <div
+                                          *ngIf="tRDFCurrent(trip)['countryFromId'].errors?.['required']"
+                                        >
+                                          Country is required.
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-7">
+                                      <select
+                                        class="form-select"
+                                        aria-label=""
+                                        formControlName="cityFromId"
+                                        [class.is-invalid]="
+                                          tRDFCurrent(trip)['cityFromId']
+                                            .invalid &&
+                                          tRDFCurrent(trip)['cityFromId']
+                                            .touched
+                                        "
+                                        [class.is-valid]="
+                                          tRDFCurrent(trip)['cityFromId']
+                                            .valid &&
+                                          tRDFCurrent(trip)['cityFromId']
+                                            .touched
+                                        "
+                                      >
+                                        <option
+                                          [value]="null"
+                                          selected
+                                          disabled
+                                        >
+                                          Select City
+                                        </option>
+                                        <option
+                                          *ngFor="let city of cityTypeItems"
+                                          [value]="city.cityId"
+                                        >
+                                          {{ city.name }}
+                                        </option>
+                                      </select>
+                                      <div class="invalid-feedback">
+                                        <div
+                                          *ngIf="tRDFCurrent(trip)['cityFromId'].errors?.['required']"
+                                        >
+                                          City is required.
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col">
+                                  <div class="row">
+                                    <label for="">Destination (To)</label>
+                                    <div class="col-sm-5">
+                                      <div>
+                                        <select
+                                          class="form-select"
+                                          aria-label=""
+                                          formControlName="countryToId"
+                                          [class.is-invalid]="
+                                            tRDFCurrent(trip)['countryToId']
+                                              .invalid &&
+                                            tRDFCurrent(trip)['countryToId']
+                                              .touched
+                                          "
+                                          [class.is-valid]="
+                                            tRDFCurrent(trip)['countryToId']
+                                              .valid &&
+                                            tRDFCurrent(trip)['countryToId']
+                                              .touched
+                                          "
+                                        >
+                                          <option
+                                            [value]="null"
+                                            selected
+                                            disabled
+                                          >
+                                            Select Country
+                                          </option>
+                                          <option
+                                            *ngFor="
+                                              let country of countryTypeItems
+                                            "
+                                            [value]="country.countryId"
+                                          >
+                                            {{ country.name }}
+                                          </option>
+                                        </select>
+                                        <!-- <div class="invalid-feedback">
+                                          <div *ngIf="tRDFCurrent(trip)['countryToId'].errors?.['required']">
+                                            Country To is required.
+                                          </div>
+                                        </div>
+                                        <div class="valid-feedback">Looks good!</div> -->
+
+                                        <div
+                                          class="invalid-feedback"
+                                          *ngIf="tRDFCurrent(trip)['countryToId'].errors?.['required']"
+                                        >
+                                          Country is required.
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-7">
+                                      <select
+                                        class="form-select"
+                                        aria-label=""
+                                        formControlName="cityToId"
+                                        [class.is-invalid]="
+                                          tRDFCurrent(trip)['cityToId']
+                                            .invalid &&
+                                          tRDFCurrent(trip)['cityToId'].touched
+                                        "
+                                        [class.is-valid]="
+                                          tRDFCurrent(trip)['cityToId'].valid &&
+                                          tRDFCurrent(trip)['cityToId'].touched
+                                        "
+                                      >
+                                        <option
+                                          [value]="null"
+                                          selected
+                                          disabled
+                                        >
+                                          Select City
+                                        </option>
+                                        <option
+                                          *ngFor="let city of cityTypeItems"
+                                          [value]="city.cityId"
+                                        >
+                                          {{ city.name }}
+                                        </option>
+                                      </select>
+                                      <div
+                                        class="invalid-feedback"
+                                        *ngIf="tRDFCurrent(trip)['cityToId'].errors?.['required']"
+                                      >
+                                        City is required.
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-4">
+                                  <label for="">Departure Date</label>
+                                  <input
+                                    type="date"
+                                    class="form-control"
+                                    formControlName="departureDate"
+                                    (change)="addCustomValidator2(i, trip)"
+                                    [class.is-invalid]="
+                                      tRDFCurrent(trip)['departureDate']
+                                        .invalid &&
+                                      tRDFCurrent(trip)['departureDate'].touched
+                                    "
+                                    [class.is-valid]="
+                                      tRDFCurrent(trip)['departureDate']
+                                        .valid &&
+                                      tRDFCurrent(trip)['departureDate']
+                                        .touched &&
+                                      !isDurationOk2(trip)
+                                    "
+                                  />
+                                  <div class="invalid-feedback">
+                                    <div
+                                      *ngIf="tRDFCurrent(trip)['departureDate'].errors?.['required']"
+                                    >
+                                      Departure Date is required.
+                                    </div>
+                                  </div>
+                                  <div
+                                    *ngIf="isDurationOk2(trip)"
+                                    class="text-danger"
+                                  >
+                                    Departure date of this Trip should be
+                                    greater than return date of previous trip.
+                                  </div>
+                                  <div class="valid-feedback">Looks good!</div>
+                                </div>
+                              </div>
+
+                              <div class="row align-items-start g-3 mb-3">
+                                <div class="col">
+                                  <label for="">Travelling By</label>
+                                  <select
+                                    class="form-select"
+                                    aria-label=""
+                                    formControlName="travelTypeId"
+                                    [class.is-invalid]="
+                                      tRDFCurrent(trip)['travelTypeId']
+                                        .invalid &&
+                                      tRDFCurrent(trip)['travelTypeId'].touched
+                                    "
+                                    [class.is-valid]="
+                                      tRDFCurrent(trip)['travelTypeId'].valid &&
+                                      tRDFCurrent(trip)['travelTypeId'].touched
+                                    "
+                                  >
+                                    <option [value]="null" selected disabled>
+                                      Select Travel By
+                                    </option>
+                                    <option
+                                      *ngFor="let class of travelTypeItems"
+                                      [value]="class.travelById"
+                                    >
+                                      {{ class.travelByName }}
+                                    </option>
+                                  </select>
+                                  <div class="invalid-feedback">
+                                    <div
+                                      *ngIf="tRDFCurrent(trip)['travelTypeId'].errors?.['required']"
+                                    >
+                                      Travel By is required.
+                                    </div>
+                                  </div>
+                                  <div class="valid-feedback">Looks good!</div>
+                                </div>
+
+                                <div class="col">
+                                  <label for="">Travel Class</label>
+                                  <select
+                                    class="form-select"
+                                    aria-label=""
+                                    formControlName="travelClassId"
+                                    [class.is-invalid]="
+                                      tRDFCurrent(trip)['travelClassId']
+                                        .invalid &&
+                                      tRDFCurrent(trip)['travelClassId'].touched
+                                    "
+                                    [class.is-valid]="
+                                      tRDFCurrent(trip)['travelClassId']
+                                        .valid &&
+                                      tRDFCurrent(trip)['travelClassId'].touched
+                                    "
+                                  >
+                                    <option [value]="null" selected disabled>
+                                      Select Travel Class
+                                    </option>
+                                    <option
+                                      *ngFor="let by of travelClassItems"
+                                      [value]="by.travelClassId"
+                                    >
+                                      {{ by.travelClassName }}
+                                    </option>
+                                  </select>
+                                  <div class="invalid-feedback">
+                                    <div
+                                      *ngIf="tRDFCurrent(trip)['travelClassId'].errors?.['required']"
+                                    >
+                                      Travel Class is required.
+                                    </div>
+                                  </div>
+                                  <div class="valid-feedback">Looks good!</div>
+                                </div>
+
+                                <div class="col">
+                                  <label for="">Travel Time Preference</label>
+                                  <select
+                                    class="form-select"
+                                    aria-label=""
+                                    formControlName="travelPreferenceTimeId"
+                                    [class.is-invalid]="
+                                      tRDFCurrent(trip)[
+                                        'travelPreferenceTimeId'
+                                      ].invalid &&
+                                      tRDFCurrent(trip)[
+                                        'travelPreferenceTimeId'
+                                      ].touched
+                                    "
+                                    [class.is-valid]="
+                                      tRDFCurrent(trip)[
+                                        'travelPreferenceTimeId'
+                                      ].valid &&
+                                      tRDFCurrent(trip)[
+                                        'travelPreferenceTimeId'
+                                      ].touched
+                                    "
+                                  >
+                                    <div class="valid-feedback">
+                                      Looks good!
+                                    </div>
+                                    <option [value]="null" selected disabled>
+                                      Select Travel Preference Time
+                                    </option>
+                                    <option
+                                      *ngFor="let time of travelPreferenceItems"
+                                      [value]="time.preferenceTimeId"
+                                    >
+                                      {{ time.preferneceTimeSpan }}
+                                      {{ time.fromTime }} - {{ time.toTime }}
+                                    </option>
+                                  </select>
+                                  <div class="invalid-feedback">
+                                    <div
+                                      *ngIf="tRDFCurrent(trip)['travelPreferenceTimeId'].errors?.['required']"
+                                    >
+                                      Travel Preference Time is required.
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-4">
+                                  <label for="">Return Date</label>
+                                  <input
+                                    type="date"
+                                    class="form-control"
+                                    formControlName="returnDate"
+                                    (change)="addCustomValidator(trip)"
+                                    [class.is-invalid]="
+                                      tRDFCurrent(trip)['returnDate'].invalid &&
+                                      tRDFCurrent(trip)['returnDate'].touched
+                                    "
+                                    [class.is-valid]="
+                                      tRDFCurrent(trip)['returnDate'].valid &&
+                                      tRDFCurrent(trip)['returnDate'].touched &&
+                                      !isDurationOk(trip)
+                                    "
+                                  />
+                                  <div class="invalid-feedback">
+                                    <div
+                                      *ngIf="tRDFCurrent(trip)['returnDate'].errors?.['required']"
+                                    >
+                                      Return Date is required.
+                                    </div>
+                                  </div>
+                                  <div
+                                    *ngIf="isDurationOk(trip)"
+                                    class="text-danger"
+                                  >
+                                    Return Date cannot be less than Departure
+                                    Date.
+                                  </div>
+                                  <div class="valid-feedback">Looks good!</div>
+                                </div>
+                              </div>
+                              <div class="row align-items-start g-3 mb-4">
+                                <div class="col-md-4">
+                                  <div class="row align-items-start">
+                                    <div class="col-6">
+                                      <label for="">Currency Type</label>
+                                      <select
+                                        class="form-select"
+                                        aria-label=""
+                                        formControlName="currencyTypeId"
+                                        [class.is-invalid]="
+                                          tRDFCurrent(trip)['currencyTypeId']
+                                            .invalid &&
+                                          tRDFCurrent(trip)['currencyTypeId']
+                                            .touched
+                                        "
+                                        [class.is-valid]="
+                                          tRDFCurrent(trip)['currencyTypeId']
+                                            .valid &&
+                                          tRDFCurrent(trip)['currencyTypeId']
+                                            .touched
+                                        "
+                                      >
+                                        <option
+                                          [value]="null"
+                                          selected
+                                          disabled
+                                        >
+                                          Select Currency Type
+                                        </option>
+                                        <option
+                                          *ngFor="
+                                            let currency of currencyTypeItems
+                                          "
+                                          [value]="currency.currencyTypeId"
+                                        >
+                                          {{ currency.currencyCode }}
+                                        </option>
+                                      </select>
+                                      <div class="invalid-feedback">
+                                        <div
+                                          *ngIf="tRDFCurrent(trip)['currencyTypeId'].errors?.['required']"
+                                        >
+                                          Currency Type is required.
+                                        </div>
+                                      </div>
+                                      <div class="valid-feedback">
+                                        Looks good!
+                                      </div>
+                                    </div>
+                                    <div class="col-6">
+                                      <label for="Acurrency"
+                                        >Travel Advance Currency</label
+                                      >
+                                      <input
+                                        id="Acurrency"
+                                        class="form-control"
+                                        placeholder="Enter Amount"
+                                        formControlName="advanceCurrency"
+                                        [class.is-invalid]="
+                                          tRDFCurrent(trip)['advanceCurrency']
+                                            .invalid &&
+                                          tRDFCurrent(trip)['advanceCurrency']
+                                            .touched
+                                        "
+                                        [class.is-valid]="
+                                          tRDFCurrent(trip)['advanceCurrency']
+                                            .valid &&
+                                          tRDFCurrent(trip)['advanceCurrency']
+                                            .touched
+                                        "
+                                      />
+                                      <div class="invalid-feedback">
+                                        <div
+                                          *ngIf="tRDFCurrent(trip)['advanceCurrency'].errors?.['required']"
+                                        >
+                                          Advance Currency is required.
+                                        </div>
+                                      </div>
+                                      <div class="valid-feedback">
+                                        Looks good!
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-2 mt-4">
+                                  <label for="" class="d-block">&nbsp;</label>
+                                  <div class="form-check">
+                                    <input
+                                      class="form-check-input"
+                                      type="checkbox"
+                                      id="pickuprequired"
+                                      formControlName="pickUpRequired"
+                                    />
+                                    <label
+                                      class="form-check-label"
+                                      for="pickuprequired"
+                                    >
+                                      Pick up required
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div
+                                class="accordion inneraccordion"
+                                id="bt-inneracc"
+                              >
+                                <div class="accordion-item">
+                                  <h2 class="accordion-header">
+                                    <button
+                                      class="accordion-button"
+                                      type="button"
+                                      data-bs-toggle="collapse"
+                                      data-bs-target="#accomodation"
+                                      aria-expanded="true"
+                                      aria-controls="accomodation"
+                                    >
+                                      Accomodation
+                                    </button>
+                                  </h2>
+                                  <div
+                                    id="accomodation"
+                                    class="accordion-collapse collapse show"
+                                    data-bs-parent="#bt-inneracc"
+                                  >
+                                    <div class="accordion-body">
+                                      <div
+                                        class="row align-items-start g-3 mb-4"
+                                      >
+                                        <div class="col-4">
+                                          <label for="">Start Date</label>
+                                          <input
+                                            type="date"
+                                            class="form-control"
+                                            formControlName="accomodationStartDate"
+                                            (change)="addCustomValidator(trip)"
+                                            [class.is-invalid]="
+                                              tRDFCurrent(trip)[
+                                                'accomodationStartDate'
+                                              ].invalid &&
+                                              tRDFCurrent(trip)[
+                                                'accomodationStartDate'
+                                              ].touched
+                                            "
+                                            [class.is-valid]="
+                                              tRDFCurrent(trip)[
+                                                'accomodationStartDate'
+                                              ].valid &&
+                                              tRDFCurrent(trip)[
+                                                'accomodationStartDate'
+                                              ].touched &&
+                                              !isDurationOk5(trip)
+                                            "
+                                          />
+                                          <div class="invalid-feedback">
+                                            <div
+                                              *ngIf="tRDFCurrent(trip)['accomodationStartDate'].errors?.['required']"
+                                            >
+                                              Accomodation Start Date is
+                                              required.
+                                            </div>
+                                          </div>
+                                          <div
+                                            *ngIf="isDurationOk5(trip)"
+                                            class="text-danger"
+                                          >
+                                            Start Date cannot not be less than
+                                            Departure Date of trip.
+                                          </div>
+                                          <div class="valid-feedback">
+                                            Looks good!
+                                          </div>
+                                        </div>
+                                        <div class="col-4">
+                                          <label for="">End Date</label>
+                                          <input
+                                            type="date"
+                                            class="form-control"
+                                            formControlName="accomodationEndDate"
+                                            (change)="addCustomValidator(trip)"
+                                            [class.is-invalid]="
+                                              tRDFCurrent(trip)[
+                                                'accomodationEndDate'
+                                              ].invalid &&
+                                              tRDFCurrent(trip)[
+                                                'accomodationEndDate'
+                                              ].touched
+                                            "
+                                            [class.is-valid]="
+                                              tRDFCurrent(trip)[
+                                                'accomodationEndDate'
+                                              ].valid &&
+                                              tRDFCurrent(trip)[
+                                                'accomodationEndDate'
+                                              ].touched &&
+                                              !isDurationOk3(trip) &&
+                                              !isDurationOk6(trip)
+                                            "
+                                          />
+                                          <div class="invalid-feedback">
+                                            <div
+                                              *ngIf="tRDFCurrent(trip)['accomodationEndDate'].errors?.['required']"
+                                            >
+                                              Accomodation End Date is required.
+                                            </div>
+                                          </div>
+                                          <div
+                                            *ngIf="isDurationOk3(trip)"
+                                            class="text-danger"
+                                          >
+                                            End Date cannot not be less than
+                                            Start Date.
+                                          </div>
+                                          <div
+                                            *ngIf="isDurationOk6(trip)"
+                                            class="text-danger"
+                                          >
+                                            End Date cannot not be greater than
+                                            Return Date of trip.
+                                          </div>
+                                          <div class="valid-feedback">
+                                            Looks good!
+                                          </div>
+                                        </div>
+                                        <div class="col-3">
+                                          <label for=""
+                                            >My Contact Number</label
+                                          >
+                                          <input
+                                            class="form-control"
+                                            formControlName="contactNumber"
+                                            [class.is-invalid]="
+                                              tRDFCurrent(trip)['contactNumber']
+                                                .invalid &&
+                                              tRDFCurrent(trip)['contactNumber']
+                                                .touched
+                                            "
+                                            [class.is-valid]="
+                                              tRDFCurrent(trip)['contactNumber']
+                                                .valid &&
+                                              tRDFCurrent(trip)['contactNumber']
+                                                .touched
+                                            "
+                                          />
+                                          <div class="invalid-feedback">
+                                            <div
+                                              *ngIf="tRDFCurrent(trip)['contactNumber'].errors?.['required']"
+                                            >
+                                              Contact Number is required.
+                                            </div>
+                                          </div>
+                                          <div class="valid-feedback">
+                                            Looks good!
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="row align-items-end">
+                                        <div class="col-md-5">
+                                          <div class="mb-3">
+                                            <label
+                                              for="formFile"
+                                              class="form-label"
+                                              >Attachments(optional)</label
+                                            >
+                                            <div class="attachmentbox">
+                                              <input
+                                                #formFileInput
+                                                class="form-control"
+                                                type="file"
+                                                id="formFile"
+                                                multiple
+                                                (change)="
+                                                  onFileSelected(
+                                                    $event,
+                                                    i,
+                                                    trip
+                                                  )
+                                                "
+                                              />
+                                            </div>
+                                            <ul class="list-inline">
+                                              <li
+                                                *ngFor="
+                                                  let file of selectedFiles[i];
+                                                  let j = index
+                                                "
+                                                class="list-inline-item bg-light border rounded d-inline-flex align-items-center py-2 px-4"
+                                              >
+                                                <span class="text-primary"
+                                                  ><i
+                                                    class="fa-light fa-file"
+                                                  ></i>
+                                                </span>
+                                                <span class="mx-2">{{
+                                                  file.name
+                                                }}</span>
+                                                <span>
+                                                  <i
+                                                    class="fa-light fa-times"
+                                                    (click)="
+                                                      removeFile(i, j, trip)
+                                                    "
+                                                  ></i>
+                                                </span>
+                                              </li>
+                                            </ul>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="accordion-item">
+                                  <h2 class="accordion-header">
+                                    <button
+                                      class="accordion-button collapsed"
+                                      type="button"
+                                      data-bs-toggle="collapse"
+                                      data-bs-target="#personaldays"
+                                      aria-expanded="false"
+                                      aria-controls="personaldays"
+                                    >
+                                      Personal Days
+                                    </button>
+                                  </h2>
+                                  <div
+                                    id="personaldays"
+                                    class="accordion-collapse collapse"
+                                    data-bs-parent="#bt-inneracc"
+                                  >
+                                    <div class="accordion-body">
+                                      <div
+                                        class="row align-items-start g-3 mb-4"
+                                      >
+                                        <div class="col-4">
+                                          <label for="">Start Date</label>
+                                          <input
+                                            type="date"
+                                            class="form-control"
+                                            formControlName="personalStartDate"
+                                            (change)="addCustomValidator(trip)"
+                                            [class.is-invalid]="
+                                              tRDFCurrent(trip)[
+                                                'personalStartDate'
+                                              ].invalid &&
+                                              tRDFCurrent(trip)[
+                                                'personalStartDate'
+                                              ].touched
+                                            "
+                                            [class.is-valid]="
+                                              tRDFCurrent(trip)[
+                                                'personalStartDate'
+                                              ].valid &&
+                                              tRDFCurrent(trip)[
+                                                'personalStartDate'
+                                              ].touched &&
+                                              !isDurationOk7(trip)
+                                            "
+                                          />
+                                          <div class="invalid-feedback">
+                                            <div
+                                              *ngIf="tRDFCurrent(trip)['personalStartDate'].errors?.['required']"
+                                            >
+                                              Personal Start Date is required.
+                                            </div>
+                                          </div>
+                                          <div
+                                            *ngIf="isDurationOk7(trip)"
+                                            class="text-danger"
+                                          >
+                                            Start Date cannot not be less than
+                                            Departure Date of trip.
+                                          </div>
+                                          <div class="valid-feedback">
+                                            Looks good!
+                                          </div>
+                                        </div>
+                                        <div class="col-4">
+                                          <label for="">End Date</label>
+                                          <input
+                                            type="date"
+                                            class="form-control"
+                                            formControlName="personalEndDate"
+                                            (change)="addCustomValidator(trip)"
+                                            [class.is-invalid]="
+                                              tRDFCurrent(trip)[
+                                                'personalEndDate'
+                                              ].invalid &&
+                                              tRDFCurrent(trip)[
+                                                'personalEndDate'
+                                              ].touched
+                                            "
+                                            [class.is-valid]="
+                                              tRDFCurrent(trip)[
+                                                'personalEndDate'
+                                              ].valid &&
+                                              tRDFCurrent(trip)[
+                                                'personalEndDate'
+                                              ].touched &&
+                                              !isDurationOk4(trip) &&
+                                              !isDurationOk8(trip)
+                                            "
+                                          />
+                                          <div class="invalid-feedback">
+                                            <div
+                                              *ngIf="tRDFCurrent(trip)['personalEndDate'].errors?.['required']"
+                                            >
+                                              Personal End Date is required.
+                                            </div>
+                                          </div>
+                                          <div
+                                            *ngIf="isDurationOk4(trip)"
+                                            class="text-danger"
+                                          >
+                                            End Date cannot not be less than
+                                            Start Date.
+                                          </div>
+                                          <div
+                                            *ngIf="isDurationOk8(trip)"
+                                            class="text-danger"
+                                          >
+                                            End Date cannot not be greater than
+                                            return Date of trip.
+                                          </div>
+                                          <div class="valid-feedback">
+                                            Looks good!
+                                          </div>
+                                        </div>
+
+                                        <div class="col-4">
+                                          <label for="reason">Reason</label>
+                                          <input
+                                            class="form-control"
+                                            placeholder="Add Reason"
+                                            id="reason"
+                                            formControlName="personalReason"
+                                            [class.is-invalid]="
+                                              tRDFCurrent(trip)[
+                                                'personalReason'
+                                              ].invalid &&
+                                              tRDFCurrent(trip)[
+                                                'personalReason'
+                                              ].touched
+                                            "
+                                            [class.is-valid]="
+                                              tRDFCurrent(trip)[
+                                                'personalReason'
+                                              ].valid &&
+                                              tRDFCurrent(trip)[
+                                                'personalReason'
+                                              ].touched
+                                            "
+                                          />
+                                          <div class="invalid-feedback">
+                                            <div
+                                              *ngIf="tRDFCurrent(trip)['personalReason'].errors?.['required']"
+                                            >
+                                              Personal Reason is required.
+                                            </div>
+                                          </div>
+                                          <div class="valid-feedback">
+                                            Looks good!
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <div
+                                        class="d-flex align-items-center justify-content-between w-100"
+                                      >
+                                        <div
+                                          class="alert alert-primary py-2 mb-0 px-4 border-0 d-flex align-items-center w-100"
+                                        >
+                                          <p class="m-0">
+                                            <i
+                                              class="fa-light fa-info-circle me-2"
+                                            ></i>
+                                            Note : Personal Days will be
+                                            deducted from your total leaves
+                                            quota
+                                          </p>
+                                          <button
+                                            type="button"
+                                            class="btn leaves_quota ms-auto"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#leavequoata"
+                                          >
+                                            Leaves Available
+                                            <span class="count">{{
+                                              leaveQuota?.remainingleaves
+                                            }}</span>
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button
+                type="button"
+                class="btn btn-lg btn-success-light"
+                style="margin-left: 25px; margin-bottom: 50px"
+                (click)="addTrip(0)"
+              >
+                <i class="fa-regular fa-plus"></i>Add Another Trip
+              </button>
+            </div>
+            <!-- <button type="button" class="btn btn-lg btn-success-light" style="margin-left: 25px; margin-bottom: 50px"
+              (click)="addTrip(0)"><i class="fa-regular fa-plus"></i>Add Another Trip</button> -->
+          </div>
+        </div>
+      </div>
+      <!-- </div> -->
+    </div>
+
+    <footer class="fixed-footer">
+      <button
+        class="btn btn-lg btn-success-light btn-small"
+        type="button"
+        data-bs-toggle="modal"
+        data-bs-target="#confirmation-bt"
+        (click)="submitForm()"
+      >
+        Save
+      </button>
+      <a routerLink="/connect/expense/businesstravelrequisition" class="me-2">
+        <button class="btn btn-lg btn-outline-secondary btn-small">
+          Cancel
+        </button>
+      </a>
+    </footer>
+  </div>
+</form>
+
+<div
+  class="modal fade"
+  id="leavequoata"
+  tabindex="-1"
+  aria-labelledby="leavequoataLabel"
+  style="display: none"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="edittagsLabel">Leave Balance</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-section">
+          <table class="table m-0">
+            <tbody></tbody>
+            <thead>
+              <tr>
+                <th>Leave Type</th>
+                <th>Allowed</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let leaves of leaveQuota?.leaveQuota">
+                <td>{{ leaves.name }}</td>
+                <td>{{ leaves.numberOfDays }}</td>
+              </tr>
+              <tr class="bg-primary10">
+                <td><strong>Total</strong></td>
+                <td>
+                  <strong class="text-success">{{
+                    leaveQuota?.remainingleaves
+                  }}</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,787 @@
+<div class="content-box-wrapper d-flex w-100">
+  <div class="middle-content d-flex">
+    <div class="business-detail w-100">
+      <div class="row align-items-start g-0 w-100" *ngIf="isSummary">
+        <div class="col-md-8">
+          <section class="detail-left bt-details mb-4">
+            <div class="headerWrap bg-primary10 py-4 px-5">
+              <div class="d-flex align-items-center mb-3">
+                <span class="iconButton large fw-bold me-4">
+                  <img
+                    [src]="
+                      requesterDetails?.employeeDetails?.attachmentUrl
+                        ? imageBaseUrl +
+                          '/' +
+                          requesterDetails?.employeeDetails.attachmentUrl
+                        : '../../../../../assets/images/userImage.png'
+                    "
+                    class="rounded-circle img-fluid"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    data-bs-title="Sannan Hussain"
+                    alt=""
+                  />
+                </span>
+                <div>
+                  <div class="d-flex align-items-center mb-2">
+                    <h5 class="text-dark me-3">
+                      {{ requesterDetails?.employeeDetails?.fullName }}
+                    </h5>
+                  </div>
+
+                  <ul class="list-inline m-0">
+                    <li class="list-inline-item">
+                      <span class="iconButton small d-inline-flex iceBg"
+                        ><i class="fa-light fa-envelope"></i>
+                      </span>
+                      <strong class="text-primary ms-2">
+                        {{ requesterDetails?.employeeDetails?.email }}</strong
+                      >
+                    </li>
+                    <li class="list-inline-item">
+                      <span class="iconButton small d-inline-flex iceBg"
+                        ><i class="fa-light fa-phone"></i>
+                      </span>
+                      <strong class="text-primary ms-2">{{
+                        requesterDetails?.employeeDetails?.personalNumber
+                      }}</strong>
+                    </li>
+                  </ul>
+                </div>
+                <ul class="list-inline ms-auto">
+                  <li class="list-inline-item">
+                    <button
+                      *ngIf="
+                        !isAllPending && requesterDetails.status !== 'Canceled'
+                      "
+                      class="btn btn-outline-danger"
+                      data-bs-toggle="modal"
+                      data-bs-target="#cancelleaverequest"
+                    >
+                      Cancel Request
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="accordion bt-accordion mt-5" id="accordionExample">
+              <div
+                class="accordion-item mb-3"
+                *ngIf="requesterDetails?.basicProfile !== null"
+              >
+                <h4 class="accordion-header">
+                  <button
+                    class="accordion-button fs-5 fw-semibold"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne"
+                    aria-expanded="true"
+                    aria-controls="collapseOne"
+                  >
+                    Basic Information
+                  </button>
+                </h4>
+                <div
+                  id="collapseOne"
+                  class="accordion-collapse collapse show"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div class="accordion-body">
+                    <ul class="list-group list-group-flush mb-4">
+                      <li class="list-group-item">
+                        <div class="row">
+                          <label class="col-md-3 coal">Personal Number </label>
+                          <div class="col-md-9">
+                            {{ requesterDetails?.basicProfile?.personalNumber }}
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="row">
+                          <label class="col-md-3 coal">Residence Number </label>
+                          <div class="col-md-9">
+                            {{
+                              requesterDetails?.basicProfile?.residenceNumber
+                            }}
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="row">
+                          <label class="col-md-3 coal">Phone Number </label>
+                          <div class="col-md-9">
+                            {{ requesterDetails?.basicProfile?.phoneNumber }}
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="row">
+                          <label class="col-md-3 coal">CNIC Expiry </label>
+                          <div class="col-md-9">
+                            {{
+                              requesterDetails?.basicProfile?.cnicExpiry
+                                | date : "yyyy-MM-dd"
+                            }}
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="row">
+                          <label class="col-md-3 coal">Martial Status </label>
+                          <div class="col-md-9">
+                            {{
+                              requesterDetails?.basicProfile?.maritalStatusName
+                            }}
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="accordion-item mb-3"
+                *ngIf="requesterDetails?.bankDetails !== null"
+              >
+                <h4 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed fs-5 fw-semibold"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapsetwo"
+                    aria-expanded="true"
+                    aria-controls="collapsetwo"
+                  >
+                    Bank Details
+                  </button>
+                </h4>
+                <div
+                  id="collapsetwo"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div class="accordion-body">
+                    <ul class="list-group list-group-flush mb-4">
+                      <li class="list-group-item">
+                        <div class="row">
+                          <label class="col-md-3 coal">Bank Name </label>
+                          <div class="col-md-9">
+                            <span
+                              >{{ requesterDetails?.bankDetails?.bankName }}
+                            </span>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="row">
+                          <label class="col-md-3 coal"> Bank Iban</label>
+                          <div class="col-md-9">
+                            <span>{{
+                              requesterDetails?.bankDetails?.bankIban
+                            }}</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="row">
+                          <label class="col-md-3 coal"> Bank Account</label>
+                          <div class="col-md-9">
+                            <span>{{
+                              requesterDetails?.bankDetails?.bankAccount
+                            }}</span>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="accordion-item mb-3"
+                *ngIf="requesterDetails?.address !== null"
+              >
+                <h4 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed fs-5 fw-semibold"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapsethree"
+                    aria-expanded="true"
+                    aria-controls="collapsethree"
+                  >
+                    Address
+                  </button>
+                </h4>
+                <div
+                  id="collapsethree"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div class="accordion-body">
+                    <ul class="list-group list-group-flush mb-4">
+                      <li class="list-group-item">
+                        <div class="row">
+                          <label class="col-md-3 coal">Current Address </label>
+                          <div class="col-md-9">
+                            <span
+                              >{{ requesterDetails?.address?.currentAddress }}
+                            </span>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="row">
+                          <label class="col-md-3 coal"> City </label>
+                          <div class="col-md-9">
+                            <span>{{ requesterDetails?.address?.city }}</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="row">
+                          <label class="col-md-3 coal"> State </label>
+                          <div class="col-md-9">
+                            <span>{{ requesterDetails?.address?.state }}</span>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="accordion-item mb-3"
+                *ngIf="requesterDetails?.educationsList !== null"
+              >
+                <h4 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed fs-5 fw-semibold"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapsefour"
+                    aria-expanded="true"
+                    aria-controls="collapsefour"
+                  >
+                    Education
+                  </button>
+                </h4>
+                <div
+                  id="collapsefour"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div class="accordion-body">
+                    <div
+                      *ngFor="
+                        let edu of requesterDetails?.educationsList;
+                        let i = index
+                      "
+                    >
+                      <div class="accordion-item">
+                        <h2 class="accordion-header">
+                          <button
+                            class="accordion-button"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            [attr.data-bs-target]="'#education' + i"
+                            [attr.data-target]="'#education' + i"
+                            aria-expanded="false"
+                            [attr.aria-controls]="'#education' + i"
+                          >
+                            Education{{ i + 1 }}
+                          </button>
+                        </h2>
+                        <div
+                          id="education{{ i }}"
+                          class="accordion-collapse collapse"
+                          data-bs-parent="#bt-inneracc"
+                        >
+                          <div class="accordion-body">
+                            <div class="row align-items-start g-3 mb-4">
+                              <div class="accordion-body">
+                                <ul class="list-group list-group-flush mb-4">
+                                  <li class="list-group-item">
+                                    <div class="row">
+                                      <label class="col-md-3 coal"
+                                        >Qualification</label
+                                      >
+                                      <div class="col-md-9">
+                                        <span
+                                          >{{ edu.qualification1 }}({{
+                                            edu.qualification2
+                                          }})
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </li>
+
+                                  <li class="list-group-item">
+                                    <div class="row">
+                                      <label class="col-md-3 coal">
+                                        Institute
+                                      </label>
+                                      <div class="col-md-9">
+                                        <span>{{ edu.institute }}</span>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li class="list-group-item">
+                                    <div class="row">
+                                      <label class="col-md-3 coal">
+                                        Country
+                                      </label>
+                                      <div class="col-md-9">
+                                        <span>{{ edu.countryName }}</span>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li class="list-group-item">
+                                    <div class="row">
+                                      <label class="col-md-3 coal"
+                                        >Country Code
+                                      </label>
+                                      <div class="col-md-9">
+                                        <span>{{ edu.countryCode }}</span>
+                                      </div>
+                                    </div>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="accordion-item mb-3"
+                *ngIf="requesterDetails?.workExperiencesList !== null"
+              >
+                <h4 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed fs-5 fw-semibold"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapsefive"
+                    aria-expanded="true"
+                    aria-controls="collapsefive"
+                  >
+                    Work Experience
+                  </button>
+                </h4>
+                <div
+                  id="collapsefive"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div class="accordion-body">
+                    <div
+                      *ngFor="
+                        let exp of requesterDetails?.workExperiencesList;
+                        let i = index
+                      "
+                    >
+                      <div class="accordion-item">
+                        <h2 class="accordion-header">
+                          <button
+                            class="accordion-button"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            [attr.data-bs-target]="'#experience' + i"
+                            [attr.data-target]="'#experience' + i"
+                            aria-expanded="false"
+                            [attr.aria-controls]="'#experience' + i"
+                          >
+                            Work Experience{{ i + 1 }}
+                          </button>
+                        </h2>
+                        <div
+                          id="experience{{ i }}"
+                          class="accordion-collapse collapse"
+                          data-bs-parent="#bt-inneracc"
+                        >
+                          <div class="accordion-body">
+                            <div class="row align-items-start g-3 mb-4">
+                              <div class="accordion-body">
+                                <ul class="list-group list-group-flush mb-4">
+                                  <li class="list-group-item">
+                                    <div class="row">
+                                      <label class="col-md-3 coal"
+                                        >Designation</label
+                                      >
+                                      <div class="col-md-9">
+                                        <span>{{ exp.designation }} </span>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li class="list-group-item">
+                                    <div class="row">
+                                      <label class="col-md-3 coal">
+                                        From Date
+                                      </label>
+                                      <div class="col-md-9">
+                                        <span>{{
+                                          exp.fromDate | date : "yyyy-MM-dd"
+                                        }}</span>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li class="list-group-item">
+                                    <div class="row">
+                                      <label class="col-md-3 coal">
+                                        To Date
+                                      </label>
+                                      <div class="col-md-9">
+                                        <span>{{
+                                          exp.toDate | date : "yyyy-MM-dd"
+                                        }}</span>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li class="list-group-item">
+                                    <div class="row">
+                                      <label class="col-md-3 coal">
+                                        Country
+                                      </label>
+                                      <div class="col-md-9">
+                                        <span>{{ exp.country }}</span>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li class="list-group-item">
+                                    <div class="row">
+                                      <label class="col-md-3 coal">City</label>
+                                      <div class="col-md-9">
+                                        <span>{{ exp.city }}</span>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li class="list-group-item">
+                                    <div class="row">
+                                      <label class="col-md-3 coal">Responsibility</label>
+                                      <div class="col-md-9">
+                                        <span>{{ exp.responsibility }}</span>
+                                      </div>
+                                    </div>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="accordion-item mb-3"
+                *ngIf="requesterDetails?.dependentsList !== null"
+              >
+                <h4 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed fs-5 fw-semibold"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapsesix"
+                    aria-expanded="true"
+                    aria-controls="collapsesix"
+                  >
+                    Dependent
+                  </button>
+                </h4>
+                <div
+                  id="collapsesix"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div class="accordion-body">
+                    <div
+                      *ngFor="
+                        let exp of requesterDetails?.dependentsList;
+                        let i = index
+                      "
+                    >
+                      <div class="accordion-item">
+                        <h2 class="accordion-header">
+                          <button
+                            class="accordion-button"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            [attr.data-bs-target]="'#dependent' + i"
+                            [attr.data-target]="'#dependent' + i"
+                            aria-expanded="false"
+                            [attr.aria-controls]="'#dependent' + i"
+                          >
+                            Dependent{{ i + 1 }}
+                          </button>
+                        </h2>
+                        <div
+                          id="dependent{{ i }}"
+                          class="accordion-collapse collapse"
+                          data-bs-parent="#bt-inneracc"
+                        >
+                          <div class="accordion-body">
+                            <div class="row align-items-start g-3 mb-4">
+                              <div class="accordion-body">
+                                <ul class="list-group list-group-flush mb-4">
+                                  <li class="list-group-item">
+                                    <div class="row">
+                                      <label class="col-md-3 coal">Name</label>
+                                      <div class="col-md-9">
+                                        <span>{{ exp.name }} </span>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li class="list-group-item">
+                                    <div class="row">
+                                      <label class="col-md-3 coal">
+                                        Relation
+                                      </label>
+                                      <div class="col-md-9">
+                                        <span>{{ exp.relation }}</span>
+                                      </div>
+                                    </div>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="col-md-4">
+          <aside class="h-100vh iceBg">
+            <ul class="nav nav-tabs tasktabs" id="myTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link active"
+                  id="profile-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#profile-tab-pane"
+                  type="button"
+                  role="tab"
+                  aria-controls="profile-tab-pane"
+                  aria-selected="true"
+                >
+                  Activity
+                </button>
+              </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <div
+                class="tab-pane fade show active"
+                id="profile-tab-pane"
+                role="tabpanel"
+                aria-labelledby="profile-tab"
+                tabindex="0"
+              >
+                <div class="list-group-section p-4">
+                  <div class="main_timeline">
+                    <div class="pb-3 d-flex align-items-start timeline_item">
+                      <div class="timeline_icon iconButton medium border">
+                        <i class="fa-light coal fa-user"></i>
+                      </div>
+                      <div class="ps-5 timeline_content">
+                        <div class="float-end d-flex align-items-center">
+                          <span class="iconButton iconHover medium me-2"
+                            ><i class="fa-light fa-message-lines"></i>
+                          </span>
+                          <span
+                            class="badge badge-md rounded-pill skyTransBg night"
+                            >Applied</span
+                          >
+                        </div>
+                        <strong>{{ requesterDetails.requester }} </strong>
+                        <p class="mb-1 metal">
+                          <small>{{ requesterDetails.appliedDate }}</small>
+                        </p>
+                        <div
+                          class="bg-light border p-3 rounded"
+                          *ngIf="requesterDetails.reason !== ''"
+                        >
+                          <strong>Note</strong>
+                          <p class="m-0">
+                            {{ requesterDetails.reason }}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      class="pb-3 d-flex align-items-start timeline_item"
+                      *ngFor="let stage of requestStages"
+                    >
+                      <div
+                        class="timeline_icon iconButton medium border"
+                        [ngClass]="{ mintBg: stage.status === 1 }"
+                      >
+                        <i class="fa-light fa-user-tie"></i>
+                      </div>
+                      <div class="ps-5 timeline_content">
+                        <div class="float-end d-flex align-items-center">
+                          <span class="iconButton iconHover medium me-2"
+                            ><i class="fa-light fa-message-lines"></i>
+                          </span>
+                          <span
+                            *ngIf="stage.status === 1"
+                            class="badge badge-md rounded-pill grayfilled"
+                          >
+                            Pending
+                          </span>
+                          <span
+                            *ngIf="stage.status === 2"
+                            class="badge badge-md rounded-pill successbg"
+                            >Approved</span
+                          >
+
+                          <span
+                            *ngIf="stage.status === 3"
+                            class="badge badge-md rounded-pill errorbg"
+                          >
+                            Rejected
+                          </span>
+                          <span
+                            *ngIf="stage.status === 5"
+                            class="badge badge-md rounded-pill badgebg"
+                          >
+                            On Hold
+                          </span>
+                        </div>
+                        <strong>{{ stage.approver }}<small></small> </strong>
+                        <p class="mb-1 metal">
+                          <small>{{ stage.modifiedDate }}</small>
+                        </p>
+                        <div
+                          class="bg-light border p-3 rounded"
+                          *ngIf="stage.description !== ''"
+                        >
+                          {{ stage.description }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="cancelleaverequest"
+  tabindex="-1"
+  aria-labelledby="cancelleaverequestLabel"
+  aria-modal="true"
+  role="dialog"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="edittagsLabel">Confirmation</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="py-5 px-4">
+          <div class="d-flex">
+            <span class="iconButton exlarge successdarkbg">
+              <i class="fa-light fa-circle-check fs-4"></i>
+            </span>
+            <div class="ms-3">
+              <h6>Are you sure you want to Cancel the profile request</h6>
+              <p class="m-0">If you don’t save, your changes will be lost.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer saltBg">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-success closeleavereq"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="cancelRequest(currentId)"
+        >
+          ok
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="cancelleaverequest"
+  tabindex="-1"
+  aria-labelledby="cancelleaverequestLabel"
+  aria-modal="true"
+  role="dialog"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="edittagsLabel">Confirmation</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="py-5 px-4">
+          <div class="d-flex">
+            <span class="iconButton exlarge successdarkbg">
+              <i class="fa-light fa-circle-check fs-4"></i>
+            </span>
+            <div class="ms-3">
+              <h6>Are you sure you want to Cancel the Profile request</h6>
+              <p class="m-0">If you don’t save, your changes will be lost.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer saltBg">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-success closeleavereq"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="cancelRequest(requesterDetails.leaveId)"
+        >
+          ok
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-toaster></app-toaster>

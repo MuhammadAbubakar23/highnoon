@@ -1,0 +1,124 @@
+<div class="agent-page-main-content">
+  <div
+    class="create-user console-body-wrapper footerheight"
+    data-scrollbar="true"
+    tabindex="-1"
+    style="overflow-y: scroll; height: 80vh; position: relative"
+  >
+    <div class="scroll-content">
+      <div class="wider-container">
+        <!-- <header class="tab-header">
+          <nav>
+            <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+              <button
+                class="nav-link active"
+                id="user-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#user-detail"
+                type="button"
+                role="tab"
+                aria-controls="user-detail"
+                aria-selected="true"
+              >
+                <h6>Details</h6>
+              </button>
+
+            </div>
+          </nav>
+        </header> -->
+        <div class="tab-body">
+          <div class="tab-content" id="nav-tabContent">
+            <div
+              id="user-detail"
+              class="tab-pane fade active show"
+              role="tabpanel"
+              aria-labelledby="user-tab"
+            >
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="team-detail-form-box mb-5">
+                    <form [formGroup]="policyForm" class="user-detail-form">
+                      <div class="mb-3">
+                        <label for="formFile" class="form-label"
+                          >Attachments</label
+                        >
+                        <input
+                          #formFileInput
+                          class="form-control"
+                          type="file"
+                          id="formFile"
+                          multiple
+                          (change)="onFileSelected($event)"
+                        />
+                      </div>
+                      <ul class="list-inline">
+                        <li
+                          *ngFor="let file of selectedFiles; let i = index"
+                          class="list-inline-item bg-light border rounded d-inline-flex align-items-center py-2 px-4"
+                        >
+                          <span class="text-primary"
+                            ><i class="fa-light fa-file"></i>
+                          </span>
+                          <span class="mx-2">{{ file.name }}</span>
+                          <span>
+                            <i
+                              class="fa-light fa-times"
+                              (click)="removeFile(i)"
+                            ></i>
+                          </span>
+                        </li>
+                      </ul>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scrollbar-track scrollbar-track-x" style="display: none">
+      <div
+        class="scrollbar-thumb scrollbar-thumb-x"
+        style="width: 1638px; transform: translate3d(0px, 0px, 0px)"
+      ></div>
+    </div>
+    <div class="scrollbar-track scrollbar-track-y" style="display: block"></div>
+  </div>
+  <footer class="footer">
+    <div class="ps-3 pe-3">
+      <div
+        class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4"
+      >
+        <div class="row w-100">
+          <div class="col-md-4"></div>
+          <div class="col-md-8 justify-content-end d-flex">
+            <div class="buttons-wrap d-flex">
+              <button
+                type="button"
+                class="btn btn-outline-secondary btn-medium me-2 px-4"
+                routerLink="/connect/console/policies-documents"
+              >
+                Back
+              </button>
+              <button
+                type="button"
+                class="btn btn-success ms-e f-saveBtn btn-large d-none"
+              ></button>
+              <button
+                type="button"
+                class="btn skyBg ms-2 px-4 btn-medium saveBtn"
+                data-bs-toggle="modal"
+                data-bs-target=""
+                (click)="submitForm()"
+                [class.disabled]="policyForm.invalid"
+              >
+              Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>

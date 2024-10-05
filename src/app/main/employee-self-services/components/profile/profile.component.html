@@ -1,0 +1,2565 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-jelly-box"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+<div class="content-box-wrapper d-flex w-100">
+  <div class="middle-content d-flex">
+    <div class="page-content-wrapper social">
+      <div class="w-100 panelToggled social-inner-page">
+        <div class="d-flex main-body-wrapper">
+          <div
+            class="agent-page-main-content px-4 page-scroll"
+            data-scrollbar="true"
+            tabindex="-1"
+            style="overflow: auto"
+          >
+            <section class="detail-left">
+              <div class="headerWrap bg-primary10 py-4 px-5">
+                <div class="d-flex align-items-center mb-3">
+                  <!-- <span class="iconButton profileimg fw-bold me-4">
+                    <img
+
+                      class="rounded-circle img-fluid"
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="top"
+                      data-bs-title="Sannan Hussain"
+                      alt=""
+                    />
+                  </span> -->
+                  <span class="iconButton profileimg fw-bold me-4">
+                    <img
+                      [src]="
+                        employeeDetails?.attachmentUrl
+                          ? imageBaseUrl + '/' + employeeDetails.attachmentUrl
+                          : '../../../../../assets/images/userImage.png'
+                      "
+                      class="rounded-circle img-fluid"
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="top"
+                      data-bs-title="Sannan Hussain"
+                      alt=""
+                    />
+                    <span class="profileicon" for="editprofile">
+                      <i class="fa-light fa-edit"></i>
+                    </span>
+                    <input
+                      class="form-control"
+                      type="file"
+                      id="formFile"
+                      accept="image/jpeg, image/jpg, image/png"
+                      (change)="onProfileFileSelected($event)"
+                    />
+                  </span>
+                  <div>
+                    <h5 class="text-dark">
+                      {{ employeeDetails?.firstName }}
+                      {{ employeeDetails?.lastName }}
+                    </h5>
+                    <p class="mb-3 coal">
+                      <strong>{{ employeeDetails?.jobTitle }}</strong> in
+
+                      {{ employeeDetails?.team }}
+                    </p>
+                    <ul
+                      class="list-inline m-0 d-flex align-items-center list-boxes"
+                    >
+                      <li class="list-inline-item d-flex flex-column">
+                        <strong class="text-primary">{{
+                          employeeDetails?.phoneNumber
+                        }}</strong>
+                        <span>Mobile</span>
+                      </li>
+                      <li class="list-inline-item d-flex flex-column">
+                        <strong class="text-primary">{{
+                          employeeDetails?.userId
+                        }}</strong>
+                        <span>Employee ID</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-header mb-3">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link active"
+                      id="profile-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#profile-tab-pane"
+                      type="button"
+                      role="tab"
+                      aria-controls="profile-tab-pane"
+                      aria-selected="true"
+                    >
+                      Profile
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="home-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#home-tab-pane"
+                      type="button"
+                      role="tab"
+                      aria-controls="home-tab-pane"
+                      aria-selected="false"
+                      tabindex="-1"
+                    >
+                      Bank Details
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="contact-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#contact-tab-pane"
+                      type="button"
+                      role="tab"
+                      aria-controls="contact-tab-pane"
+                      aria-selected="false"
+                      tabindex="-1"
+                    >
+                      Employment Details
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="hrpolicies"
+                      data-bs-toggle="tab"
+                      data-bs-target="#hrpolicies-pane"
+                      type="button"
+                      role="tab"
+                      aria-controls="hrpolicies-pane"
+                      aria-selected="false"
+                      tabindex="-1"
+                    >
+                      Documents
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <div class="tab-content pb-5" id="myTabContent">
+                <div
+                  class="tab-pane fade show active"
+                  id="profile-tab-pane"
+                  role="tabpanel"
+                  aria-labelledby="profile-tab"
+                  tabindex="0"
+                >
+                  <div
+                    class="d-flex align-items-center justify-content-between pe-5 border-bottom mb-3 pb-3"
+                  >
+                    <h4 class="ms-5 mb-0">Basic Information</h4>
+                    <button
+                      class="iconButton medium bg-primary20"
+                      (click)="openEnd(basicProfile)"
+                    >
+                      <i class="fa-light fa-edit"></i>
+                    </button>
+                  </div>
+
+                  <ul class="list-group list-group-flush mb-4 list-ps5">
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal">Full name </label>
+                        <div class="col-md-9">
+                          {{ employeeDetails?.firstName }}
+                          {{ employeeDetails?.lastName }}
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal">Employee ID </label>
+                        <div class="col-md-9">
+                          {{ employeeDetails?.userId }}
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal">Alternative Email </label>
+                        <div class="col-md-9">
+                          {{ employeeDetails?.alternateEmail }}
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal">Mobile Number </label>
+                        <div class="col-md-9">
+                          {{ employeeDetails?.phoneNumber }}
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal">Personal Number </label>
+                        <div class="col-md-9">
+                          {{ employeeDetails?.personalNumber }}
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal"> Residence Number </label>
+                        <div class="col-md-9">
+                          {{ employeeDetails?.residenceNumber }}
+                        </div>
+                      </div>
+                    </li>
+
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal">CNIC </label>
+                        <div class="col-md-9">{{ employeeDetails?.cnic }}</div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal">CNIC Expiry Date </label>
+                        <div class="col-md-9">
+                          {{
+                            employeeDetails?.cnicExpiry | date : "dd-MM-yyyy"
+                          }}
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal">Martial Status </label>
+                        <div class="col-md-9">
+                          {{ employeeDetails?.maritalStatus }}
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal"> Division </label>
+                        <div class="col-md-9">
+                          {{ employeeDetails?.division }}
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal"> Department </label>
+                        <div class="col-md-9">
+                          {{ employeeDetails?.team }}
+                        </div>
+                      </div>
+                    </li>
+
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal"> Section </label>
+                        <div class="col-md-9">
+                          {{ employeeDetails?.section }}
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal"> Report to </label>
+                        <div class="col-md-9">
+                          <span>{{ employeeDetails?.manager }}</span>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                  <div
+                    class="d-flex align-items-center justify-content-between pe-5 border-bottom mb-3 pb-3"
+                  >
+                    <h4 class="ms-5 mb-0">Address</h4>
+                    <button
+                      class="iconButton medium bg-primary20"
+                      (click)="openEnd(address)"
+                    >
+                      <i class="fa-light fa-edit"></i>
+                    </button>
+                  </div>
+                  <ul class="list-group list-group-flush mb-4 list-ps5">
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal">Current Address </label>
+                        <div class="col-md-9">
+                          <span
+                            >{{ employeeDetails?.address?.currentAddress }}
+                          </span>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal"> City </label>
+                        <div class="col-md-9">
+                          <span>{{ employeeDetails?.address?.city }}</span>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal"> State </label>
+                        <div class="col-md-9">
+                          <span>{{ employeeDetails?.address?.state }}</span>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                  <h4 class="ms-5 mb-4">Education</h4>
+                  <ul
+                    class="list-0 justify-content-between checkinrow row h-auto ps-5"
+                  >
+                    <li class="col ps-0">
+                      <div class="row w-100">
+                        <div class="col-md-3">
+                          <div
+                            class="card-hover card mb-3"
+                            (click)="resetEducation()"
+                          >
+                            <div
+                              class="addicon"
+                              data-bs-toggle="modal"
+                              data-bs-target="#addeducation"
+                            >
+                              <i class="fa-solid fa-square-plus"></i>
+                              <span>Add New</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          class="col-md-3"
+                          *ngFor="
+                            let education of employeeDetails?.employeeEducationList;
+                            let i = index
+                          "
+                        >
+                          <div class="card-hover card mb-3">
+                            <div class="card-body d-flex align-items-center">
+                              <dl class="m-0">
+                                <dt class="night text-truncate">
+                                  {{ education.qualification1 }}
+                                  ({{ education.qualification2 }})
+                                </dt>
+                                <dd>
+                                  <small class="coal">{{
+                                    education.institute
+                                  }}</small>
+                                </dd>
+                              </dl>
+                              <div class="ms-auto">
+                                <button
+                                  class="iconButton small mb-2"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#editeducation"
+                                  (click)="editEducation(education)"
+                                >
+                                  <i class="fa-light fa-edit"></i>
+                                </button>
+                                <button
+                                  class="iconButton small"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#deleteeducation"
+                                  (click)="
+                                    deleteId(education.employeeEducationId, '')
+                                  "
+                                >
+                                  <i class="fa-light fa-trash"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+
+                  <h4 class="ms-5 mb-4">Work Experience</h4>
+                  <ul
+                    class="list-0 justify-content-between checkinrow row h-auto ps-5"
+                  >
+                    <li class="col ps-0">
+                      <div class="row w-100">
+                        <div class="col-md-3">
+                          <div
+                            class="card-hover card mb-3"
+                            (click)="resetWorkExperience()"
+                          >
+                            <div
+                              class="addicon"
+                              data-bs-toggle="modal"
+                              data-bs-target="#addexperience"
+                            >
+                              <i class="fa-solid fa-square-plus"></i>
+                              <span>Add New</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          class="col-md-3"
+                          *ngFor="
+                            let workExperience of employeeDetails?.employeeWorkExperienceList;
+                            let i = index
+                          "
+                        >
+                          <div class="card-hover card mb-3">
+                            <div class="card-body d-flex align-items-center">
+                              <dl class="m-0">
+                                <dt class="night text-truncate">
+                                  {{ workExperience.designation }}
+                                </dt>
+                                <dd>
+                                  <small class="coal"
+                                    >{{
+                                      workExperience.fromDate
+                                        | date : "mediumDate"
+                                    }}/{{
+                                      workExperience.toDate
+                                        | date : "mediumDate"
+                                    }}</small
+                                  >
+                                </dd>
+                              </dl>
+                              <div class="ms-auto">
+                                <button
+                                  class="iconButton small mb-2"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#editexperience"
+                                  (click)="editWorkExperience(workExperience)"
+                                >
+                                  <i class="fa-light fa-edit"></i>
+                                </button>
+                                <button
+                                  class="iconButton small"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#deleteexperience"
+                                  (click)="
+                                    deleteId(
+                                      workExperience.workExperienceId,
+                                      ''
+                                    )
+                                  "
+                                >
+                                  <i class="fa-light fa-trash"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+
+                  <h4 class="ms-5 mb-4">Dependents</h4>
+                  <ul
+                    class="list-0 justify-content-between checkinrow row h-auto ps-5"
+                  >
+                    <li class="col ps-0">
+                      <div class="row w-100">
+                        <div class="col-md-3">
+                          <div
+                            class="card-hover card mb-3"
+                            (click)="resetDependent()"
+                          >
+                            <div
+                              class="addicon"
+                              data-bs-toggle="modal"
+                              data-bs-target="#adddependent"
+                            >
+                              <i class="fa-solid fa-square-plus"></i>
+                              <span>Add New</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-3" *ngFor="let dep of dependents">
+                          <div class="card-hover card mb-3">
+                            <div class="card-body d-flex align-items-center">
+                              <dl class="m-0">
+                                <dt class="night text-truncate">
+                                  {{ dep.name }}
+                                </dt>
+                                <!-- <dd>
+                                  <small class="coal">{{ dep.cnic }}</small>
+                                </dd> -->
+                                <!-- <dd data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="DOB"> <small class="coal"><i class="fa-light fa-calendar"></i> {{dep.createdDate | date:'M-d-yy'}}  </small></dd> -->
+                                <dt
+                                  class="badge mt-2 bg-primary20 night rounded-pill"
+                                >
+                                  {{ dep.relationship?.relation }}
+                                </dt>
+                              </dl>
+                              <!-- data-bs-toggle="modal"
+                              data-bs-target="#editdependent" -->
+                              <!-- data-bs-toggle="modal"
+                              data-bs-target="#deletedependent" -->
+                              <div class="ms-auto">
+                                <button
+                                  class="iconButton small mb-2"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#editdependent"
+                                  (click)="editDependent(dep)"
+                                >
+                                  <i class="fa-light fa-edit"></i>
+                                </button>
+                                <button
+                                  class="iconButton small"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#deletedependent"
+                                  (click)="deleteId(dep.dependentId, dep.name)"
+                                >
+                                  <i class="fa-light fa-trash"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!--
+                        <div class="col-md-3">
+                          <div class="card-hover card mb-3">
+                            <div class="card-body d-flex align-items-center">
+                              <dl class="m-0">
+                                <dt class="night text-truncate">Mrs. Kamran</dt>
+                                <dd>
+                                  <small class="coal">38403-7599994-1 </small>
+                                </dd>
+                                <dt
+                                  class="badge mt-2 bg-primary20 night rounded-pill"
+                                >
+                                  Father
+                                </dt>
+                              </dl>
+                              <div class="ms-auto">
+                                <button
+                                  class="iconButton small mb-2"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#editdependent"
+                                >
+                                  <i class="fa-light fa-edit"></i>
+                                </button>
+                                <button
+                                  class="iconButton small"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#deletedependent"
+                                >
+                                  <i class="fa-light fa-trash"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="card-hover card mb-3">
+                            <div class="card-body d-flex align-items-center">
+                              <dl class="m-0">
+                                <dt class="night text-truncate">Haider Ali</dt>
+                                <dd>
+                                  <small class="coal">38403-7599994-1 </small>
+                                </dd>
+                                <dt
+                                  class="badge mt-2 bg-primary20 night rounded-pill"
+                                >
+                                  Sibling
+                                </dt>
+                              </dl>
+                              <div class="ms-auto">
+                                <button
+                                  class="iconButton small mb-2"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#editdependent"
+                                >
+                                  <i class="fa-light fa-edit"></i>
+                                </button>
+                                <button
+                                  class="iconButton small"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#deletedependent"
+                                >
+                                  <i class="fa-light fa-trash"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="card-hover card mb-3">
+                            <div class="card-body d-flex align-items-center">
+                              <dl class="m-0">
+                                <dt class="night text-truncate">Mrs. Ali</dt>
+                                <dd>
+                                  <small class="coal">38403-7599994-1 </small>
+                                </dd>
+                                <dt
+                                  class="badge mt-2 bg-primary20 night rounded-pill"
+                                >
+                                  Spouse
+                                </dt>
+                              </dl>
+                              <div class="ms-auto">
+                                <button
+                                  class="iconButton small mb-2"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#editdependent"
+                                >
+                                  <i class="fa-light fa-edit"></i>
+                                </button>
+                                <button
+                                  class="iconButton small"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#deletedependent"
+                                >
+                                  <i class="fa-light fa-trash"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="card-hover card mb-3">
+                            <div class="card-body d-flex align-items-center">
+                              <dl class="m-0">
+                                <dt class="night text-truncate">Noman Ali</dt>
+                                <dd>
+                                  <small class="coal">38403-7599994-1 </small>
+                                </dd>
+                                <dt
+                                  class="badge mt-2 bg-primary20 night rounded-pill"
+                                >
+                                  Son
+                                </dt>
+                              </dl>
+                              <div class="ms-auto">
+                                <button
+                                  class="iconButton small mb-2"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#editdependent"
+                                >
+                                  <i class="fa-light fa-edit"></i>
+                                </button>
+                                <button
+                                  class="iconButton small"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#deletedependent"
+                                >
+                                  <i class="fa-light fa-trash"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="card-hover card mb-3">
+                            <div class="card-body d-flex align-items-center">
+                              <dl class="m-0">
+                                <dt class="night text-truncate">Dua Ali</dt>
+                                <dd>
+                                  <small class="coal">38403-7599994-1 </small>
+                                </dd>
+                                <dt
+                                  class="badge mt-2 bg-primary20 night rounded-pill"
+                                >
+                                  Daughter
+                                </dt>
+                              </dl>
+                              <div class="ms-auto">
+                                <button
+                                  class="iconButton small mb-2"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#editdependent"
+                                >
+                                  <i class="fa-light fa-edit"></i>
+                                </button>
+                                <button
+                                  class="iconButton small"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#deletedependent"
+                                >
+                                  <i class="fa-light fa-trash"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="card-hover card mb-3">
+                            <div class="card-body d-flex align-items-center">
+                              <dl class="m-0">
+                                <dt class="night text-truncate">Zeeshan</dt>
+                                <dd>
+                                  <small class="coal">38403-7599994-1 </small>
+                                </dd>
+                                <dt
+                                  class="badge mt-2 bg-primary20 night rounded-pill"
+                                >
+                                  Other
+                                </dt>
+                              </dl>
+                              <div class="ms-auto">
+                                <button
+                                  class="iconButton small mb-2"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#editdependent"
+                                >
+                                  <i class="fa-light fa-edit"></i>
+                                </button>
+                                <button
+                                  class="iconButton small"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#deletedependent"
+                                >
+                                  <i class="fa-light fa-trash"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div> -->
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div
+                  class="tab-pane fade"
+                  id="home-tab-pane"
+                  role="tabpanel"
+                  aria-labelledby="home-tab"
+                  tabindex="0"
+                >
+                  <div
+                    class="d-flex align-items-center justify-content-between pe-5 border-bottom mb-3 pb-3"
+                  >
+                    <h4 class="ms-5 mb-0">Bank Details</h4>
+                    <button
+                      class="iconButton medium bg-primary20"
+                      (click)="openEnd(bankDetails)"
+                    >
+                      <i class="fa-light fa-edit"></i>
+                    </button>
+                  </div>
+                  <ul class="list-group list-group-flush list-ps5">
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal">CNIC</label>
+                        <div class="col-md-9">
+                          {{ employeeDetails?.bankCNIC }}
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal">Bank Name </label>
+                        <div class="col-md-9">{{ employeeDetails?.bank }}</div>
+                      </div>
+                    </li>
+                    <!-- <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal">Bank Branch</label>
+                        <div class="col-md-9">{{ employeeDetails?.branchName }}</div>
+                      </div>
+                    </li> -->
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal">Account Number </label>
+                        <div class="col-md-9">
+                          {{ employeeDetails?.bankAccount }}
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal">IBAN Number </label>
+                        <div class="col-md-9">
+                          {{ employeeDetails?.bankIban }}
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div
+                  class="tab-pane fade"
+                  id="contact-tab-pane"
+                  role="tabpanel"
+                  aria-labelledby="contact-tab"
+                  tabindex="0"
+                >
+                  <ul class="list-group list-group-flush list-ps5">
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal">Employee ID </label>
+                        <div class="col-md-9">
+                          {{ employeeDetails?.userId }}
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal">Employer </label>
+                        <div class="col-md-9">
+                          {{ employeeDetails?.employer }}
+                        </div>
+                      </div>
+                    </li>
+                    <!-- <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal"> Location</label>
+                        <div class="col-md-9">Karachi</div>
+                      </div>
+                    </li> -->
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal">Department Name </label>
+                        <div class="col-md-9">
+                          {{ employeeDetails?.team }}
+                        </div>
+                      </div>
+                    </li>
+                    <!-- <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal">Team Name </label>
+                        <div class="col-md-9">{{ employeeDetails?.team }}</div>
+                      </div>
+                    </li> -->
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal">Designation </label>
+                        <div class="col-md-9">
+                          {{ employeeDetails?.designation }}
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal">Job Title </label>
+                        <div class="col-md-9">
+                          {{ employeeDetails?.jobTitle }}
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal">Status </label>
+                        <div class="col-md-9">
+                          {{ employeeDetails?.employeeType }}
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <label class="col-md-3 coal">Date of Joining </label>
+                        <div class="col-md-9">
+                          {{
+                            employeeDetails?.joinigDate | date : "dd-MM-yyyy"
+                          }}
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div
+                  class="tab-pane fade"
+                  id="hrpolicies-pane"
+                  role="tabpanel"
+                  aria-labelledby="hrpolicies"
+                  tabindex="0"
+                >
+                  <div class="agent-page-main-content px-4">
+                    <div class="filter-container mb-4">
+                      <div class="row justify-content-between">
+                        <div class="col-md-7">
+                          <ul class="list-group list-group-horizontal border-0">
+                            <li class="list-group-item border-0 p-0 me-2">
+                              <div class="icon-input search_field">
+                                <i class="fa-light fa-magnifying-glass"></i>
+                                <input
+                                  class="form-control"
+                                  placeholder="Search.. "
+                                  [(ngModel)]="searchText"
+                                  (input)="generalFilter()"
+                                />
+                              </div>
+                            </li>
+                            <!-- <li class="list-group-item border-0 ms-2 pe-0">
+                              <span class="coal">From</span>
+                            </li>
+                            <li class="list-group-item border-0 p-0 me-2">
+                              <div class="ms-2">
+                                <input
+                                  [(ngModel)]="startDate"
+                                  class="form-control timepicker flatpickr-input"
+                                  value="From"
+                                  type="date"
+                                  (change)="resetEndDate()"
+                                />
+                              </div>
+                            </li>
+                            <li class="list-group-item border-0 ms-2 pe-0">
+                              <span class="coal">To</span>
+                            </li>
+                            <li class="list-group-item border-0 p-0 mx-2">
+                              <div class="ms-2">
+                                <input
+                                  [(ngModel)]="endDate"
+                                  class="form-control timepicker flatpickr-input"
+                                  type="date"
+                                  (change)="filterByDate()"
+                                />
+                              </div>
+                            </li> -->
+                            <li
+                              class="list-group-item border-0 iconButton iconHover medium"
+                              aria-label="..."
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="bottom"
+                              data-bs-original-title="Refresh"
+                              (click)="resetinput()"
+                            >
+                              <i class="fal fa-redo-alt"></i>
+                            </li>
+
+                            <li
+                              class="list-group-item border-top-0 iconButton medium iconHover border-bottom-0 border-start-0 after-select-fun"
+                              aria-label="..."
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="bottom"
+                              data-bs-original-title="Delete"
+                              style="display: none"
+                            >
+                              <i class="fal fa-trash"></i>
+                            </li>
+                          </ul>
+                        </div>
+
+                        <div class="col-md-5">
+                          <div
+                            class="filters-opt d-flex align-items-center justify-content-end"
+                          >
+                            <button
+                              class="btn btn-outline-success me-2"
+                              data-bs-toggle="modal"
+                              data-bs-target="#uploaddocs"
+                            >
+                              <i class="fa-light fa-upload"></i> Upload
+                              Documents
+                            </button>
+                            <button
+                              class="iconButton medium iconHover gridicon"
+                              [ngClass]="{ active: isDocuments === true }"
+                              (click)="showDocs()"
+                            >
+                              <i class="fas fa-th-large"></i>
+                            </button>
+                            <button
+                              class="iconButton medium iconHover listicon"
+                              [ngClass]="{ active: isDocuments === false }"
+                              (click)="hideDocs()"
+                            >
+                              <i class="fas fa-list"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="table-section"
+                      id="tableview"
+                      [ngClass]="{ 'd-none': isDocuments === true }"
+                    >
+                      <table class="table mb-5 align-middle">
+                        <thead>
+                          <tr>
+                            <!-- <th *ngIf="showCheckboxes">
+                            <ul class="list-group list-group-horizontal border-0 p-0">
+                              <li class="list-group-item border-0 all-check-boxes p-0">
+                                <input class="form-check-input" type="checkbox" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Check All">
+                              </li>
+                            </ul>
+                            -->
+                            <th>ID</th>
+
+                            <th *ngFor="let column of columnNames">
+                              {{ column }}
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            *ngFor="let item of emplyeeDocsItems; let i = index"
+                          >
+                            <td *ngIf="pageNumber == 1">{{ i + 1 }}</td>
+                            <td *ngIf="pageNumber > 1">
+                              {{ i + 1 + pageSize * (pageNumber - 1) }}
+                            </td>
+                            <td>
+                              <a
+                                target="_blank"
+                                [href]="
+                                  imageBaseUrl + '/' + item['attachmentUrl']
+                                "
+                                >{{ item["attachmentName"] }}</a
+                              >
+                            </td>
+
+                            <td>
+                              {{ item["modifiedDate"] | date : "medium" }}
+                            </td>
+
+                            <!-- <td>
+                              <button
+                                class="btn iconButton medium iconHover"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                                data-bs-title="Download"
+                              >
+                                <i class="fal fa-download"></i>
+                              </button>
+                            </td> -->
+                            <!-- <td>
+                              <div
+                                class="dropdown w-auto"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                              >
+                                <button
+                                  class="iconButton small iconHover d-inline-block"
+                                  id="dropdownMenuButton1"
+                                  data-bs-toggle="dropdown"
+                                  aria-expanded="true"
+                                >
+                                  <i class="far fa-ellipsis-v"></i>
+                                </button>
+                                <ul
+                                  class="dropdown-menu custom-dropdown"
+                                  aria-labelledby="dropdownMenuButton1"
+                                >
+                                  <li>
+                                    <a
+                                      class="dropdown-item p-1"
+                                      (click)="
+                                        deleteEmployeeDoc(
+                                          item.employeeDocumentId
+                                        )
+                                      "
+                                    >
+                                      <button
+                                        class="iconButton dropdown-iconBtn small dropdown-item p-1"
+                                      >
+                                        <i class="fal fa-trash"></i>
+                                      </button>
+                                      Delete
+                                    </a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </td> -->
+                          </tr>
+                        </tbody>
+                      </table>
+                      <ng-container *ngIf="totalRecords > pageSize">
+                        <div class="me-5">
+                          <ul class="pagination justify-content-end">
+                            <li class="page-item">
+                              <a
+                                class="page-link"
+                                (click)="prevPage()"
+                                [attr.disabled]="pageNumber === 1"
+                                >Previous</a
+                              >
+                            </li>
+                            <ng-container *ngFor="let page of visiblePages()">
+                              <li
+                                class="page-item"
+                                [ngClass]="{ disabled: page === -1 }"
+                              >
+                                <a
+                                  class="page-link"
+                                  (click)="changePage(page)"
+                                  [class.active]="pageNumber === page"
+                                  >{{ page === -1 ? "..." : page }}</a
+                                >
+                              </li>
+                            </ng-container>
+                            <li class="page-item">
+                              <a
+                                class="page-link"
+                                (click)="nextPage()"
+                                [attr.disabled]="pageNumber === totalPages"
+                                >Next</a
+                              >
+                            </li>
+                          </ul>
+                        </div>
+                      </ng-container>
+                    </div>
+
+                    <div
+                      class="file-card-view"
+                      id="cardview"
+                      [ngClass]="{ 'd-none': isDocuments === false }"
+                    >
+                      <div class="row">
+                        <div
+                          class="col-lg-3"
+                          *ngFor="let item of emplyeeDocsItems"
+                        >
+                          <div class="card mb-4">
+                            <div class="card-body">
+                              <span class="btn iconButton">
+                                <i
+                                  [class]="getIconClass(item.attachmentUrl)"
+                                ></i>
+                              </span>
+                              <h6 class="text-truncate">
+                                <a
+                                  target="_blank"
+                                  [href]="
+                                    imageBaseUrl + '/' + item.attachmentUrl
+                                  "
+                                  >{{ item.attachmentName }}</a
+                                >
+                                <!-- <small class="metal">({{ getFileSize(item.attachmentName) }} MB)</small> -->
+                              </h6>
+                              <p class="darkblue m-0">
+                                <small>{{
+                                  item.modifiedDate | date : "mediumDate"
+                                }}</small>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #basicProfile let-offcanvas>
+  <div class="offcanvas-header bg-light">
+    <div class="row g-0 w-100">
+      <div class="col-md-6 d-flex align-items-center">
+        <h5 class="mb-0">Edit Basic Information</h5>
+      </div>
+      <div class="col-md-6 justify-content-end d-flex align-items-center pe-0">
+        <span
+          class="iconButton iconHower medium"
+          (click)="closeOffset(basicProfile)"
+          ><i class="fa-light fa-times"></i
+        ></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="offcanvas-body px-4">
+    <form [formGroup]="employeeBasicProfileForm">
+      <div class="mb-3">
+        <label for="personalNumber" class="col-form-label"
+          >Personal Number</label
+        >
+        <input
+          type="text"
+          id="personalNumber"
+          class="form-control"
+          formControlName="personalNumber"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="residenceNumber" class="col-form-label"
+          >Residence Number</label
+        >
+        <input
+          type="text"
+          id="residenceNumber"
+          class="form-control"
+          formControlName="residenceNumber"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="residenceNumber" class="col-form-label">Phone Number</label>
+        <input
+          type="text"
+          id="residenceNumber"
+          class="form-control"
+          formControlName="phoneNumber"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="cnicExpiry" class="col-form-label">CNIC Expiry</label>
+        <input
+          type="date"
+          id="cnicExpiry"
+          class="form-control"
+          formControlName="cnicExpiry"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="maritalStatusId" class="col-form-label"
+          >Marital Status</label
+        >
+        <select
+          class="form-select"
+          id="maritalStatusId"
+          formControlName="maritalStatusId"
+          (change)="setmaritalStatusName()"
+        >
+          <option disabled selected value="">Select Marital Status</option>
+          <option
+            [value]="marital.maritalStatusId"
+            *ngFor="let marital of martialStatus"
+          >
+            {{ marital.maritalStatusName }}
+          </option>
+        </select>
+      </div>
+    </form>
+  </div>
+
+  <footer class="bg-light p-3 text-end pe-5">
+    <button
+      class="btn btn-primary btn-small profileedit"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+      style="margin-right: 10px"
+      (click)="submitProfileBasic(basicProfile)"
+    >
+      Update
+    </button>
+    <button
+      class="btn btn-outline-danger btn-small"
+      (click)="closeOffset(basicProfile)"
+    >
+      Cancel
+    </button>
+  </footer>
+</ng-template>
+
+<ng-template #bankDetails let-offcanvas>
+  <div class="offcanvas-header bg-light">
+    <div class="row g-0 w-100">
+      <div class="col-md-6 d-flex align-items-center">
+        <h5 class="mb-0">Edit Bank Details</h5>
+      </div>
+      <div class="col-md-6 justify-content-end d-flex align-items-center pe-0">
+        <span
+          class="iconButton iconHower medium"
+          (click)="closeOffset(bankDetails)"
+          ><i class="fa-light fa-times"></i
+        ></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="offcanvas-body px-4">
+    <form [formGroup]="employeeBankDetailsForm">
+      <div class="mb-3">
+        <label for="maritalStatusId" class="col-form-label">Bank Name</label>
+        <select
+          class="form-select"
+          id="maritalStatusId"
+          formControlName="bankId"
+          (change)="setBankName()"
+        >
+          <option disabled selected [value]="">Select Bank</option>
+          <option [value]="bank.bankId" *ngFor="let bank of banks">
+            {{ bank.bankName }}
+          </option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="BankIban" class="col-form-label">Bank Iban</label>
+        <input
+          type="text"
+          id="BankIban"
+          class="form-control"
+          formControlName="bankIban"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="bankAccount" class="col-form-label">BankAccount</label>
+        <input
+          type="text"
+          id="residenceNumber"
+          class="form-control"
+          formControlName="bankAccount"
+        />
+      </div>
+    </form>
+  </div>
+
+  <footer class="bg-light p-3 text-end pe-5">
+    <button
+      class="btn btn-primary btn-small profileedit"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+      style="margin-right: 10px"
+      (click)="submitBankDetails(bankDetails)"
+    >
+      Update
+    </button>
+    <button
+      class="btn btn-outline-danger btn-small"
+      (click)="closeOffset(bankDetails)"
+    >
+      Cancel
+    </button>
+  </footer>
+</ng-template>
+
+<ng-template #address let-offcanvas>
+  <div class="offcanvas-header bg-light">
+    <div class="row g-0 w-100">
+      <div class="col-md-6 d-flex align-items-center">
+        <h5 class="mb-0">Edit Address</h5>
+      </div>
+      <div class="col-md-6 justify-content-end d-flex align-items-center pe-0">
+        <span class="iconButton iconHower medium" (click)="closeOffset(address)"
+          ><i class="fa-light fa-times"></i
+        ></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="offcanvas-body px-4">
+    <form [formGroup]="employeeAddressForm">
+      <div class="mb-3">
+        <label for="currentAddress" class="col-form-label"
+          >Current Address</label
+        >
+        <input
+          type="text"
+          id="currentAddress"
+          class="form-control"
+          formControlName="currentAddress"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="city" class="col-form-label">City</label>
+        <input
+          type="text"
+          id="city"
+          class="form-control"
+          formControlName="city"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="state" class="col-form-label">State</label>
+        <input
+          type="text"
+          id="state"
+          class="form-control"
+          formControlName="state"
+        />
+      </div>
+    </form>
+  </div>
+
+  <footer class="bg-light p-3 text-end pe-5">
+    <button
+      class="btn btn-primary btn-small profileedit"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+      style="margin-right: 10px"
+      (click)="submitAddress(address)"
+    >
+      Update
+    </button>
+    <button
+      class="btn btn-outline-danger btn-small"
+      (click)="closeOffset(address)"
+    >
+      Cancel
+    </button>
+  </footer>
+</ng-template>
+
+<!-- <ng-template #address let-offcanvas>
+  <div class="offcanvas-header bg-light">
+    <div class="row g-0 w-100">
+      <div class="col-md-6 d-flex align-items-center">
+        <h5 class="mb-0">Edit Bank Details</h5>
+      </div>
+      <div class="col-md-6 justify-content-end d-flex align-items-center pe-0">
+        <span
+          class="iconButton iconHower medium"
+          (click)="closeOffset(bankDetails)"
+          ><i class="fa-light fa-times"></i
+        ></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="offcanvas-body px-4">
+    <form [formGroup]="employeeBasicProfileForm">
+      <h5 class="mb-3">Bank Details</h5>
+      <div class="mb-3">
+        <label for="personalNumber" class="col-form-label"
+          >Personal Number</label
+        >
+        <input
+          type="text"
+          id="personalNumber"
+          class="form-control"
+          formControlName="personalNumber"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="residenceNumber" class="col-form-label"
+          >Residence Number</label
+        >
+        <input
+          type="text"
+          id="residenceNumber"
+          class="form-control"
+          formControlName="residenceNumber"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Profile Picture</label>
+        <input
+          class="form-control"
+          type="file"
+          id="formFile"
+          accept="image/jpeg, image/jpg, image/png"
+          (change)="onProfileFileSelected($event)"
+        />
+        <div
+          class="file-hint"
+          style="font-size: 0.8rem; color: #6c757d; margin-top: 0.25rem"
+        >
+          Supported formats: JPEG, JPG, PNG
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="cnicExpiry" class="col-form-label">CNIC Expiry</label>
+        <input
+          type="date"
+          id="cnicExpiry"
+          class="form-control"
+          formControlName="cnicExpiry"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="maritalStatusId" class="col-form-label"
+          >Marital Status</label
+        >
+        <select
+          class="form-select"
+          id="maritalStatusId"
+          formControlName="maritalStatusId"
+        >
+          <option disabled selected value="">Select Marital Status</option>
+          <option
+            [value]="marital.maritalStatusId"
+            *ngFor="let marital of martialStatus"
+          >
+            {{ marital.maritalStatusName }}
+          </option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="maritalStatusId" class="col-form-label">Bank Name</label>
+        <select
+          class="form-select"
+          id="maritalStatusId"
+          formControlName="bankId"
+        >
+          <option disabled selected [value]="">Select Bank</option>
+          <option [value]="bank.bankId" *ngFor="let bank of banks">
+            {{ bank.bankName }}
+          </option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="BankIban" class="col-form-label">Bank Iban</label>
+        <input
+          type="text"
+          id="BankIban"
+          class="form-control"
+          formControlName="bankIban"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="bankAccount" class="col-form-label">BankAccount</label>
+        <input
+          type="text"
+          id="residenceNumber"
+          class="form-control"
+          formControlName="bankAccount"
+        />
+      </div>
+      <div class="mb-3" formGroupName="address">
+        <label for="currentAddress" class="col-form-label"
+          >Current Address</label
+        >
+        <input
+          type="text"
+          id="currentAddress"
+          class="form-control"
+          formControlName="currentAddress"
+        />
+      </div>
+      <div class="mb-3" formGroupName="address">
+        <label for="city" class="col-form-label">City</label>
+        <input
+          type="text"
+          id="city"
+          class="form-control"
+          formControlName="city"
+        />
+      </div>
+      <div class="mb-3" formGroupName="address">
+        <label for="state" class="col-form-label">State</label>
+        <input
+          type="text"
+          id="state"
+          class="form-control"
+          formControlName="state"
+        />
+      </div>
+
+      <div class="accordion inneraccordion mb-3" id="bt-inneracc">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#education"
+              aria-expanded="false"
+              aria-controls="education"
+            >
+              Education
+            </button>
+          </h2>
+          <div
+            id="education"
+            class="accordion-collapse"
+            data-bs-parent="#bt-inneracc"
+          >
+            <div class="accordion-body">
+              <div class="row align-items-start g-3 mb-4">
+                <div formArrayName="employeeEducationList">
+                  <div
+                    *ngFor="
+                      let eduControl of educationList.controls;
+                      let i = index
+                    "
+                  >
+                    <div [formGroupName]="i" class="mb-3">
+                      <div class="mb-3">
+                        <label for="institute">Qualification1</label>
+                        <select
+                          class="form-select"
+                          id="qualification1Id"
+                          formControlName="qualification1Id"
+                        >
+                          <option disabled selected [value]="">
+                            Select Qualification1
+                          </option>
+                          <option
+                            [value]="qualification.qualification1Id"
+                            *ngFor="let qualification of qualifications1"
+                          >
+                            {{ qualification.qualification1Name }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="mb-3">
+                        <label for="institute">Qualification2</label>
+                        <select
+                          class="form-select"
+                          id="qualification2Id"
+                          formControlName="qualification2Id"
+                        >
+                          <option disabled selected [value]="0">
+                            Select Qualification2
+                          </option>
+                          <option
+                            [value]="qualification.qualification2Id"
+                            *ngFor="let qualification of qualifications2"
+                          >
+                            {{ qualification.qualification2Name }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="mb-3">
+                        <label for="institute">Institute</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="institute"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label for="institute">Country</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="countryName"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label for="institute">Country Code</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="countryCode"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-success-light"
+                    (click)="addEducationItem()"
+                  >
+                    Add Education
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion inneraccordion mb-3" id="bt-inneracc">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#experience"
+              aria-expanded="false"
+              aria-controls="experience"
+            >
+              Experience
+            </button>
+          </h2>
+          <div
+            id="experience"
+            class="accordion-collapse collapse"
+            data-bs-parent="#bt-inneracc"
+          >
+            <div class="accordion-body">
+              <div class="row align-items-start g-3 mb-4">
+                <div formArrayName="employeeWorkExperienceList">
+                  <div
+                    *ngFor="
+                      let expControl of workExperienceList.controls;
+                      let i = index
+                    "
+                  >
+                    <div [formGroupName]="i" class="mb-3">
+                      <div class="mb-3">
+                        <label for="designation">Designation</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="designation"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label for="designation">From Date</label>
+                        <input
+                          type="date"
+                          class="form-control"
+                          formControlName="fromDate"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label for="toDate">To Date</label>
+                        <input
+                          type="date"
+                          class="form-control"
+                          formControlName="toDate"
+                        />
+                        <div *ngIf="isDateGreater()" class="text-danger">
+                          To Date must be greater than From Date.
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="designation">Country</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="country"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label for="designation">City</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="city"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label for="designation">Responsibility</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="responsibility"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-success-light"
+                    (click)="addWorkExperienceItem()"
+                  >
+                    Add Experience
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <footer class="bg-light p-3 text-end pe-5">
+    <button
+      class="btn btn-primary btn-small profileedit"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+      style="margin-right: 10px"
+      (click)="submitProfileForm()"
+    >
+      Update
+    </button>
+    <button
+      class="btn btn-outline-danger btn-small"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    >
+      Cancel
+    </button>
+  </footer>
+</ng-template> -->
+<!--Education-->
+<div
+  class="modal fade"
+  id="addeducation"
+  tabindex="-1"
+  aria-labelledby="addeducationLabel"
+  aria-modal="true"
+  role="dialog"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title line-head" id="addeducationLabel">
+          Add Education
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form [formGroup]="employeeEducationForm">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="institute">Qualification1</label>
+            <select
+              class="form-select"
+              id="qualification1Id"
+              formControlName="qualification1Id"
+              (change)="setQualification1()"
+            >
+              <option disabled selected value="">Select Qualification1</option>
+              <option
+                [value]="qualification.qualification1Id"
+                *ngFor="let qualification of qualifications1"
+              >
+                {{ qualification.qualification1Name }}
+              </option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="institute">Qualification2</label>
+            <select
+              class="form-select"
+              id="qualification2Id"
+              formControlName="qualification2Id"
+              (change)="setQualification2()"
+            >
+              <option disabled selected [value]="0">
+                Select Qualification2
+              </option>
+              <option
+                [value]="qualification.qualification2Id"
+                *ngFor="let qualification of qualifications2"
+              >
+                {{ qualification.qualification2Name }}
+              </option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="institute">Institute</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="institute"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="institute">Country</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="countryName"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="institute">Country Code</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="countryCode"
+            />
+          </div>
+        </div>
+      </form>
+      <div class="modal-footer saltBg">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary adddependent"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="submitEducation()"
+          [class.disabled]="employeeEducationForm.invalid"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class
+  class="modal fade"
+  id="editeducation"
+  tabindex="-1"
+  aria-labelledby="editeducationLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title line-head" id="editeducationLabel">
+          Edit Education
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form [formGroup]="employeeEducationForm">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="institute">Qualification1</label>
+            <select
+              class="form-select"
+              id="qualification1Id"
+              formControlName="qualification1Id"
+              (change)="setQualification1()"
+            >
+              <option disabled selected value="">Select Qualification1</option>
+              <option
+                [value]="qualification.qualification1Id"
+                *ngFor="let qualification of qualifications1"
+              >
+                {{ qualification.qualification1Name }}
+              </option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="institute">Qualification2</label>
+            <select
+              class="form-select"
+              id="qualification2Id"
+              formControlName="qualification2Id"
+              (change)="setQualification2()"
+            >
+              <option disabled selected [value]="0">
+                Select Qualification2
+              </option>
+              <option
+                [value]="qualification.qualification2Id"
+                *ngFor="let qualification of qualifications2"
+              >
+                {{ qualification.qualification2Name }}
+              </option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="institute">Institute</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="institute"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="institute">Country</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="countryName"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="institute">Country Code</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="countryCode"
+            />
+          </div>
+        </div>
+      </form>
+      <div class="modal-footer saltBg">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary updatedependent"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="submitEducation()"
+        >
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="deleteeducation"
+  tabindex="-1"
+  aria-labelledby="deleteeducationLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="edittagsLabel">Confirmation</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="py-5 px-4">
+          <div class="d-flex">
+            <span class="iconButton exlarge errorbg">
+              <i class="fa-light fa-trash fs-4"></i>
+            </span>
+            <div class="ms-3">
+              <h6>
+                Are you sure you want to delete {{ updatedName }} from your
+                education list
+              </h6>
+              <p class="m-0">If you don’t save, your changes will be lost.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer saltBg">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger dependentdelete"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="deleteEducation()"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Work Experience-->
+<div
+  class="modal fade"
+  id="addexperience"
+  tabindex="-1"
+  aria-labelledby="addexperienceLabel"
+  aria-modal="true"
+  role="dialog"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title line-head" id="addexperienceLabel">
+          Add Work Experience
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form [formGroup]="employeeworkExperienceForm">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="designation">Designation</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="designation"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="designation">From Date</label>
+            <input
+              type="date"
+              class="form-control"
+              formControlName="fromDate"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="toDate">To Date</label>
+            <input type="date" class="form-control" formControlName="toDate" />
+            <div *ngIf="isDateGreater" class="text-danger">
+              To Date must be greater than From Date.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="designation">Country</label>
+            <input type="text" class="form-control" formControlName="country" />
+          </div>
+          <div class="mb-3">
+            <label for="designation">City</label>
+            <input type="text" class="form-control" formControlName="city" />
+          </div>
+          <div class="mb-3">
+            <label for="designation">Responsibility</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="responsibility"
+            />
+          </div>
+        </div>
+      </form>
+      <div class="modal-footer saltBg">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary adddependent"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="submitExperience()"
+          [class.disabled]="employeeworkExperienceForm.invalid"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class
+  class="modal fade"
+  id="editexperience"
+  tabindex="-1"
+  aria-labelledby="editexperienceLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title line-head" id="editexperienceLabel">
+          Edit Work Experience
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form [formGroup]="employeeworkExperienceForm">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="designation">Designation</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="designation"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="designation">From Date</label>
+            <input
+              type="date"
+              class="form-control"
+              formControlName="fromDate"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="toDate">To Date</label>
+            <input type="date" class="form-control" formControlName="toDate" />
+            <div *ngIf="isDateGreater" class="text-danger">
+              To Date must be greater than From Date.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="designation">Country</label>
+            <input type="text" class="form-control" formControlName="country" />
+          </div>
+          <div class="mb-3">
+            <label for="designation">City</label>
+            <input type="text" class="form-control" formControlName="city" />
+          </div>
+          <div class="mb-3">
+            <label for="designation">Responsibility</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="responsibility"
+            />
+          </div>
+        </div>
+      </form>
+      <div class="modal-footer saltBg">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary updatedependent"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="submitExperience()"
+        >
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="deleteexperience"
+  tabindex="-1"
+  aria-labelledby="deleteexperienceLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="edittagsLabel">Confirmation</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="py-5 px-4">
+          <div class="d-flex">
+            <span class="iconButton exlarge errorbg">
+              <i class="fa-light fa-trash fs-4"></i>
+            </span>
+            <div class="ms-3">
+              <h6>
+                Are you sure you want to delete {{ updatedName }} from your work
+                experience list
+              </h6>
+              <p class="m-0">If you don’t save, your changes will be lost.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer saltBg">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger dependentdelete"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="deleteWorkExperience()"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Dependents-->
+<div
+  class="modal fade"
+  id="adddependent"
+  tabindex="-1"
+  aria-labelledby="adddependentLabel"
+  aria-modal="true"
+  role="dialog"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title line-head" id="adddependentLabel">
+          Add Dependedent
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form [formGroup]="dependentForm">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="">Name</label>
+            <input
+              class="form-control"
+              formControlName="name"
+              [class.is-invalid]="dF['name'].invalid && dF['name'].touched"
+              [class.is-valid]="dF['name'].valid && dF['name'].touched"
+            />
+            <div class="invalid-feedback">
+              <div *ngIf="dF['name'].errors?.['required']">
+                Name is required.
+              </div>
+              <div *ngIf="dF['name'].errors?.['maxlength']">
+                Name must be less than 200 characters.
+              </div>
+            </div>
+            <div class="valid-feedback">Looks good!</div>
+          </div>
+          <div class="mb-3">
+            <label for="">Relation</label>
+            <select
+              class="form-select"
+              formControlName="relationshipId"
+              [class.is-invalid]="
+                dF['relationshipId'].invalid && dF['relationshipId'].touched
+              "
+              [class.is-valid]="
+                dF['relationshipId'].valid && dF['relationshipId'].touched
+              "
+              (change)="setRelation()"
+            >
+              <option disabled selected value="0">Select Relation</option>
+              <option
+                [value]="relation.relationshipId"
+                *ngFor="let relation of relations"
+              >
+                {{ relation.relation }}
+              </option>
+            </select>
+            <div class="invalid-feedback">
+              <div *ngIf="dF['relationshipId'].errors?.['required']">
+                Relation is required.
+              </div>
+              <div *ngIf="dF['relationshipId'].errors?.['maxlength']">
+                Relation must be less than 100 characters.
+              </div>
+            </div>
+            <div class="valid-feedback">Looks good!</div>
+          </div>
+        </div>
+      </form>
+      <div class="modal-footer saltBg">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary adddependent"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="submitDependent()"
+          [class.disabled]="dependentForm.invalid"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class
+  class="modal fade"
+  id="editdependent"
+  tabindex="-1"
+  aria-labelledby="editdependentLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title line-head" id="editdependentLabel">
+          Edit Dependedent
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form [formGroup]="dependentForm">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="">Name</label>
+            <input class="form-control" name="" formControlName="name" />
+            <div class="invalid-feedback">
+              <div *ngIf="dF['name'].errors?.['required']">
+                Name is required.
+              </div>
+              <div *ngIf="dF['name'].errors?.['maxlength']">
+                Name must be less than 20 characters.
+              </div>
+            </div>
+            <div class="valid-feedback">Looks good!</div>
+          </div>
+          <!-- <div class="mb-3">
+            <label for="">CNIC</label>
+            <input class="form-control" name="" formControlName="cnic" />
+          </div> -->
+          <div class="mb-3">
+            <label for="">Relation</label>
+            <select
+              class="form-select"
+              formControlName="relationshipId"
+              [class.is-invalid]="
+                dF['relationshipId'].invalid && dF['relationshipId'].touched
+              "
+              [class.is-valid]="
+                dF['relationshipId'].valid && dF['relationshipId'].touched
+              "
+              (change)="setRelation()"
+            >
+              <option disabled selected value="0">Select Relation</option>
+              <option
+                [value]="relation.relationshipId"
+                *ngFor="let relation of relations"
+              >
+                {{ relation.relation }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </form>
+      <div class="modal-footer saltBg">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary updatedependent"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="submitDependent()"
+        >
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="deletedependent"
+  tabindex="-1"
+  aria-labelledby="deletedependentLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="edittagsLabel">Confirmation</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="py-5 px-4">
+          <div class="d-flex">
+            <span class="iconButton exlarge errorbg">
+              <i class="fa-light fa-trash fs-4"></i>
+            </span>
+            <div class="ms-3">
+              <h6>
+                Are you sure you want to delete {{ updatedName }} from your
+                dependent list
+              </h6>
+              <p class="m-0">If you don’t save, your changes will be lost.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer saltBg">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger dependentdelete"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="deleteDependent()"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="uploaddocs"
+  tabindex="-1"
+  aria-labelledby="uploaddocsLabel"
+  aria-modal="true"
+  role="dialog"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="uploaddocsLabel">Upload Documents</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="employeeDocumentForm" class="user-detail-form">
+          <div class="mb-3">
+            <label for="formFile" class="form-label">Attachments</label>
+            <input
+              #formFileInput
+              class="form-control"
+              type="file"
+              id="formFile"
+              multiple
+              (change)="onFileSelected($event)"
+            />
+          </div>
+          <ul class="list-group list-group-flush">
+            <li
+              *ngFor="let file of selectedFiles; let i = index"
+              class="list-group-item bg-light border rounded d-inline-flex align-items-center py-2 px-4 mb-2"
+            >
+              <span class="text-primary"
+                ><i class="fa-light fa-file"></i>
+              </span>
+              <span class="mx-2">{{ file.name }}</span>
+              <span class="ms-auto">
+                <i class="fa-light fa-times" (click)="removeFile(i)"></i>
+              </span>
+            </li>
+          </ul>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="submitDocumentForm()"
+        >
+          Upload All
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-toaster></app-toaster>

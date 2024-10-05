@@ -1,0 +1,230 @@
+<div class="agent-page-main-content">
+  <div
+    class="create-user console-body-wrapper footerheight"
+    data-scrollbar="true"
+    tabindex="-1"
+    style="overflow-y: scroll; height: 80vh; position: relative"
+  >
+    <div class="scroll-content">
+      <div class="wider-container">
+        <!-- <header class="tab-header">
+          <nav>
+            <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+              <button
+                class="nav-link active"
+                id="user-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#user-detail"
+                type="button"
+                role="tab"
+                aria-controls="user-detail"
+                aria-selected="true"
+              >
+                <h6>Details</h6>
+              </button>
+
+            </div>
+          </nav>
+        </header> -->
+        <div class="tab-body">
+          <div class="tab-content" id="nav-tabContent">
+            <div
+              id="user-detail"
+              class="tab-pane fade active show"
+              role="tabpanel"
+              aria-labelledby="user-tab"
+            >
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="team-detail-form-box mb-5">
+                    <form [formGroup]="articleForm" class="user-detail-form">
+                      <div class="mb-3">
+                        <label for="" class="col-form-label">Date </label>
+                        <div class="iconholder">
+                          <!-- <i class="fa-light fa-calendar-plus iconleft"></i> -->
+                          <input
+                            name=""
+                            id="datepicker"
+                            class="form-control flatpickr-input"
+                            placeholder="Date"
+                            formControlName="Date"
+                            [class.is-invalid]="
+                              aF['Date'].invalid && aF['Date'].touched
+                            "
+                            [class.is-valid]="
+                              aF['Date'].valid && aF['Date'].touched
+                            "
+                            type="date"
+                          />
+                          <div class="invalid-feedback">
+                            <div *ngIf="aF['Date'].errors?.['required']">
+                              Date is required.
+                            </div>
+                          </div>
+                          <div class="valid-feedback">Looks good!</div>
+                        </div>
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="first-Name">Name</label>
+                        <input
+                          [class.is-invalid]="
+                            aF['Name'].invalid && aF['Name'].touched
+                          "
+                          [class.is-valid]="
+                            aF['Name'].valid && aF['Name'].touched
+                          "
+                          class="form-control"
+                          id="Name"
+                          placeholder="Enter Name"
+                          formControlName="Name"
+                        />
+
+                        <div class="invalid-feedback">
+                          <div *ngIf="aF['Name'].errors?.['required']">
+                            Location Name is required.
+                          </div>
+                          <div *ngIf="aF['Name'].errors?.['maxlength']">
+                            Location Name must be less than 100 characters.
+                          </div>
+                        </div>
+                        <div class="valid-feedback">Looks good!</div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="first-Description">Description</label>
+                        <textarea
+                          [class.is-invalid]="
+                            aF['Description'].invalid &&
+                            aF['Description'].touched
+                          "
+                          [class.is-valid]="
+                            aF['Description'].valid && aF['Description'].touched
+                          "
+                          class="form-control"
+                          id="Description"
+                          placeholder="Enter Description"
+                          formControlName="Description"
+                        ></textarea>
+
+                        <div class="invalid-feedback">
+                          <div *ngIf="aF['Description'].errors?.['required']">
+                            Description is required.
+                          </div>
+                          <!-- <div *ngIf="aF['Description'].errors?.['maxlength']">
+                            Description must be less than 200 characters.
+                          </div> -->
+                        </div>
+                        <div class="valid-feedback">Looks good!</div>
+                      </div>
+                      <!-- <div class="mb-3">
+                        <label for="first-URL">URL</label>
+                        <input
+                          [class.is-invalid]="
+                            aF['URL'].invalid && aF['URL'].touched
+                          "
+                          [class.is-valid]="
+                            aF['URL'].valid && aF['URL'].touched
+                          "
+                          class="form-control"
+                          id="URL"
+                          placeholder="Enter URL"
+                          formControlName="URL"
+                        />
+
+                        <div class="invalid-feedback">
+                          <div *ngIf="aF['URL'].errors?.['required']">
+                            URL is required.
+                          </div>
+                          <div *ngIf="aF['URL'].errors?.['maxlength']">
+                            URL must be less than 100 characters.
+                          </div>
+                        </div>
+                        <div class="valid-feedback">Looks good!</div>
+                      </div> -->
+                      <div class="mb-3">
+                        <label for="formFile" class="form-label"
+                          >Attachment</label
+                        >
+                        <input
+                          #formFileInput
+                          class="form-control"
+                          type="file"
+                          id="formFile"
+                          accept="image/jpeg, image/jpg, image/png"
+                          (change)="onFileSelected($event)"
+                        />
+                        <div class="text-danger" *ngIf="haveDocument">
+                          <div>Attachment is required.</div>
+                        </div>
+                      </div>
+                      <ul class="list-inline">
+                        <li
+                          *ngFor="let file of selectedFiles; let i = index"
+                          class="list-inline-item bg-light border rounded d-inline-flex align-items-center py-2 px-4"
+                        >
+                          <span class="text-primary"
+                            ><i class="fa-light fa-file"></i>
+                          </span>
+                          <span class="mx-2">{{ file.name }}</span>
+                          <span>
+                            <i
+                              class="fa-light fa-times"
+                              (click)="removeFile(i)"
+                            ></i>
+                          </span>
+                        </li>
+                      </ul>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scrollbar-track scrollbar-track-x" style="display: none">
+      <div
+        class="scrollbar-thumb scrollbar-thumb-x"
+        style="width: 1638px; transform: translate3d(0px, 0px, 0px)"
+      ></div>
+    </div>
+    <div class="scrollbar-track scrollbar-track-y" style="display: block"></div>
+  </div>
+  <footer class="footer">
+    <div class="ps-3 pe-3">
+      <div
+        class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4"
+      >
+        <div class="row w-100">
+          <div class="col-md-4"></div>
+          <div class="col-md-8 justify-content-end d-flex">
+            <div class="buttons-wrap d-flex">
+              <button
+                type="button"
+                class="btn btn-outline-secondary btn-medium me-2 px-4"
+                routerLink="/connect/console/policies-articles"
+              >
+                Back
+              </button>
+              <button
+                type="button"
+                class="btn btn-success ms-e f-saveBtn btn-large d-none"
+              ></button>
+              <button
+                type="button"
+                class="btn skyBg ms-2 px-4 btn-medium saveBtn"
+                data-bs-toggle="modal"
+                data-bs-target=""
+                (click)="submitForm()"
+                [class.disabled]="articleForm.invalid"
+              >
+              Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>

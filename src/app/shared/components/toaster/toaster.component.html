@@ -1,0 +1,20 @@
+
+  <div class="position-fixed toast-bar rounded iceBg" style="z-index: 60">
+    <div [ngClass]="{'toast':true,'border-0':true,'p-4':true,'fade':true,'show':isShown}"  role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex border-0 w-100">
+    <i *ngIf="isSuccess" class="fa-solid fa-check-circle fs-2 me-3 mint"></i>
+    <i *ngIf="!isSuccess"class="fa-solid fa-exclamation-triangle fs-2 me-3 text-danger"></i>
+    <div class="d-flex flex-column">
+    <h5 class="toast-heading">{{toastHeading}}</h5>
+    <p class="toast-line-para fs-6 m-0">{{toastParagrahp}}</p>
+    </div>
+    <div class="toast-btn">
+    <button type="button" class="btn m-0 fs-5" data-bs-dismiss="toast" (click)="hideSuccessToast()"><i class="fa-regular fa-times"></i></button>
+    </div>
+    </div>
+    </div>
+    </div>
+
+
+
+  <!-- <i class="fa-solid fa-exclamation-triangle fs-2 me-3 text-danger"></i> -->

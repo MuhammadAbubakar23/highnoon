@@ -1,0 +1,460 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
+  <p style="color: white">Loading...</p>
+</ngx-spinner>
+<div class="content-box-wrapper d-flex w-100">
+  <div class="middle-content d-flex">
+
+
+    <div class="business-detail w-100">
+      <div class="row align-items-start g-0">
+        <div class="col-md-8">
+          <section class="detail-left bt-details mb-4">
+            <div class="headerWrap bg-primary10 py-4 px-5">
+              <div class="d-flex align-items-center mb-3">
+                <span class="iconButton large fw-bold me-4">
+                  <img src="../images/avatar-3.png" class="rounded img-fluid" data-bs-toggle="tooltip"
+                    data-bs-placement="top" data-bs-title="Kamran Ali " alt="">
+                </span>
+                <div>
+                  <div class="d-flex align-items-center mb-2">
+                    <h5 class="text-dark me-3">{{requesterDetails.userName}} </h5>
+                    <span class="badge badge-md rounded-pill" [ngClass]="{
+                      'successbg': travelRequisitionSummaryDetails[0]?.travelStatus === 2,
+                      'grayfilled': travelRequisitionSummaryDetails[0]?.travelStatus === 1,
+                      'errorbg': travelRequisitionSummaryDetails[0]?.travelStatus === 3,
+                      'warningbg': travelRequisitionSummaryDetails[0]?.travelStatus === 4
+                    }"> {{ sharedMethods.getStatusText(travelRequisitionSummaryDetails[0]?.travelStatus) }}
+                    </span>
+                  </div>
+
+
+
+                  <ul class="list-inline m-0">
+                    <li class="list-inline-item">
+                      <span class="iconButton small d-inline-flex iceBg"><i class="fa-light fa-envelope"></i> </span>
+                      <strong class="text-primary ms-2"> {{requesterDetails.email}}</strong>
+                    </li>
+                    <li class="list-inline-item">
+                      <span class="iconButton small d-inline-flex iceBg"><i class="fa-light fa-phone"></i> </span>
+                      <strong class="text-primary ms-2">{{requesterDetails.phoneNumber}}</strong>
+                    </li>
+
+
+                  </ul>
+                </div>
+                <!-- <ul class="list-inline ms-auto">
+          <li class="list-inline-item">
+            <button class="btn btn-outline-danger">
+              Reject
+            </button>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#approverequest">
+              Approve
+            </button>
+          </li>
+
+        </ul> -->
+
+
+
+                <ng-container *ngIf="stage?.isActive">
+                  <ul class="list-inline ms-auto">
+                    <li class="list-inline-item">
+                      <button class="btn btn-success" style="margin-right: 10px" data-bs-toggle="modal"
+                        data-bs-placement="top" data-bs-target="#approveleave" data-bs-dismiss="offcanvas"
+                        aria-label="Close">
+                        Approve
+                      </button>
+                      <button class="btn btn-outline-danger" style="margin-right: 10px" data-bs-toggle="modal" data-bs-placement="top"
+                        data-bs-target="#rejectleave" data-bs-dismiss="offcanvas" aria-label="Close">
+                        Reject
+                      </button>
+                      <button class="btn btn-outline-danger button2" style="margin-right: 10px" data-bs-toggle="modal" data-bs-placement="top"
+                        data-bs-target="#holdleave" data-bs-dismiss="offcanvas" aria-label="Close"  *ngIf="stage?.status != 5">
+                        On Hold
+                      </button>
+                    </li>
+                  </ul>
+                </ng-container>
+
+
+
+              </div>
+
+            </div>
+            <div *ngFor="let details of travelRequisitionSummaryDetails; let i = index">
+              <div class="accordion bt-accordion" [id]="'accordionExample' + i">
+                <div class="accordion-item mb-3">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" [attr.data-bs-toggle]="'collapse'"
+                      [attr.data-bs-target]="'#collapseOne' + i" aria-expanded="true"
+                      [attr.aria-controls]="'collapseOne' + i">
+                      <!-- <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> -->
+                      <div class="d-flex align-items-center justify-content-between pe-4 w-100">
+                        <div class="text-start">
+                          <h3 class="m-0">{{details.fromCity}}</h3>
+                          <h6 class="m-0">{{details.fromCity}}, {{details.countryFrom}}</h6>
+                        </div>
+                        <div class="text-center">
+                          {{sharedMethods.convertToShortDate(details.departureDate)}}
+                          -{{sharedMethods.convertToShortDate(details.returnDate)}}
+                          <div class="dotlist d-flex align-items-center justify-content-between">
+                            <span>
+                              <i class="fa-sharp fa-light fa-circle night"></i>
+                            </span>
+                            <span>
+                              <i class="fa-light fa-plane text-primary"></i>
+                            </span>
+                            <span>
+                              <i class="fa-sharp fa-light fa-circle night"></i>
+                            </span>
+                          </div>
+                          <span class="badge badge-md rounded-pill bg-primary20 night">
+                            {{details.tripType}}
+                          </span>
+                          <span class="badge badge-md rounded-pill grayfilled night">
+                            {{details.travelClass}}
+                          </span>
+                        </div>
+                        <div class="text-end">
+                          <h3 class="m-0">{{details.toCity}}</h3>
+                          <h6 class="m-0">{{details.toCity}}, {{details.countryTo}}</h6>
+                        </div>
+                      </div>
+                    </button>
+                  </h2>
+                  <div [id]="'collapseOne' + i" class="accordion-collapse collapse" [class.show]="i === 0"
+                    [attr.aria-labelledby]="'headingOne' + i">
+                    <!-- <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample"> -->
+                    <div class="accordion-body">
+
+                      <div class="row mb-4">
+                        <div class="col-3">
+                          <span for="" class="coal">Travelling By</span>
+                          <p class="m-0 fw-semibold text-truncate">{{details.travelBy}}</p>
+                        </div>
+                        <div class="col-3">
+                          <span for="" class="coal">Travel Time Preference</span>
+                          <p class="m-0 fw-semibold text-truncate">{{details.travelPreferenceTimeFrom}} -
+                            {{details.travelPreferenceTimeTo}}</p>
+                        </div>
+                        <div class="col-3">
+                          <span for="" class="coal">Advance Currency</span>
+                          <p class="m-0 fw-semibold text-truncate">{{details.advanceCurrency | number}} {{details.currencyType}}
+                          </p>
+                        </div>
+                        <div class="col-3">
+                          <span for="" class="coal">Pickup</span>
+                          <p class="m-0 fw-semibold text-truncate">{{details.pickUpRequired}} </p>
+                        </div>
+                      </div>
+
+                      <div class="accordion inneraccordion m-0" id="bt-inneracc">
+                        <div class="accordion-item">
+                          <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                              data-bs-target="#accomodation" aria-expanded="true" aria-controls="accomodation">
+                              Accomodation
+                            </button>
+                          </h2>
+                          <div id="accomodation" class="accordion-collapse collapse show" data-bs-parent="#bt-inneracc">
+                            <div class="accordion-body">
+                              <div class="row mb-4">
+                                <div class="col-3">
+                                  <span for="" class="coal">Start End Date</span>
+                                  <p class="m-0 fw-semibold text-truncate">
+                                    {{sharedMethods.convertToShortDate(details.accomodationStartDate)}} -
+                                    {{sharedMethods.convertToShortDate(details.accomodationEndDate)}}</p>
+                                </div>
+                                <div class="col-3">
+                                  <span for="" class="coal">My Contact Number</span>
+                                  <p class="m-0 fw-semibold text-truncate">{{details.contactNumber}}</p>
+                                </div>
+
+                              </div>
+                              <ul class="list-inline">
+                                <li *ngFor="let file of details.travelRequisitionAttachmentDetails"
+                                  class="list-inline-item bg-light border rounded d-inline-flex align-items-center py-2 px-4">
+                                  <span class="text-primary"><i class="fa-light fa-file"></i></span>
+                                  <span class="mx-2">{{file.attachmentName}}</span>
+                                </li>
+                              </ul>
+
+
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                          <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                              data-bs-target="#personaldays" aria-expanded="false" aria-controls="personaldays">
+                              Personal Days
+                            </button>
+                          </h2>
+                          <div id="personaldays" class="accordion-collapse collapse" data-bs-parent="#bt-inneracc">
+                            <div class="accordion-body">
+                              <div class="row mb-4">
+                                <div class="col-3">
+                                  <span for="" class="coal">Start End Date</span>
+                                  <p class="m-0 fw-semibold text-truncate">
+                                    {{sharedMethods.convertToShortDate(details.personalStartDate)}} -
+                                    {{sharedMethods.convertToShortDate(details.personalEndDate)}}</p>
+                                </div>
+                                <div class="col-3">
+                                  <span for="" class="coal">Reason</span>
+                                  <p class="m-0 fw-semibold text-truncate">{{details.personalReason}}</p>
+                                </div>
+
+                              </div>
+                              <div class="d-flex align-items-center justify-content-between w-100">
+                                <div
+                                  class="alert alert-primary py-2 mb-0 px-4 border-0 d-flex align-items-center w-100">
+                                  <p class="m-0"><i class="fa-light fa-info-circle me-2"></i> Note : Personal Days will
+                                    be
+                                    deducted from your total leaves quota</p>
+
+                                  <button class="btn leaves_quota ms-auto" data-bs-toggle="modal"
+                                    data-bs-target="#leavequoata">
+                                    Leaves Available <span class="count">{{leaveQuota?.remainingleaves}}</span>
+                                  </button>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+
+
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="col-md-4">
+          <aside class="h-100vh iceBg">
+            <header class="p-3">
+              <h5> Approval History</h5>
+            </header>
+            <div class="list-group-section p-3">
+              <div class="main_timeline">
+                <div class="pb-3 d-flex align-items-start timeline_item" *ngFor="let stage of requestStages">
+                  <div class="timeline_icon iconButton medium border" [ngClass]="{ mintBg: stage.status === 1 }">
+                    <i class="fa-light fa-user-tie"></i>
+                  </div>
+                  <div class="ps-5 timeline_content">
+                    <div class="float-end d-flex align-items-center">
+                      <span class="iconButton iconHover medium me-2"><i class="fa-light fa-message-lines"></i>
+                      </span>
+                      <span *ngIf="stage.status === 1" class="badge badge-md rounded-pill grayfilled">
+                        Pending
+                      </span>
+                      <span *ngIf="stage.status === 2" class="badge badge-md rounded-pill successbg">Approved</span>
+
+                      <span *ngIf="stage.status === 3" class="badge badge-md rounded-pill errorbg">
+                        Rejected
+                      </span>
+                      <span *ngIf="stage.status === 5" class="badge badge-md rounded-pill badgebg">
+                        On Hold
+                      </span>
+                    </div>
+                    <strong>{{ stage.approver }}<small></small> </strong>
+                    <p class="mb-1 metal">
+                      <small>{{ stage.modifiedDate }}</small>
+                    </p>
+                    <div class="bg-light border p-3 rounded" *ngIf="stage.description !== ''">
+                      {{ stage.description }}
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+</div>
+
+
+<div class="modal fade" id="approveleave" tabindex="-1" aria-labelledby="approveleaveLabel" aria-modal="true"
+  role="dialog">
+  <form [formGroup]="teamRequestForm">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="edittagsLabel">Comment</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="py-5 px-4">
+            <div class="mb-3">
+              <label for="" class="col-form-label">Add Notes</label>
+              <textarea class="form-control" placeholder="Write Note here" style="height: 100px" spellcheck="false"
+                formControlName="description"
+                [class.is-invalid]="
+                rF['description'].invalid && rF['description'].touched
+              "
+              [class.is-valid]="
+                rF['description'].valid && rF['description'].touched
+              ">
+              </textarea>
+              <div class="invalid-feedback">
+                <div *ngIf="rF['description'].errors?.['maxlength']">
+                  Description cannot be more than 200 characters.
+                </div>
+                <div *ngIf="rF['description'].errors?.['required']">
+                  Description is required.
+                </div>
+              </div>
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer saltBg">
+          <button type="button" class="btn btn-outline-secondary approveleave" data-bs-dismiss="modal"
+            aria-label="Close" (click)="updateRequest(currentRequestStageId, 2)">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal fade" id="rejectleave" tabindex="-1" aria-labelledby="rejectleaveLabel" aria-modal="true"
+  role="dialog">
+  <form [formGroup]="teamRequestForm">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="edittagsLabel">Rejection Comment</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="py-5 px-4">
+            <div class="mb-3">
+              <label for="" class="col-form-label">Add Notes</label>
+              <textarea class="form-control" placeholder="Write Note here" style="height: 100px" spellcheck="false"
+                formControlName="description"
+                [class.is-invalid]="
+                rF['description'].invalid && rF['description'].touched
+              "
+              [class.is-valid]="
+                rF['description'].valid && rF['description'].touched
+              ">
+              </textarea>
+              <div class="invalid-feedback">
+                <div *ngIf="rF['description'].errors?.['maxlength']">
+                  Description cannot be more than 200 characters.
+                </div>
+                <div *ngIf="rF['description'].errors?.['required']">
+                  Description is required.
+                </div>
+              </div>
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer saltBg">
+          <button type="button" class="btn btn-outline-secondary closerejectleave" data-bs-dismiss="modal"
+            aria-label="Close" (click)="updateRequest(currentRequestStageId, 3)">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal fade" id="holdleave" tabindex="-1" aria-labelledby="rejectleaveLabel" aria-modal="true"
+  role="dialog">
+  <form [formGroup]="teamRequestForm">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="edittagsLabel">Hold Comment</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="py-5 px-4">
+            <div class="mb-3">
+              <label for="" class="col-form-label">Add Notes</label>
+              <textarea class="form-control" placeholder="Write Note here" style="height: 100px" spellcheck="false"
+                formControlName="description"
+                [class.is-invalid]="
+                rF['description'].invalid && rF['description'].touched
+              "
+              [class.is-valid]="
+                rF['description'].valid && rF['description'].touched
+              ">
+              </textarea>
+              <div class="invalid-feedback">
+                <div *ngIf="rF['description'].errors?.['maxlength']">
+                  Description cannot be more than 200 characters.
+                </div>
+                <div *ngIf="rF['description'].errors?.['required']">
+                  Description is required.
+                </div>
+              </div>
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer saltBg">
+          <button type="button" class="btn btn-outline-secondary closerejectleave" data-bs-dismiss="modal"
+            aria-label="Close" (click)="updateRequest(currentRequestStageId, 5)">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="modal fade" id="leavequoata" tabindex="-1" aria-labelledby="leavequoataLabel" style="display: none;"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="edittagsLabel">Leave Balance </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-section">
+          <table class="table m-0">
+            <tbody>
+            </tbody>
+            <thead>
+              <tr>
+                <th> Leave Type</th>
+                <th> Allowed </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let leaves of leaveQuota?.leaveQuota">
+                <td>{{leaves.name}}</td>
+                <td>{{leaves.numberOfDays}}</td>
+              </tr>
+              <tr class="bg-primary10">
+                <td><strong>Total</strong> </td>
+                <td><strong class="text-success">{{leaveQuota?.remainingleaves}}</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,518 @@
+<div class="content-box-wrapper d-flex w-100">
+  <div class="middle-content d-flex">
+    <div class="agent-page-main-content">
+      <div
+        class="create-user console-body-wrapper perfect-scrollbar footerheight"
+        data-scrollbar="true"
+        tabindex="-1"
+        style="overflow: auto; outline: none"
+      >
+        <div class="scroll-content">
+          <div class="row pt-5 justify-content-center">
+            <div class="col-md-9">
+              <ul
+                class="list-group list-group-flush bluk-user-wrap"
+                [ngClass]="{ 'd-none': !isFileField }"
+              >
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-start p-0 pt-2 pb-2 border-0"
+                >
+                  <div class="ms-2 me-auto fw-normal coal">
+                    <h4 class="night">Bulk Employee</h4>
+                    Add Bulk Employee by uploading Xlsx file
+                  </div>
+
+                  <a class="btn btn-link"
+                  href="assets/files/schedule_template.xlsx"
+                  target="_blank"
+                  download="sample-file.xlsx">
+                    <i class="fal fa-file-user"></i> Download Template</a
+                  >
+                </li>
+                <li class="list-group-item p-0 pt-2 pb-2 border-0">
+                  <div class="ms-2 me-auto fw-normal coal">
+                    <p>
+                      Required headings: email, firstname (can be blank),
+                      lastname (can be blank), admin (true/false) (can be
+                      blank).
+                    </p>
+                    <p>
+                      The Employee Name field refers to the teammate or Teammate
+                      Template permissions you’d like to apply to the new
+                      Employee.
+                    </p>
+                  </div>
+                </li>
+                <li class="list-group-item p-0 pt-2 pb-2 border-0">
+                  <div class="mb-4 upload-files">
+                    <label for="formFileLg" class="form-label"
+                      >Upload Your Files</label
+                    >
+                    <input
+                      class="form-control form-control-lg"
+                      id="formFileLg"
+                      type="file"
+                      (change)="onFileChange($event)"
+                    />
+                    <div  *ngIf="!validFile" class="text-danger mt-2">
+                      Invalid file type. Please select an Excel file.
+                    </div>
+                    <div  *ngIf="fileRequired" class="text-danger mt-2">
+                      File is Required.
+                    </div>
+
+                  </div>
+                </li>
+              </ul>
+              <div
+                class="file-upload-after"
+                [ngClass]="{ 'd-none': !isProgressBar }"
+              >
+                <ul class="list-group list-group-flush">
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-start p-0 pt-2 pb-2 border-0"
+                  >
+                    <p>{{ fileName }}</p>
+                    <p>File size: {{ fileSize }}MB</p>
+                  </li>
+                  <li class="list-group-item p-0 pt-2 pb-2 border-0">
+                    <div class="progress">
+                      <div
+                        class="progress-bar skyBg"
+                        role="progressbar"
+                        style="width: 25%"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                  </li>
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-start p-0 pt-2 pb-2 border-0"
+                  >
+                    <p>12 Entires, 42 Rows uploaded..</p>
+                    <p>2 min, 56 sec remaining...</p>
+                  </li>
+                </ul>
+                <ul
+                  class="list-group list-group-horizontal mb-4 uploading-list"
+                >
+                  <li
+                    class="list-group-item d-flex align-items-center col-3 p-3 processingBg"
+                  >
+                    <i class="fal fa-clock me-2 mt-1"></i> Proccessing...
+                  </li>
+                  <li class="list-group-item col-9 d-flex align-items-center">
+                    144 rows remaining...
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="file-upload-after-progress"
+                [ngClass]="{ 'd-none': !isUpload }"
+              >
+                <ul
+                  class="list-group list-group-horizontal mb-4 uploading-list"
+                >
+                  <li
+                    class="w-100 list-group-item d-flex justify-content-between align-items-start p-0 pt-2 pb-2 border-0 border-bottom rounded-0"
+                  >
+                    <p class="mb-0">{{ fileName }}</p>
+                    <p class="mb-0">File size: {{ fileSize }}MB</p>
+                  </li>
+                </ul>
+                <ul
+                  class="list-group list-group-horizontal mb-4 uploading-list"
+                  id="errorBtneWrap"
+                >
+                  <li
+                    class="list-group-item d-flex align-items-center col-3 p-3 errorbg"
+                  >
+                    <i class="fal fa-times me-2 mt-1"></i> Errors
+                  </li>
+                  <li class="list-group-item d-flex align-items-center col-6">
+                    {{ errorsData.length }} rows found with missing data
+                  </li>
+                  <li
+                    class="list-group-item border-0 d-flex align-items-center col-3"
+                  >
+                    <button class="btn btn-link" id="review-error">
+                      Review
+                    </button>
+                  </li>
+                </ul>
+                <ul
+                  class="list-group list-group-horizontal mb-4 uploading-list"
+                  id="importBtnWrap"
+                >
+                  <li
+                    class="list-group-item d-flex align-items-center col-3 p-3 successbg"
+                  >
+                    <i class="fal fa-check me-2 mt-1"></i> Success
+                  </li>
+                  <li class="list-group-item d-flex align-items-center col-6">
+                    {{ successData.length }} rows were uploaded successfully...
+                  </li>
+                  <li
+                    class="list-group-item border-0 d-flex align-items-center col-3"
+                  >
+                    <button
+                      class="btn btn-medium btn-success"
+                      id="importall"
+                      data-bs-toggle="modal"
+                      data-bs-target="#uploadbulkfile"
+                    >
+                      Import All
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div
+            class="row pt-5 justify-content-center import-table"
+            [ngClass]="{ 'd-none': !isUpload }"
+          >
+            <div class="col-md-11">
+              <div class="table-toolbar">
+                <ul class="list-group list-group-horizontal border-0">
+                  <li
+                    class="list-group-item border-0 refreshicon show d-none"
+                    aria-label="..."
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="bottom"
+                    data-bs-original-title="Report Spam"
+                  >
+                    <i class="fal fa-exclamation-circle"></i>
+                  </li>
+                  <li
+                    class="list-group-item border-0 refreshicon"
+                    aria-label="..."
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="bottom"
+                    data-bs-original-title="Delete Records"
+                  >
+                    <i class="fal fa-trash"></i>
+                  </li>
+                  <li
+                    class="list-group-item border-0 refreshicon"
+                    id="exportBtn"
+                    aria-label="..."
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="bottom"
+                    data-bs-original-title="Export"
+                  >
+                    <i class="fal fa-file-export"></i>
+                  </li>
+                </ul>
+                <div class="form-check form-switch">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    (change)="showAll($event)"
+                    id="shoowalle"
+                  />
+                  <label class="form-check-label" for="shoowalle"
+                    >Show all entries</label
+                  >
+                </div>
+              </div>
+              <div class="table-section">
+                <table class="table mb-5 align-middle">
+                  <thead>
+                    <tr>
+                      <th>
+                        <div class="filter-container reset-filter">
+                          <ul class="list-group list-group-horizontal border-0">
+                            <li
+                              class="list-group-item border-0 all-check-boxes"
+                            >
+                              <input
+                                class="form-check-input me-1"
+                                type="checkbox"
+                                aria-label="..."
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="bottom"
+                                data-bs-original-title="Check All"
+                              />
+                            </li>
+                          </ul>
+                        </div>
+                      </th>
+                      <!-- <th>
+                        INDEX
+                        <i class="fas fa-long-arrow-alt-down"></i>
+                      </th> -->
+                      <th *ngFor="let column of requiredColumns">
+                        {{ column }}
+                      </th>
+                      <!-- <th>NAME</th>
+                      <th>EMAIL</th>
+                      <th>CARD NUMBER</th>
+                      <th>TEAM</th>
+                      <th>ROLES</th> -->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      class="error slaHigh"
+                      [ngClass]="{ 'd-none': !isErrors }"
+                      *ngFor="let item of errorsData"
+                    >
+                      <td>
+                        <input
+                          class="form-check-input me-1"
+                          type="checkbox"
+                          aria-label="..."
+                        />
+                      </td>
+                      <td *ngFor="let column of requiredColumns">
+                        {{ item[column] }}
+                      </td>
+                      <!-- <td>200155</td>
+                      <td>Abdul Moiz</td>
+                      <td>Abdul@aaaa</td>
+                      <td>2FX001JJX824</td>
+                      <td>Design</td>
+                      <td>Employee</td> -->
+                    </tr>
+                    <!-- <tr class="error slaHigh">
+                      <td>
+                        <input
+                          class="form-check-input me-1"
+                          type="checkbox"
+                          aria-label="..."
+                        />
+                      </td>
+                      <td>1</td>
+                      <td>123129</td>
+                      <td>Junaid Mazhar</td>
+                      <td>-=0i/zz</td>
+                      <td>2FX001JJX824</td>
+                      <td>Sales</td>
+                      <td>Manager</td>
+                    </tr>
+                    <tr class="error slaHigh">
+                      <td>
+                        <input
+                          class="form-check-input me-1"
+                          type="checkbox"
+                          aria-label="..."
+                        />
+                      </td>
+                      <td>38</td>
+                      <td>673341</td>
+                      <td>Salman Khan</td>
+                      <td>Skhan@/com</td>
+                      <td>2FX001JJX824</td>
+                      <td>Finance</td>
+                      <td>Manager</td>
+                    </tr> -->
+                    <tr
+                      class="success"
+                      [ngClass]="{ 'd-none': !isSuccess }"
+                      *ngFor="let item of successData"
+                    >
+                      <td>
+                        <input
+                          class="form-check-input me-1"
+                          type="checkbox"
+                          aria-label="..."
+                        />
+                      </td>
+                      <td *ngFor="let column of requiredColumns">
+                        {{ item[column] }}
+                      </td>
+                      <!-- <td>342342</td>
+                      <td>Ijtaba Sultan</td>
+                      <td>Skhan@/com</td>
+                      <td>2FX001JJX824</td>
+                      <td>Developement</td>
+                      <td>Senior Manager</td> -->
+                    </tr>
+                    <!-- <tr class="success d-none">
+                      <td>
+                        <input
+                          class="form-check-input me-1"
+                          type="checkbox"
+                          aria-label="..."
+                        />
+                      </td>
+                      <td>1</td>
+                      <td>200155</td>
+                      <td>Abdul Moiz</td>
+                      <td>Abdul@aaaa</td>
+                      <td>2FX001JJX824</td>
+                      <td>Design</td>
+                      <td>Employee</td>
+                    </tr>
+                    <tr class="success d-none">
+                      <td>
+                        <input
+                          class="form-check-input me-1"
+                          type="checkbox"
+                          aria-label="..."
+                        />
+                      </td>
+                      <td>1</td>
+                      <td>123129</td>
+                      <td>Junaid Mazhar</td>
+                      <td>-=0i/zz</td>
+                      <td>2FX001JJX824</td>
+                      <td>Sales</td>
+                      <td>Manager</td>
+                    </tr>
+                    <tr class="success d-none">
+                      <td>
+                        <input
+                          class="form-check-input me-1"
+                          type="checkbox"
+                          aria-label="..."
+                        />
+                      </td>
+                      <td>38</td>
+                      <td>673341</td>
+                      <td>Salman Khan</td>
+                      <td>Skhan@/com</td>
+                      <td>2FX001JJX824</td>
+                      <td>Finance</td>
+                      <td>Manager</td>
+                    </tr>
+                    <tr class="success d-none">
+                      <td>
+                        <input
+                          class="form-check-input me-1"
+                          type="checkbox"
+                          aria-label="..."
+                        />
+                      </td>
+                      <td>38</td>
+                      <td>342342</td>
+                      <td>Ijtaba Sultan</td>
+                      <td>Skhan@/com</td>
+                      <td>2FX001JJX824</td>
+                      <td>Developement</td>
+                      <td>Senior Manager</td>
+                    </tr>
+                    <tr class="success d-none">
+                      <td>
+                        <input
+                          class="form-check-input me-1"
+                          type="checkbox"
+                          aria-label="..."
+                        />
+                      </td>
+                      <td>1</td>
+                      <td>200155</td>
+                      <td>Abdul Moiz</td>
+                      <td>Abdul@aaaa</td>
+                      <td>2FX001JJX824</td>
+                      <td>Design</td>
+                      <td>Employee</td>
+                    </tr>
+                    <tr class="success d-none">
+                      <td>
+                        <input
+                          class="form-check-input me-1"
+                          type="checkbox"
+                          aria-label="..."
+                        />
+                      </td>
+                      <td>1</td>
+                      <td>123129</td>
+                      <td>Junaid Mazhar</td>
+                      <td>-=0i/zz</td>
+                      <td>2FX001JJX824</td>
+                      <td>Sales</td>
+                      <td>Manager</td>
+                    </tr>
+                    <tr class="success d-none">
+                      <td>
+                        <input
+                          class="form-check-input me-1"
+                          type="checkbox"
+                          aria-label="..."
+                        />
+                      </td>
+                      <td>38</td>
+                      <td>673341</td>
+                      <td>Salman Khan</td>
+                      <td>Skhan@/com</td>
+                      <td>2FX001JJX824</td>
+                      <td>Finance</td>
+                      <td>Manager</td>
+                    </tr>
+                    <tr class="success d-none">
+                      <td>
+                        <input
+                          class="form-check-input me-1"
+                          type="checkbox"
+                          aria-label="..."
+                        />
+                      </td>
+                      <td>38</td>
+                      <td>342342</td>
+                      <td>Ijtaba Sultan</td>
+                      <td>Skhan@/com</td>
+                      <td>2FX001JJX824</td>
+                      <td>Developement</td>
+                      <td>Senior Manager</td>
+                    </tr> -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="footer">
+        <div class="ps-3 pe-3">
+          <div
+            class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4"
+          >
+            <div class="row w-100">
+              <div class="col-md-4"></div>
+              <div class="col-md-8 justify-content-end d-flex">
+                <div class="buttons-wrap d-flex">
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary btn-medium me-2 px-4"
+                    routerLink="/connect/attendance/team-roster"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-success ms-e f-saveBtn btn-large d-none"
+                  ></button>
+                  <button
+                    [ngClass]="{ 'd-none': isSave }"
+                    type="button"
+                    class="btn skyBg ms-2 px-4 btn-medium saveBtn"
+                    data-bs-toggle="modal"
+                    data-bs-target=""
+                    id="uploadfilesBtn"
+                    (click)="fileUpload()"
+                  >
+                    Upload
+                  </button>
+                  <button
+                    [ngClass]="{ 'd-none': !isSave }"
+                    type="button"
+                    class="btn skyBg ms-2 px-4 btn-medium saveBtn"
+                    data-bs-toggle="modal"
+                    data-bs-target=""
+                    id="uploadfilesBtn"
+                    (click)="submitFile()"
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+</div>

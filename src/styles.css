@@ -1,0 +1,53 @@
+@import "~@ng-select/ng-select/themes/default.theme.css";
+/* @import "./assets/CSS/main-97c8ae5d64.css"; */
+/*@import "./assets/CSS/main-af6c69e573.css"; */
+@import "./assets/CSS/main-4506c4be4c.css";
+@import "./assets/CSS/toast.css";
+@import "./assets//CSS/dashboard.css";
+.modal-backdrop {
+  z-index: 1040;
+}
+
+.modal {
+  z-index: 1050;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #fff;
+  border-radius: 15px !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #eee;
+}
+
+.query-container {
+  height: calc(100vh - 290px);
+}
+.search_field input {
+  min-width: 160px;
+}
+.hierarchy .tooltip-inner {
+  min-width: 160px;
+}
+.hierarchy {
+  padding-left: 56px !important;
+}
+.offcanvas {
+  width: 40% !important;
+}
+.warningbg {
+  background-color: #ffcc00; /* Set the background color to yellow for the warning status */
+  color: black; /* Set the text color for contrast */
+  /* Add any other desired styles for the warning status */
+}
+

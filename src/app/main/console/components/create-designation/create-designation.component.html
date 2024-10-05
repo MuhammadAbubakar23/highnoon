@@ -1,0 +1,147 @@
+<div class="agent-page-main-content">
+  <div
+    class="create-user console-body-wrapper footerheight"
+    data-scrollbar="true"
+    tabindex="-1"
+    style="overflow-y: scroll; height: 80vh; position: relative"
+  >
+    <div class="scroll-content">
+      <div class="wider-container">
+        <!-- <header class="tab-header">
+          <nav>
+            <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+              <button
+                class="nav-link active"
+                id="user-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#user-detail"
+                type="button"
+                role="tab"
+                aria-controls="user-detail"
+                aria-selected="true"
+              >
+                <h6>Details</h6>
+              </button>
+            </div>
+          </nav>
+        </header> -->
+        <div class="tab-body">
+          <div class="tab-content" id="nav-tabContent">
+            <div
+              id="user-detail"
+              class="tab-pane fade active show"
+              role="tabpanel"
+              aria-labelledby="user-tab"
+            >
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="team-detail-form-box mb-5">
+                    <form
+                      [formGroup]="designationForm"
+                      class="user-detail-form"
+                    >
+                      <div class="floating-item mb-4">
+                        <div class="form-floating mb-2">
+                          <input
+                            [class.is-invalid]="
+                              dF['title'].invalid && dF['title'].touched
+                            "
+                            [class.is-valid]="
+                              dF['title'].valid && dF['title'].touched
+                            "
+                            class="form-control"
+                            id="name"
+                            placeholder="Enter Title"
+                            formControlName="title"
+                          />
+                          <label for="first-name">Name</label>
+                          <div class="invalid-feedback">
+                            <div *ngIf="dF['title'].errors?.['required']">
+                              Designation Name is required.
+                            </div>
+                            <div *ngIf="dF['title'].errors?.['maxlength']">
+                              Designation Name be less than 100  characters.
+                            </div>
+                          </div>
+                          <div class="valid-feedback">Looks good!</div>
+                        </div>
+                      </div>
+                      <div class="floating-item mb-4">
+                        <div class="form-floating mb-2">
+                          <input
+                            [class.is-invalid]="
+                              dF['grade'].invalid && dF['grade'].touched
+                            "
+                            [class.is-valid]="
+                              dF['grade'].valid && dF['grade'].touched
+                            "
+                            class="form-control"
+                            id="name"
+                            placeholder="Enter Grade"
+                            formControlName="grade"
+                          />
+                          <label for="first-name">Grade</label>
+                          <div class="invalid-feedback">
+                            <div *ngIf="dF['grade'].errors?.['required']">
+                              Grade is required.
+                            </div>
+                            <div *ngIf="dF['grade'].errors?.['maxlength']">
+                              Grade must be less than 100  characters.
+                            </div>
+                          </div>
+                          <div class="valid-feedback">Looks good!</div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scrollbar-track scrollbar-track-x" style="display: none">
+      <div
+        class="scrollbar-thumb scrollbar-thumb-x"
+        style="width: 1638px; transform: translate3d(0px, 0px, 0px)"
+      ></div>
+    </div>
+    <div class="scrollbar-track scrollbar-track-y" style="display: block"></div>
+  </div>
+  <footer class="footer">
+    <div class="ps-3 pe-3">
+      <div
+        class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4"
+      >
+        <div class="row w-100">
+          <div class="col-md-4"></div>
+          <div class="col-md-8 justify-content-end d-flex">
+            <div class="buttons-wrap d-flex">
+              <button
+                type="button"
+                class="btn btn-outline-secondary btn-medium me-2 px-4"
+                 routerLink="/connect/console/designations"
+              >
+                Back
+              </button>
+              <button
+                type="button"
+                class="btn btn-success ms-e f-saveBtn btn-large d-none"
+              ></button>
+              <button
+                type="button"
+                class="btn skyBg ms-2 px-4 btn-medium saveBtn"
+                (click)="submitForm()"
+                [class.disabled]="designationForm.invalid"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>

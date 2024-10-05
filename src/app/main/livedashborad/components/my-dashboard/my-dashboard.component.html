@@ -1,0 +1,739 @@
+<div class="content-box-wrapper d-flex w-100">
+  <div class="middle-content d-flex">
+    <div class="page-content-wrapper dashboard">
+      <div
+        class="agent-page-main-content px-4 page-scroll"
+        data-scrollbar="true"
+        tabindex="-1"
+        style="overflow: auto"
+      >
+        <div
+          class="scroll-content"
+          style="transform: translate3d(0px, 0px, 0px)"
+        >
+          <div class="pt-4">
+            <h3>Hi, {{ userName }}</h3>
+            <p class="mb-4">
+              Good Afternoon! You came 2 hours and 54 minutes early today.
+            </p>
+          </div>
+          <section class="announcementbox">
+            <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <div class="announce-item">
+                    <i class="fa-light fa-circle-info pe-3 text-primary"></i>
+                    Q2 2023 performance appraisal report has been shared.
+                    <a  class="text-primary fw-semibold">Click here</a>
+                    to view appraisal form
+                  </div>
+                </div>
+                <div class="carousel-item">
+                  <div class="announce-item">
+                    <i class="fa-light fa-circle-info pe-3 text-primary"></i>
+                    Q3 2023 performance appraisal.
+                    <a  class="text-primary fw-semibold">Click here</a>
+                    to view appraisal form
+                  </div>
+                </div>
+                <div class="carousel-item">
+                  <div class="announce-item">
+                    <i class="fa-light fa-circle-info pe-3 text-primary"></i>
+                    Q4 2023 performance appraisal.
+                    <a  class="text-primary fw-semibold">Click here</a>
+                    to view appraisal form
+                  </div>
+                </div>
+              </div>
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#myCarousel"
+                data-bs-slide="prev"
+              >
+                <i class="fa-sharp fa-light fa-angle-left"></i>
+              </button>
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#myCarousel"
+                data-bs-slide="next"
+              >
+                <i class="fa-sharp fa-light fa-angle-right"></i>
+              </button>
+            </div>
+          </section>
+          <div class="row my-4 align-items-start">
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h5 class="mb-4">
+                    <a>Time Log</a>
+                  </h5>
+                  <div class="row mb-5">
+                    <div class="col">
+                      <div
+                        class="boxborder px-3 py-4 d-flex align-items-center"
+                      >
+                        <div class="iconButton large me-4 successbg">
+                          <i class="fa-light fa-arrow-right-to-bracket"></i>
+                        </div>
+                        <div>
+                          <p class="silver mb-1 text-uppercase">Check-In</p>
+                          <h6 class="m-0">{{ recentCheckIn || "--/--" }}</h6>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div
+                        class="boxborder px-3 py-4 d-flex align-items-center"
+                      >
+                        <div class="iconButton large me-4 errorbg">
+                          <i class="fa-light fa-arrow-right-from-bracket"></i>
+                        </div>
+                        <div>
+                          <p class="silver mb-1 text-uppercase">Check-Out</p>
+                          <!-- <h6 class="m-0">--/--</h6> -->
+                          <h6 class="m-0">{{ recentCheckOut || "--/--" }}</h6>
+                        </div>
+
+                        <a
+
+                          role="button"
+                          (click)="openEnd(addcontent)"
+                          *ngIf="recentCheckOut === '' || recentCheckOut === null"
+                          class="btn btn-link ms-auto"
+                          >Add
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row justify-content-between mb-4">
+                    <div class="col">
+                      <h6>{{ recentCheckInTime || "-" }}</h6>
+                      <p class="silver mb-1 text-uppercase">Check-In</p>
+                    </div>
+                    <div class="col">
+                      <!-- <h6>-</h6> -->
+                      <h6>{{ recentCheckOutTime || "-" }}</h6>
+                      <p class="silver mb-1 text-uppercase">Check-Out</p>
+                    </div>
+                    <div class="col">
+                      <h6>{{ totalHours || "-" }}</h6>
+                      <p class="silver mb-1 text-uppercase">Total Hours</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 datepnew">
+              <bs-datepicker-inline
+                [bsConfig]="{ containerClass: 'theme-orange' }"
+                [bsValue]="bsInlineValue"
+                [(ngModel)]="filterDate"
+                (bsValueChange)="filterData($event)"
+              ></bs-datepicker-inline>
+            </div>
+          </div>
+          <div class="row my-4">
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-body p-0">
+                  <h5 class="p-4 m-0">Vacant Jobs</h5>
+                  <ul
+                    class="list-group list-group-flush list-second linklist"
+                    data-scrollbar="true"
+                    tabindex="-1"
+                    style="overflow: auto; outline: none"
+                  >
+                    <div
+                      class="scroll-content"
+                      style="transform: translate3d(0px, 0px, 0px)"
+                    >
+                      <li
+                        class="list-group-item"
+                        *ngFor="let job of vaccantJobs"
+                      >
+                        <a class="d-flex align-items-center" href="{{job.job_details_url}}" target="_blank">
+                          <div>
+                            <p class="m-0">
+                              {{ job.jobs?.title }}
+                            </p>
+                            <small class="coal">
+                              <i class="fa-light fa-location"></i>
+                              <ng-container
+                                *ngFor="
+                                  let city of job.jobs?.cities;
+                                  let lastCity = last
+                                "
+                              >
+                                <span>{{ city.name }}</span>
+                                <ng-container *ngIf="!lastCity"
+                                  >,
+                                </ng-container>
+                              </ng-container>
+                            </small>
+                          </div>
+                          <!-- <span class="badge rounded-pill cherryTransBg ms-auto">BPO</span> -->
+                          <span class="ms-auto"
+                            ><small>Expire at: {{ job.jobs?.expired_at }}</small>
+                          </span>
+                        </a>
+                      </li>
+                    </div>
+                    <div
+                      class="scrollbar-track scrollbar-track-x"
+                      style="display: block"
+                    >
+                      <div
+                        class="scrollbar-thumb scrollbar-thumb-x"
+                        style="
+                          width: 516px;
+                          transform: translate3d(0px, 0px, 0px);
+                        "
+                      ></div>
+                    </div>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-body p-0">
+                  <h5 class="p-4 m-0">Team’s Birthday</h5>
+                  <ul
+                    class="list-group list-group-flush list-second linklist"
+                    data-scrollbar="true"
+                    tabindex="-1"
+                    style="overflow: auto; outline: none"
+                  >
+                    <div
+                      class="scroll-content"
+                      style="transform: translate3d(0px, 0px, 0px)"
+                    >
+                      <li
+                        class="list-group-item d-flex align-items-center"
+                        *ngFor="let birthday of filteredBirthdays"
+                      >
+                        <span
+                          class="iconButton medium cherryTransBg night fw-bolder"
+                          >{{ birthday.firstNameLetter
+                          }}{{ birthday.lastNameLetter }}</span
+                        >
+                        <div class="ms-3">
+                          <h6 class="mb-0">{{ birthday.userName }}</h6>
+                          <small class="coal"
+                            ><i class="fa-light fa-calendar"></i>
+                            {{ birthday.birthDate | date }}</small>
+                        </div>
+                      </li>
+                    </div>
+                    <div
+                      class="scrollbar-track scrollbar-track-x"
+                      style="display: block"
+                    >
+                      <div
+                        class="scrollbar-thumb scrollbar-thumb-x"
+                        style="
+                          width: 516px;
+                          transform: translate3d(0px, 0px, 0px);
+                        "
+                      ></div>
+                    </div>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-body p-0">
+                  <h5 class="p-4 m-0">Benefits</h5>
+                  <ul
+                    class="list-group list-group-flush list-second linklist"
+                    data-scrollbar="true"
+                    tabindex="-1"
+                    style="overflow: auto; outline: none"
+                  >
+                    <div class="scroll-content">
+                      <ng-container *ngIf="benefits.length > 0; else noBenefit">
+                        <li
+                          class="list-group-item d-flex align-items-center"
+                          *ngFor="let benefit of benefits"
+                        >
+                          <span class="iconButton medium radicalTransBg night"
+                            ><i [ngClass]="benefit.icon"></i
+                          ></span>
+                          <h6 class="ms-3 mb-0">{{ benefit.type }}</h6>
+                        </li>
+                      </ng-container>
+                      <ng-template #noBenefit>
+                        <div style="display: block; text-align: center">
+                          <span>Benefit not added yet</span>
+                        </div>
+                      </ng-template>
+                    </div>
+                    <div
+                      class="scrollbar-track scrollbar-track-x"
+                      style="display: block"
+                    >
+                      <div
+                        class="scrollbar-thumb scrollbar-thumb-x"
+                        style="
+                          width: 516px;
+                          transform: translate3d(0px, 0px, 0px);
+                        "
+                      ></div>
+                    </div>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="my-4">
+            <div class="card">
+              <div class="card-body p-0">
+                <h5 class="p-4 m-0">Reporting Hierarchy</h5>
+                <ul class="hierarchy list-0">
+                  <li *ngIf="hierarchy.manager !== null">
+                    <div
+                      class="h-item bg-primary ice"
+                      [tooltip]="
+                        hierarchy.manager?.name +
+                        ', ' +
+                        hierarchy.manager?.designation
+                      "
+                      placement="right"
+                      data-bs-html="true"
+                    >
+                      <span
+                        >{{ hierarchy.manager?.firstNameLetter
+                        }}{{ hierarchy.manager?.lastNameLetter }}</span
+                      >
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="h6 ps-5 ms-4 coal"
+                      *ngIf="hierarchy.sharingManager?.length > 0"
+                      >Sharing Same Manager ({{
+                        hierarchy.sharingManager?.length
+                      }})</span
+                    >
+
+                    <ul class="list-inline align-items-center">
+                      <li class="list-inline-item">
+                        <div
+                          class="h-item skyTransBg night"
+                          data-bs-html="true"
+                          [tooltip]="
+                            hierarchy.user?.name +
+                            ', ' +
+                            hierarchy.user?.designation
+                          "
+                          placement="right"
+                        >
+                          <span
+                            >{{ hierarchy.user?.firstNameLetter
+                            }}{{ hierarchy.user?.lastNameLetter }}</span
+                          >
+                        </div>
+                      </li>
+
+                      <li
+                        class="list-inline-item"
+                        *ngFor="
+                          let manager of hierarchy.sharingManager?.slice(0, 5)
+                        "
+                      >
+                        <div
+                          class="h-item cherryTransBg night"
+                          data-bs-toggle="tooltip"
+                          data-bs-html="true"
+                          [tooltip]="manager.name + ', ' + manager.designation"
+                          placement="right"
+                        >
+                          <span>
+                            {{ manager.firstNameLetter
+                            }}{{ manager.lastNameLetter }}
+                          </span>
+                        </div>
+                      </li>
+                      <li
+                        class="list-inline-item"
+                        *ngIf="hierarchy.sharingManager?.length > 5"
+                      >
+                        <div
+                          class="btn btn-sm btn-link bg-primary20 ms-5"
+                          data-bs-toggle="offcanvas"
+                          href="#sharingManagerdetails"
+                          role="button"
+                          aria-controls="offcanvasExample"
+                        >
+                          <span>View All</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li *ngIf="hierarchy.reporty?.length > 0">
+                    <span class="h6 ps-5 ms-4 coal"
+                      >Reporting To ({{ hierarchy.reporty?.length }})</span
+                    >
+                    <ul class="list-inline align-items-center">
+                      <li
+                        class="list-inline-item"
+                        *ngFor="let reporty of hierarchy.reporty?.slice(0, 5)"
+                      >
+                        <div
+                          class="h-item berryTransBg night"
+                          data-bs-html="true"
+                          [tooltip]="reporty.name + ', ' + reporty.designation"
+                          placement="top"
+                        >
+                          <span>
+                            {{ reporty.firstNameLetter
+                            }}{{ reporty.lastNameLetter }}
+                          </span>
+                        </div>
+                      </li>
+                      <li
+                        class="list-inline-item"
+                        *ngIf="hierarchy.reporty?.length > 5"
+                      >
+                        <div
+                          class="btn btn-sm btn-link bg-primary20 ms-5"
+                          data-bs-toggle="offcanvas"
+                          href="#reportydetails"
+                          role="button"
+                          aria-controls="offcanvasExample"
+                        >
+                          <span>View All</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="my-4">
+            <div class="card">
+              <div class="card-body p-0">
+                <h5 class="p-4 m-0">Important Links</h5>
+                <ul
+                  class="list-group list-group-flush linklist"
+                  data-scrollbar="true"
+                  tabindex="-1"
+                  style="overflow: auto; outline: none"
+                >
+                  <div
+                    class="scroll-content"
+                    style="transform: translate3d(0px, 0px, 0px)"
+                    *ngFor="let link of importantLinkItems"
+                  >
+                    <li class="list-group-item">
+                      <a routerLink="{{ link.linkURL }}">{{ link.linkURL }}</a>
+                    </li>
+                  </div>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div
+  class="offcanvas offcanvas-small offcanvas-end"
+  tabindex="-1"
+  id="updateattendance"
+  aria-labelledby="updateattendanceLabel"
+  aria-modal="true"
+  role="dialog"
+> -->
+<ng-template #addcontent let-offcanvas>
+  <div class="offcanvas-header bg-light">
+    <div class="row g-0 w-100">
+      <div class="col-md-6">
+        <h5 class="mb-0">Update Attendance</h5>
+        <h6 class="mt-1 coal">{{ currentDayAttendance?.attendanceDate }}</h6>
+      </div>
+      <div class="col-md-6 justify-content-end d-flex align-items-center pe-0">
+        <span
+          class="iconButton iconHower medium"
+        (click)="closeOffset(addcontent)"
+          ><i class="fa-light fa-times"></i
+        ></span>
+      </div>
+    </div>
+  </div>
+  <div class="offcanvas-body p-4">
+    <div class="d-flex align-items-center justify-content-center px-4">
+      <div
+        class="checkinbox border inactive rounded p-3 me-4 d-flex align-items-center col"
+      >
+        <span class="iconButton medium bg-light me-3">
+          <i class="fa-light fa-left-from-line"></i>
+        </span>
+        <div>
+          <p class="m-0">check In at</p>
+          <h4>{{ recentCheckInTime }}</h4>
+        </div>
+      </div>
+      <div
+        class="checkinbox active border rounded p-3 d-flex align-items-center col"
+      >
+        <span class="iconButton medium errorbg me-3">
+          <i class="fa-light fa-right-from-line"></i>
+        </span>
+        <div>
+          <p class="m-0">Check-Out at</p>
+          <h4>{{ checkOutAt }}</h4>
+        </div>
+      </div>
+    </div>
+    <form [formGroup]="addAttendanceForm" class="px-4">
+      <div class="mb-3">
+        <label for="" class="col-form-label">Attendance Date</label>
+        <div class="iconholder">
+
+          <input
+            type="date"
+            class="form-control"
+            formControlName="attendanceDate"
+          />
+        </div>
+        <div class="invalid-feedback">
+          <div *ngIf="aF['attendanceDate'].errors?.['required']">
+            Attendance Date is required.
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="" class="col-form-label">Check-In Location</label>
+        <select name="" class="form-select" formControlName="checkInLocation">
+          <option value="" disabled selected>Select Location</option>
+          <option
+            [value]="location.description"
+            *ngFor="let location of locations"
+          >
+            {{ location.description }}
+          </option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="" class="col-form-label">Check-in Time</label>
+        <div class="iconholder">
+
+          <input
+            (change)="checkInChange()"
+            type="datetime-local"
+            class="form-control"
+            formControlName="checkInDateTime"
+            [class.is-invalid]="aF['checkInDateTime'].invalid && aF['checkInDateTime'].touched"
+            [class.is-valid]="aF['checkInDateTime'].valid && aF['checkInDateTime'].touched"
+          />
+
+        </div>
+        <div class="invalid-feedback">
+          <div *ngIf="aF['checkInDateTime'] && aF['checkInDateTime'].errors">
+            <div *ngIf="aF['checkInDateTime'].errors?.['required']">checkIn Date Time is required.</div>
+          </div>
+        </div>
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <div class="mb-3">
+        <label for="" class="col-form-label">Check-Out Location</label>
+        <select name="" class="form-select" formControlName="checkOutLocation">
+          <option value="" disabled selected>Select Location</option>
+          <option
+            [value]="location.description"
+            *ngFor="let location of locations"
+          >
+            {{ location.description }}
+          </option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="" class="col-form-label">Check-Out Time</label>
+        <div class="iconholder">
+
+          <input
+            (change)="checkOut()"
+            type="datetime-local"
+            class="form-control"
+            formControlName="checkOutDateTime"
+            [class.is-invalid]="
+              aF['checkOutDateTime'].invalid && aF['checkOutDateTime'].touched
+            "
+            [class.is-valid]="
+              aF['checkOutDateTime'].valid &&
+              aF['checkOutDateTime'].touched &&
+              !isCheckoutGreater &&
+              !isDurationOk
+            "
+          />
+        </div>
+      </div>
+      <div *ngIf="isCheckoutGreater" class="text-danger">
+        Check-out time must be greater than check-in time.
+      </div>
+      <div *ngIf="isDurationOk" class="text-danger">
+        The duration should be less than 24 hours.
+      </div>
+
+
+      <div class="mb-3">
+        <label for="" class="col-form-label">Add Note</label>
+        <textarea
+          class="form-control"
+          placeholder="Write Note here"
+          style="height: 100px"
+          [class.is-invalid]="aF['note'].invalid && aF['note'].touched"
+          [class.is-valid]="aF['note'].valid && aF['note'].touched"
+          formControlName="note"
+        ></textarea>
+
+        <div class="invalid-feedback">
+          <div *ngIf="aF['note'] && aF['note'].errors">
+            <div *ngIf="aF['note'].errors?.['required']">Note is required.</div>
+          </div>
+        </div>
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+    </form>
+  </div>
+  <footer class="bg-light p-3 text-end pe-5">
+    <button
+      class="btn btn-primary btn-small updateattendance"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+      style="margin-right: 10px"
+      (click)="submitForm(addcontent)"
+    >
+      Submit
+    </button>
+    <button
+      class="btn btn-outline-danger btn-small"
+      (click)="closeOffset(addcontent)"
+    >
+      Cancel
+    </button>
+  </footer>
+</ng-template>
+<!-- </div> -->
+
+<div
+  class="offcanvas w-40 offcanvas-end"
+  tabindex="-1"
+  id="sharingManagerdetails"
+  aria-labelledby="addbtLabel"
+  aria-modal="true"
+  role="dialog"
+>
+  <div
+    class="d-flex align-items-center justify-content-between p-4 mb-3 bg-primary20"
+  >
+    <div class="d-flex align-items-center" *ngIf="hierarchy.manager !== null">
+      <span class="iconButton large fw-bold bg-primary night">
+        {{ hierarchy.manager?.firstNameLetter
+        }}{{ hierarchy.manager?.lastNameLetter }}
+      </span>
+      <div class="ms-3">
+        <h5 class="text-dark">{{ hierarchy.manager?.name }}</h5>
+        <p class="mb-1 text-dark">{{ hierarchy.manager?.designation }}</p>
+      </div>
+    </div>
+    <span
+      class="iconButton iconHower medium"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+      ><i class="fa-light fa-times"></i
+    ></span>
+  </div>
+
+  <div class="offcanvas-body p-0">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item coal" *ngIf="hierarchy.manager !== null">
+        <p>
+          Total {{ hierarchy.sharingManager?.length + 1 }} Employees are
+          reporting to {{ hierarchy.manager?.name }}
+        </p>
+      </li>
+      <ng-container *ngIf="hierarchy.sharingManager?.length > 0">
+        <li
+          *ngFor="let manager of hierarchy.sharingManager"
+          class="list-group-item d-flex align-items-center justify-content-between px-4 mb-3"
+        >
+          <div class="d-flex align-items-center">
+            <span class="iconButton medium fw-bold mintTransBg night">
+              FS
+            </span>
+            <div class="ms-3">
+              <h5 class="text-dark">{{ manager.name }}</h5>
+              <p class="mb-1 coal">{{ manager.designation }}</p>
+            </div>
+          </div>
+        </li></ng-container
+      >
+    </ul>
+  </div>
+</div>
+<div
+  class="offcanvas w-40 offcanvas-end"
+  tabindex="-1"
+  id="reportydetails"
+  aria-labelledby="addbtLabel"
+  aria-modal="true"
+  role="dialog"
+>
+  <div
+    class="d-flex align-items-center justify-content-between p-4 mb-3 bg-primary20"
+  >
+    <div class="d-flex align-items-center">
+      <span class="iconButton large fw-bold bg-primary night">
+        {{ hierarchy.user?.firstNameLetter
+        }}{{ hierarchy.user?.lastNameLetter }}
+      </span>
+      <div class="ms-3">
+        <h5 class="text-dark">{{ hierarchy.user?.name }}</h5>
+        <p class="mb-1 text-dark">{{ hierarchy.user?.designation }}</p>
+      </div>
+    </div>
+    <span
+      class="iconButton iconHower medium"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+      ><i class="fa-light fa-times"></i
+    ></span>
+  </div>
+
+  <div class="offcanvas-body p-0" *ngIf="hierarchy.reporty?.length > 0">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item coal">
+        <p>
+          Total {{ hierarchy.reporty?.length }} Employees are reporting to
+          {{ hierarchy.user?.name }}
+        </p>
+      </li>
+      <li
+        *ngFor="let reporty of hierarchy.reporty"
+        class="list-group-item d-flex align-items-center justify-content-between px-4 mb-3"
+      >
+        <div class="d-flex align-items-center">
+          <span class="iconButton medium fw-bold mintTransBg night">
+            {{ reporty.firstNameLetter }}{{ reporty.lastNameLetter }}
+          </span>
+          <div class="ms-3">
+            <h5 class="text-dark">{{ reporty.name }}</h5>
+            <p class="mb-1 coal">{{ reporty.designation }}</p>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<app-toaster></app-toaster>

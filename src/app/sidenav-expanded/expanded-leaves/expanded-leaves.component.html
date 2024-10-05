@@ -1,0 +1,41 @@
+<nav id="left-sidebar-expand">
+  <div class="leftbar-console-expanded">
+    <div class="sidebar-header pe-3 ps-3">
+      <h5 class="fw-bold mt-3 ms-1">
+        <a>{{ headerTitle }}</a>
+      </h5>
+    </div>
+    <ul class="list-group console-list mt-2" data-scrollbar="true">
+      <li class="list-group-item list-group-item-action"
+      [ngClass]="!menu.expanded?'collapsed':''"
+      *ngFor="let menu of subMenus; let i = index">
+        <a class="d-flex  align-items-center" [routerLink]="menu['RouteName']" [ngClass]="menu.isChild?'chevron-icon':''" type="button" (click)="toggleCollapse(menu)">
+          <i class="fal fa-calendar pe-2"></i>
+          {{ menu["DisplayName"] }}
+      </a>
+
+        <ul
+          *ngIf="menu.Children"
+          class="list-unstyled-inner collapse"
+          [ngClass]="menu.expanded?'show':''"
+        >
+          <li
+            *ngFor="let child of menu.Children; let j = index"
+            class="list-group-item list-group-item-action"
+            [ngClass]="{ active: activeIndex === j }"
+          >
+            <a
+              [routerLinkActive]="'active'"
+              [routerLink]="child['RouteName']"
+              class="d-flex align-items-center"
+              (click)="activeMenu(j)"
+            >
+              {{ child["DisplayName"] }}
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <a class="panelToggle" (click)="toggleNavTest()"></a>
+</nav>

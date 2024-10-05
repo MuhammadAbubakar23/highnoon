@@ -1,0 +1,46 @@
+.query-container {
+  height: calc(100vh - 290px);
+  /* overflow: hidden;
+  &.active{
+    height: calc(100vh - 140px);
+  }
+  .table{
+   tr{
+
+     td{
+      &:nth-child(4){
+        max-width: 550px
+      }
+
+     }
+      .maintext{
+        @include text-truncate();
+        max-width: 700px;
+      }
+   }
+  } */
+}
+
+/* .input-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+} */
+
+.invalid-feedback,
+.valid-feedback {
+  position: absolute;
+  bottom: -20px;
+}
+
+.input-wrapper {
+  flex: 1;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.custom-dropdown {
+  max-height: 600px;
+  overflow-y: auto;
+}
+

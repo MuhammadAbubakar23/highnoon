@@ -1,0 +1,803 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-jelly-box"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+<div class="content-box-wrapper d-flex w-100">
+  <div class="middle-content d-flex">
+    <div class="page-content-wrapper">
+      <div
+        class="agent-page-main-content px-4 page-scroll"
+        data-scrollbar="true"
+        tabindex="-1"
+        style="overflow: hidden; outline: none"
+      >
+        <div class="scroll-content">
+          <div class="row mt-4">
+            <div class="col-lg-4 col-md-6">
+              <div class="card dashboard-card">
+                <div class="card-body d-flex align-items-center">
+                  <div class="iconButton medium me-3 successbg">
+                    <i class="fa-light fa-calendar-xmark"></i>
+                  </div>
+                  <div>
+                    <p class="silver mb-1 text-uppercase">Deadline</p>
+                    <h6 class="m-0">Dec 31, {{ year }}</h6>
+                  </div>
+                  <a
+                    data-bs-toggle="offcanvas"
+                    (click)="openEnd(addcontent)"
+                    role="button"
+                    aria-controls="applyaccural"
+                    class="btn btn-link ms-auto"
+                    >Apply</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <div class="card dashboard-card">
+                <div class="card-body d-flex align-items-center">
+                  <div class="iconButton medium me-3 bg-primary20 night">
+                    <i class="fa-light fa-calendar"></i>
+                  </div>
+                  <div>
+                    <p class="silver mb-1 text-uppercase">Remaining Leaves</p>
+                    <h6 class="m-0">{{ resRemainingLeaves }}</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <div class="card dashboard-card">
+                <div class="card-body d-flex align-items-center">
+                  <div class="iconButton medium me-3 skyTransBg night">
+                    <i class="fa-light fa-money-check-dollar"></i>
+                  </div>
+                  <div>
+                    <p class="silver mb-1 text-uppercase">
+                      Leave Accruals Amount
+                    </p>
+                    <h6 class="m-0">Rs.{{ resAccrualsAmount }}</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="filter-container">
+            <div class="row justify-content-between">
+              <div class="col-md-7">
+                <ul class="list-group list-group-horizontal border-0">
+                  <li class="list-group-item border-0 p-0 me-2">
+                    <div class="icon-input search_field">
+                      <i class="fa-light fa-magnifying-glass"></i>
+                      <input
+                        class="form-control"
+                        placeholder="Search.. "
+                        [(ngModel)]="searchText"
+                        (input)="generalFilter()"
+                      />
+                    </div>
+                  </li>
+                  <li class="list-group-item border-0 ms-2 pe-0">
+                    <span class="coal">From</span>
+                  </li>
+                  <li class="list-group-item border-0 p-0 me-2">
+                    <div class="ms-2">
+                      <input
+                        [(ngModel)]="startDate"
+                        class="form-control timepicker flatpickr-input"
+                        value="From"
+                        type="date"
+                        (change)="resetEndDate()"
+                      />
+                    </div>
+                  </li>
+                  <li class="list-group-item border-0 ms-2 pe-0">
+                    <span class="coal">To</span>
+                  </li>
+                  <li class="list-group-item border-0 p-0 mx-2">
+                    <div class="ms-2">
+                      <input
+                        [(ngModel)]="endDate"
+                        class="form-control timepicker flatpickr-input"
+                        type="date"
+                        (change)="filterByDate()"
+                      />
+                    </div>
+                  </li>
+                  <li
+                    class="list-group-item border-0 iconButton iconHover medium"
+                    aria-label="..."
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="bottom"
+                    data-bs-original-title="Refresh"
+                    (click)="refreshPage()"
+                  >
+                    <i class="fal fa-redo-alt"></i>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-md-5">
+                <div
+                  class="filters-opt d-flex align-items-center justify-content-end"
+                >
+                  <div class="dropdown w-auto rounded">
+                    <button
+                      class="btn iconButton iconHover medium"
+                      type="button"
+                      id="sorting1"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="fa-regular fa-arrow-down-short-wide"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="sorting1">
+                      <li class="saltBg p-2 charcoal">
+                        <strong> Sort By</strong>
+                      </li>
+                      <li *ngFor="let column of desColumns">
+                        <a
+                          class="dropdown-item d-flex align-items-center"
+                          (click)="sortDataBy(column)"
+                        >
+                          {{ column }}
+                        </a>
+                      </li>
+                      <!-- <li>
+                        <a
+                          class="dropdown-item d-flex align-items-center"
+
+                        >
+                          Leave Date
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item d-flex align-items-center"
+
+                        >
+                          Leave Type
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item d-flex align-items-center"
+
+                        >
+                          Leave Duration
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item d-flex align-items-center"
+
+                        >
+                          Attachment
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item d-flex align-items-center"
+
+                        >
+                          Leave Status
+                        </a>
+                      </li> -->
+                    </ul>
+                  </div>
+                  <!-- <div class="dropdown w-auto mx-2">
+                    <button
+                      class="btn iconButton iconHover medium"
+                      type="button"
+                      id="columnssort"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="fa-light fa-table-columns"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="columnssort">
+                      <li class="saltBg p-2 charcoal">
+                        <strong> Adjust Columns</strong>
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item d-flex align-items-center"
+
+                        >
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              id="flexCheckDefault"
+                            />
+                            <label
+                              class="form-check-label"
+                              for="flexCheckDefault"
+                            >
+                              Leave Date
+                            </label>
+                          </div>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item d-flex align-items-center"
+
+                        >
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              id="flexCheckDefault"
+                            />
+                            <label
+                              class="form-check-label"
+                              for="flexCheckDefault"
+                            >
+                              Leave Type
+                            </label>
+                          </div>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item d-flex align-items-center"
+
+                        >
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              id="flexCheckDefault"
+                            />
+                            <label
+                              class="form-check-label"
+                              for="flexCheckDefault"
+                            >
+                              Leave Duration
+                            </label>
+                          </div>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item d-flex align-items-center"
+
+                        >
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              id="flexCheckDefault"
+                            />
+                            <label
+                              class="form-check-label"
+                              for="flexCheckDefault"
+                            >
+                              Attachment
+                            </label>
+                          </div>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item d-flex align-items-center"
+
+                        >
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              id="flexCheckDefault"
+                            />
+                            <label
+                              class="form-check-label"
+                              for="flexCheckDefault"
+                            >
+                              Leave Status
+                            </label>
+                          </div>
+                        </a>
+                      </li>
+                    </ul>
+                  </div> -->
+                  <div class="dropdown w-auto">
+                    <button
+                      class="btn iconButton medium"
+                      type="button"
+                      id="dropdownMenuButton1"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="fa-regular fa-ellipsis"></i>
+                    </button>
+                    <ul
+                      class="dropdown-menu"
+                      aria-labelledby="dropdownMenuButton1"
+                    >
+                      <li>
+                        <a class="dropdown-item p-1" (click)="exportData()">
+                          <button
+                            class="iconButton dropdown-iconBtn small"
+                            id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+                            <i class="fa-solid fa-file-export"></i></button
+                          >Export to CSV
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="query-container perfect-scrollbar"
+            data-scrollbar="true"
+            tabindex="-1"
+            style="overflow-y: auto; outline: none"
+          >
+            <div class="scroll-content">
+              <div class="table-section pb-5">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th *ngFor="let column of columnNames">
+                        {{ column }}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of accrualsItems; let i = index">
+                      <td *ngIf="pageNumber == 1">
+                        <a
+                          (click)="getLeaveSummary(item, contentsummary)"
+                          role="button"
+                          aria-controls="leaveaccural"
+                          >{{ i + 1 }}</a
+                        >
+                      </td>
+                      <td *ngIf="pageNumber > 1">
+                        <a
+                          (click)="getLeaveSummary(item, contentsummary)"
+                          role="button"
+                          aria-controls="leaveaccural"
+                        >
+                          {{ i + 1 + pageSize * (pageNumber - 1) }}</a
+                        >
+                      </td>
+
+                      <td
+                        *ngFor="let column of desColumns"
+                        (click)="getLeaveSummary(item, contentsummary)"
+                      >
+                        <span
+                          [ngClass]="{
+                            'badge badge-md rounded-pill':
+                              item[column] === 'Pending' ||
+                              item[column] === 'Approved' ||
+                              item[column] === 'Rejected',
+                            grayfilled: item[column] === 'Pending',
+                            successbg: item[column] === 'Approved',
+                            errorbg: item[column] === 'Rejected',
+                            '':
+                              item[column] !== 'Pending' &&
+                              item[column] !== 'Approved' &&
+                              item[column] !== 'Rejected'
+                          }"
+                        >
+                          {{ item[column] }}
+                        </span>
+                      </td>
+
+                      <!-- <td>
+                      <div
+                        class="dropdown w-auto"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                      >
+                        <button
+                          class="iconButton small iconHover d-inline-block"
+                          id="dropdownMenuButton1"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="true"
+                        >
+                          <i class="far fa-ellipsis-v"></i>
+                        </button>
+                        <ul
+                          class="dropdown-menu custom-dropdown"
+                          aria-labelledby="dropdownMenuButton1"
+                        >
+                          <li>
+                            <a
+                              class="dropdown-item p-1"
+
+                            >
+                              <button
+                                class="iconButton dropdown-iconBtn small"
+                              >
+                                <i class="fal fa-edit"></i></button
+                              >Edit
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item p-1"
+
+                            >
+                              <button
+                                class="iconButton dropdown-iconBtn small dropdown-item p-1"
+                              >
+                                <i class="fal fa-trash"></i>
+                              </button>
+                              Delete
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </td> -->
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <ng-container *ngIf="totalRecords > pageSize">
+              <div class="me-5">
+                <ul class="pagination justify-content-end">
+                  <li class="page-item">
+                    <a
+                      class="page-link"
+                      (click)="prevPage()"
+                      [attr.disabled]="pageNumber === 1"
+                      >Previous</a
+                    >
+                  </li>
+                  <ng-container *ngFor="let page of visiblePages()">
+                    <li class="page-item" [ngClass]="{ disabled: page === -1 }">
+                      <a
+                        class="page-link"
+                        (click)="changePage(page)"
+                        [class.active]="pageNumber === page"
+                        >{{ page === -1 ? "..." : page }}</a
+                      >
+                    </li>
+                  </ng-container>
+                  <li class="page-item">
+                    <a
+                      class="page-link"
+                      (click)="nextPage()"
+                      [attr.disabled]="pageNumber === totalPages"
+                      >Next</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div
+  class="offcanvas offcanvas-small offcanvas-end"
+  [class.show]="showOffcanvas"
+  tabindex="-1"
+  id="applyaccural"
+  aria-labelledby="applyaccuralLabel"
+  aria-modal="true"
+  role="dialog"
+> -->
+<ng-template #addcontent let-offcanvas>
+  <div class="offcanvas-header bg-light">
+    <div class="row g-0 w-100">
+      <div class="col-md-6 d-flex align-items-center">
+        <h5 class="mb-0">Apply Leave Accurals</h5>
+      </div>
+      <div class="col-md-6 justify-content-end d-flex align-items-center pe-0">
+        <span
+          class="iconButton iconHower medium"
+          (click)="closeOffset(addcontent)"
+          aria-label="Close"
+          ><i class="fa-light fa-times"></i
+        ></span>
+      </div>
+    </div>
+  </div>
+  <div class="offcanvas-body p-0">
+    <div class="list-group-section">
+      <ul class="list-group list-group-flush">
+        <li
+          class="list-group-item d-flex align-items-center justify-content-between px-4"
+        >
+          <span>For the Year of</span>
+          <strong>{{ year }}</strong>
+        </li>
+        <li
+          class="list-group-item d-flex align-items-center justify-content-between px-4"
+        >
+          <span>Leaves Remaining</span>
+          <strong>{{ remainingLeaves }}</strong>
+        </li>
+        <li
+          class="list-group-item d-flex align-items-center justify-content-between px-4"
+        >
+          <span>Pay Per Leaves</span>
+          <strong>PKR {{ payPerLeave }}</strong>
+        </li>
+        <li
+          class="list-group-item d-flex align-items-center justify-content-between px-4"
+        >
+          <span>Overall Tax on Leave Accurals (5%)</span>
+          <strong>PKR {{ overAllTax }}</strong>
+        </li>
+        <li
+          class="list-group-item d-flex align-items-center justify-content-between px-4"
+        >
+          <h5 class="text-success"><span>Total Accurals Amount </span></h5>
+          <h5 class="text-success">
+            <strong>PKR {{ totalAccrualsAmount }}</strong>
+          </h5>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <footer class="bg-light p-3 text-end pe-5">
+    <button
+      class="btn btn-primary btn-small"
+      (click)="showConsfirmationLabel()"
+      style="margin-right: 10px"
+    >
+      Apply
+    </button>
+    <button
+      class="btn btn-outline-danger btn-small"
+      aria-label="Close"
+      (click)="closeOffset(addcontent)"
+    >
+      Cancel
+    </button>
+  </footer>
+</ng-template>
+<!-- </div> -->
+<div
+  class="modal fade show"
+  id="applyencash"
+  tabindex="-1"
+  aria-labelledby="applyencashLabel"
+  aria-modal="true"
+  role="dialog"
+  [ngStyle]="{ display: consfirmationLabel ? 'block' : 'none' }"
+>
+  >
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="edittagsLabel">Confirmation</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="cancelConsfirmationLabel()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="py-5 px-4">
+          <div class="d-flex">
+            <span class="iconButton exlarge successdarkbg">
+              <i class="fa-light fa-circle-check fs-4"></i>
+            </span>
+            <div class="ms-3">
+              <h6>Are you sure you want to apply for accruals</h6>
+              <p class="m-0">If you don’t save, your changes will be lost.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer saltBg">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-dismiss="modal"
+          (click)="cancelConsfirmationLabel()"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-success encashementapply"
+          id="closebutton"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          [class.disabled]="isButtonDisabled"
+          (click)="submitForm(addcontent)"
+        >
+          ok
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="offcanvas offcanvas-small offcanvas-end"
+  tabindex="-1"
+  id="leaveaccural"
+  aria-labelledby="leaveaccuralLabel"
+  aria-modal="true"
+  role="dialog"
+>
+  <ng-template #contentsummary let-offcanvas>
+    <div class="offcanvas-header bg-light">
+      <div class="row g-0 w-100">
+        <div class="col-md-6 d-flex align-items-center">
+          <h5 class="mb-0">Leave Accurals</h5>
+        </div>
+        <div
+          class="col-md-6 justify-content-end d-flex align-items-center pe-0"
+        >
+          <span
+            class="iconButton iconHower medium"
+            (click)="closeOffset(contentsummary)"
+            aria-label="Close"
+            ><i class="fa-light fa-times"></i
+          ></span>
+        </div>
+      </div>
+    </div>
+    <div class="offcanvas-body p-0">
+      <div class="list-group-section mb-4">
+        <ul class="list-group list-group-flush">
+          <li
+            class="list-group-item d-flex align-items-center justify-content-between px-4"
+          >
+            <span>For the Year of</span>
+            <strong>{{ requesterDetails.year }}</strong>
+          </li>
+          <li
+            class="list-group-item d-flex align-items-center justify-content-between px-4"
+          >
+            <span>Leaves Remaining</span>
+            <strong>{{ requesterDetails.remainingLeaves }}</strong>
+          </li>
+          <li
+            class="list-group-item d-flex align-items-center justify-content-between px-4"
+          >
+            <span>Pay Per Leaves</span>
+            <strong>PKR {{ requesterDetails.payPerLeave }}</strong>
+          </li>
+          <li
+            class="list-group-item d-flex align-items-center justify-content-between px-4"
+          >
+            <span>Overall Tax on Leave accurals (5%)</span>
+            <strong>PKR {{ requesterDetails.overAllTax }}</strong>
+          </li>
+          <li
+            class="list-group-item d-flex align-items-center justify-content-between px-4"
+          >
+            <h5 class="text-success"><span>Total Accurals Amount </span></h5>
+            <h5 class="text-success">
+              <strong
+                >PKR {{ requesterDetails.encashmentAmount | number }}</strong
+              >
+            </h5>
+          </li>
+        </ul>
+      </div>
+      <div class="list-group-section pe-3 pt-4">
+        <div class="main_timeline">
+          <div class="pb-3 d-flex align-items-start timeline_item">
+            <div class="timeline_icon iconButton medium border">
+              <i class="fa-light coal fa-user"></i>
+            </div>
+            <div class="ps-5 timeline_content">
+              <div class="float-end d-flex align-items-center">
+                <span class="iconButton iconHover medium me-2"
+                  ><i class="fa-light fa-message-lines"></i>
+                </span>
+                <span class="badge badge-md rounded-pill skyTransBg night"
+                  >Applied</span
+                >
+              </div>
+              <strong>{{ requesterDetails.requester }} </strong>
+              <p class="mb-1 metal">
+                <small>{{ requesterDetails.appliedDate }}</small>
+              </p>
+              <div
+                class="bg-light border p-3 rounded"
+                *ngIf="requesterDetails.reason !== ''"
+              >
+                <strong>Note</strong>
+                <p class="m-0">
+                  {{ requesterDetails.reason }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="pb-3 d-flex align-items-start timeline_item"
+            *ngFor="let stage of requestStages"
+          >
+            <div
+              class="timeline_icon iconButton medium border"
+              [ngClass]="{ mintBg: stage.status === 1 }"
+            >
+              <i class="fa-light fa-user-tie"></i>
+            </div>
+            <div class="ps-5 timeline_content">
+              <div class="float-end d-flex align-items-center">
+                <span class="iconButton iconHover medium me-2"
+                  ><i class="fa-light fa-message-lines"></i>
+                </span>
+                <span
+                  *ngIf="stage.status === 1"
+                  class="badge badge-md rounded-pill grayfilled"
+                >
+                  Pending
+                </span>
+                <span
+                  *ngIf="stage.status === 2"
+                  class="badge badge-md rounded-pill successbg"
+                  >Approved</span
+                >
+
+                <span
+                  *ngIf="stage.status === 3"
+                  class="badge badge-md rounded-pill errorbg"
+                >
+                  Rejected
+                </span>
+              </div>
+              <strong>{{ stage.approver }}<small></small> </strong>
+              <p class="mb-1 metal">
+                <small>{{ stage.modifiedDate }}</small>
+              </p>
+              <div
+                class="bg-light border p-3 rounded"
+                *ngIf="stage.description !== ''"
+              >
+                {{ stage.description }}
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="pb-3 d-flex align-items-start timeline_item">
+          <div class="timeline_icon iconButton medium border mintBg">
+            <i class="fa-light fa-user-tie"></i>
+          </div>
+          <div class="ps-5 timeline_content">
+            <div class="float-end d-flex align-items-center">
+              <span class="badge badge-md rounded-pill grayfilled"
+                >Pending</span
+              >
+            </div>
+            <strong>Saif Raza <small></small> </strong>
+            <p class="mb-1">May 12, 2023</p>
+          </div>
+        </div> -->
+        </div>
+      </div>
+    </div>
+    <footer class="bg-light p-3 text-end pe-5">
+      <button
+        class="btn btn-outline-danger btn-small"
+        (click)="closeOffset(contentsummary)"
+        aria-label="Close"
+      >
+        Cancel
+      </button>
+    </footer>
+  </ng-template>
+</div>
+
+<app-toaster></app-toaster>

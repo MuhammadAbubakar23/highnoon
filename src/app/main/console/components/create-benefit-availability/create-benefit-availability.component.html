@@ -1,0 +1,209 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-jelly-box"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+<div class="agent-page-main-content">
+  <div
+    class="create-user console-body-wrapper footerheight"
+    data-scrollbar="true"
+    tabindex="-1"
+    style="overflow-y: scroll; height: 80vh; position: relative"
+  >
+    <div class="scroll-content">
+      <div class="wider-container pt-3">
+        <header class="tab-header">
+          <nav>
+            <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+              <button
+                class="nav-link active"
+                id="user-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#user-detail"
+                type="button"
+                role="tab"
+                aria-controls="user-detail"
+                aria-selected="true"
+              >
+                <h6>Details</h6>
+              </button>
+              <!-- <button
+                class="nav-link"
+                id="team-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#user-preference"
+                type="button"
+                role="tab"
+                aria-controls="user-preference"
+                aria-selected="false"
+                tabindex="-1"
+              >
+                <h6>Preferences</h6>
+              </button> -->
+            </div>
+          </nav>
+        </header>
+        <!-- <button class="btn btn-primary btn-small closeattendreq" data-bs-dismiss="offcanvas" aria-label="Close">Add Attendance</button>
+        <div class="position-fixed toast-bar rounded iceBg" style="z-index: 60">
+          <div class="toast border-0 p-4 fade hide" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="d-flex border-0 w-100">
+          <i class="fa-solid fa-check-circle fs-2 me-3 mint"></i>
+          <div class="d-flex flex-column">
+          <h5 class="toast-heading">Request sent successfully </h5>
+          <p class="toast-line-para fs-6 m-0">Your request for attendace add has been sent for approval </p>
+          </div>
+          <div class="toast-btn">
+          <button type="button" class="btn m-0 fs-5" data-bs-dismiss="toast"><i class="fa-regular fa-times"></i></button>
+          </div>
+          </div>
+          </div>
+          </div> -->
+        <div class="tab-body">
+          <div class="tab-content" id="nav-tabContent">
+            <div
+              id="user-detail"
+              class="tab-pane fade active show"
+              role="tabpanel"
+              aria-labelledby="user-tab"
+            >
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="team-detail-form-box mb-5">
+                    <form
+                      [formGroup]="benefitAvailabilityForm"
+                      class="user-detail-form"
+                    >
+                      <div class="floating-item mb-4">
+                        <div class="form-floating mb-2">
+                          <input
+                            [class.is-invalid]="
+                              bAF['limit'].invalid && bAF['limit'].touched
+                            "
+                            [class.is-valid]="
+                              bAF['limit'].valid && bAF['limit'].touched
+                            "
+                            class="form-control"
+                            id="limit"
+                            type="number"
+                            placeholder="Enter Limit"
+                            formControlName="limit"
+                          />
+                          <label for="first-name">Limit</label>
+                          <div class="invalid-feedback">
+                            Please enter a Limit
+                          </div>
+                          <div class="valid-feedback">Looks good!</div>
+                        </div>
+                        <div class="form-floating mb-2">
+                          <input
+                            [class.is-invalid]="
+                              bAF['unit'].invalid && bAF['unit'].touched
+                            "
+                            [class.is-valid]="
+                              bAF['unit'].valid && bAF['unit'].touched
+                            "
+                            class="form-control"
+                            id="unit"
+                            placeholder="Enter Unit"
+                            formControlName="unit"
+                          />
+                          <label for="first-name">Unit</label>
+                          <div class="invalid-feedback">
+                            Please enter a Unit
+                          </div>
+                          <div class="valid-feedback">Looks good!</div>
+                        </div>
+
+                        <div class="form-floating mb-2">
+                          <select
+                            class="form-select"
+                            id="benefitTypeId"
+                            formControlName="benefitTypeId"
+                          >
+                            <option disabled [value]="0">Select Benefit</option>
+                            <option
+                              [value]="benefit.benefitTypeId"
+                              *ngFor="let benefit of benefits"
+                            >
+                              {{ benefit.type }}
+                            </option>
+                          </select>
+                          <!-- <label for="first-name">employeeTypeId</label> -->
+                          <div class="invalid-feedback">
+                            <div
+                              *ngIf="bAF['benefitTypeId'].errors?.['required']"
+                            >
+                              Please enter a Benefit Type
+                            </div>
+                          </div>
+                          <div class="valid-feedback">Looks good!</div>
+                        </div>
+
+                        <div class="form-floating mb-2">
+                          <ng-select
+                            [multiple]="isMultiple"
+                            placeholder="Select Designation"
+                            formControlName="designationId"
+                          >
+                            <ng-option
+                              *ngFor="let designation of designations"
+                              [value]="designation.designationId"
+                              >{{ designation.title }}</ng-option
+                            >
+                          </ng-select>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer">
+    <div class="ps-3 pe-3">
+      <div
+        class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4"
+      >
+        <div class="row w-100">
+          <div class="col-md-4"></div>
+          <div class="col-md-8 justify-content-end d-flex">
+            <div class="buttons-wrap d-flex">
+              <button
+                type="button"
+                class="btn btn-outline-secondary btn-medium me-2 px-4"
+                data-bs-toggle="modal"
+                data-bs-target=""
+                routerLink="/connect/console/benefit-availability"
+              >
+                Back
+              </button>
+              <button
+                type="button"
+                class="btn btn-success ms-e f-saveBtn btn-large d-none"
+              ></button>
+              <button
+                type="button"
+                class="btn skyBg ms-2 px-4 btn-medium saveBtn"
+                data-bs-toggle="modal"
+                data-bs-target=""
+                (click)="submitForm()"
+                [class.disabled]="benefitAvailabilityForm.invalid"
+              >
+              Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<app-toaster></app-toaster>

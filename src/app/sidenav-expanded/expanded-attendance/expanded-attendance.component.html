@@ -1,0 +1,25 @@
+<nav id="left-sidebar-expand" class="">
+  <div class="leftbar-console-expanded">
+
+    <div class="sidebar-header pe-3 ps-3">
+      <h5 class="fw-bold mt-3 ms-1">
+        <a>{{ headerTitle }}</a>
+      </h5>
+    </div>
+    <ul class="list-group console-list mt-2" data-scrollbar="data-scrollbar">
+        <li  class="list-group-item list-group-item-action" *ngFor="let menu of subMenus;let i=index"
+      [ngClass]="{'active':activeIndex===i}">
+        <a
+          (click)="activeMenu(i)"
+          class="d-flex align-items-center"
+          [routerLink]="[menu['RouteName']]"
+        >
+          {{ menu['DisplayName'] }}
+        </a>
+      </li>
+    </ul>
+    
+
+  </div>
+  <a class="panelToggle" (click)="toggleNavTest()"></a>
+</nav>

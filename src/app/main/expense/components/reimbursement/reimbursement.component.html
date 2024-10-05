@@ -1,0 +1,971 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-jelly-box"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+
+<div class="content-box-wrapper d-flex w-100">
+  <div class="middle-content d-flex">
+    <div class="page-content-wrapper">
+      <div class="agent-page-main-content px-4">
+        <div class="row mt-4">
+          <div class="col-md-3">
+            <div class="card dashboard-card">
+              <div class="card-body d-flex align-items-center">
+                <div class="iconButton medium me-3 skyTransBg">
+                  <i class="fa-light fa-file-invoice-dollar"></i>
+                </div>
+                <div>
+                  <p class="silver mb-1 text-uppercase">total Expense</p>
+                  <h5 class="m-0">PKR {{ totalExpense }}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card dashboard-card">
+              <div class="card-body d-flex align-items-center">
+                <div class="iconButton medium me-3 successbg night">
+                  <i class="fa-light fa-check"></i>
+                </div>
+                <div>
+                  <p class="silver mb-1 text-uppercase">Approved</p>
+                  <h5 class="m-0">{{ approved }}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card dashboard-card">
+              <div class="card-body d-flex align-items-center">
+                <div class="iconButton medium me-3 errorbg night">
+                  <i class="fa-light fa-times"></i>
+                </div>
+                <div>
+                  <p class="silver mb-1 text-uppercase">Rejected</p>
+                  <h5 class="m-0">{{ rejected }}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card dashboard-card">
+              <div class="card-body d-flex align-items-center">
+                <div class="iconButton medium me-3 grayfilled night">
+                  <i class="fa-regular fa-spinner"></i>
+                </div>
+                <div>
+                  <p class="silver mb-1 text-uppercase">Pending</p>
+                  <h5 class="m-0">{{ pending }}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="filter-container">
+          <div class="row justify-content-between">
+            <div class="col-md-7">
+              <ul class="list-group list-group-horizontal border-0">
+                <!-- <li class="list-group-item border-0 p-0 me-2">
+                  <div class="icon-input">
+                    <i class="fa-light fa-magnifying-glass"></i>
+                    <input
+                      class="form-control"
+                      placeholder="Search.. "
+                      [(ngModel)]="text"
+                      (input)="generalFilter()"
+                    />
+                  </div>
+                </li>
+                <li class="list-group-item border-0 p-0 me-2">
+                  <div class="iconholder ms-2">
+                    <input
+                      [(ngModel)]="startDate"
+                      class="form-control timepicker flatpickr-input"
+                      type="date"
+                      (change)="resetEndDate()"
+                    />
+                  </div>
+                </li>
+                <li class="list-group-item border-0 p-0 me-2">
+                  <div class="iconholder ms-2">
+                    <input
+                      [(ngModel)]="endDate"
+                      class="form-control timepicker flatpickr-input"
+                      type="date"
+                      (change)="filterByDate()"
+                    />
+                  </div>
+                </li> -->
+                <li class="list-group-item border-0 p-0 me-2">
+                  <div class="icon-input search_field">
+                    <i class="fa-light fa-magnifying-glass"></i>
+                    <input
+                      class="form-control"
+                      placeholder="Search.. "
+                      [(ngModel)]="text"
+                      (input)="generalFilter()"
+                    />
+                  </div>
+                </li>
+                <li class="list-group-item border-0 ms-2 pe-0">
+                  <span class="coal">From</span>
+                </li>
+                <li class="list-group-item border-0 p-0 me-2">
+                  <div class="ms-2">
+                    <input
+                      [(ngModel)]="startDate"
+                      class="form-control timepicker flatpickr-input"
+                      value="From"
+                      type="date"
+                      (change)="resetEndDate()"
+                    />
+                  </div>
+                </li>
+                <li class="list-group-item border-0 ms-2 pe-0">
+                  <span class="coal">To</span>
+                </li>
+                <li class="list-group-item border-0 p-0 mx-2">
+                  <div class="ms-2">
+                    <input
+                      [(ngModel)]="endDate"
+                      class="form-control timepicker flatpickr-input"
+                      type="date"
+                      (change)="filterByDate()"
+                    />
+                  </div>
+                </li>
+                <li class="list-group-item border-0 p-0 me-2">
+                  <div class="dropdown w-auto">
+                    <button
+                      class="btn dropdown-toggle"
+                      type="button"
+                      id="dropdownMenuButton1"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      {{ selectedReimbursementStatus || "Status" }}
+                    </button>
+                    <ul
+                      class="dropdown-menu custom-dropdown"
+                      aria-labelledby="dropdownMenuButton1"
+                    >
+                      <li *ngFor="let ls of reimbursementStatusKeys">
+                        <a class="dropdown-item" (click)="filterByStatus(ls)">{{
+                          ls
+                        }}</a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li
+                  class="list-group-item border-0 iconButton iconHover medium"
+                  aria-label="..."
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="bottom"
+                  data-bs-original-title="Refresh"
+                  (click)="refreshPage()"
+                >
+                  <i class="fal fa-redo-alt"></i>
+                </li>
+                <li
+                  class="list-group-item border-top-0 iconButton medium iconHover border-bottom-0 border-start-0 after-select-fun"
+                  aria-label="..."
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="bottom"
+                  data-bs-original-title="Delete"
+                  style="display: none"
+                >
+                  <i class="fal fa-trash"></i>
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-5">
+              <div
+                class="filters-opt d-flex align-items-center justify-content-end"
+              >
+                <a
+                  class="btn btn-success me-2"
+                  (click)="openEnd(addcontent)"
+                  role="button"
+                  aria-controls="addreimbursement"
+                >
+                  Add Reimbursement
+                </a>
+                <div class="dropdown w-auto rounded">
+                  <button
+                    class="btn iconButton iconHover medium"
+                    type="button"
+                    id="sorting1"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <i class="fa-regular fa-arrow-down-short-wide"></i>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="sorting1">
+                    <li class="saltBg p-2 charcoal">
+                      <strong> Sort By</strong>
+                    </li>
+                    <li *ngFor="let column of desColumns">
+                      <a
+                      class="dropdown-item d-flex align-items-center"
+                      (click)="sortDataBy(column)"
+                      >
+                      {{ column }}
+                    </a>
+                    </li>
+                    <!-- <li>
+                      <a
+                        class="dropdown-item d-flex align-items-center"
+
+                      >
+                        ID
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item d-flex align-items-center"
+
+                      >
+                        Name
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item d-flex align-items-center"
+
+                      >
+                        Status
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item d-flex align-items-center"
+
+                      >
+                        Priority
+                      </a>
+                    </li> -->
+                  </ul>
+                </div>
+                <!-- <div class="dropdown w-auto mx-2">
+                  <button
+                    class="btn iconButton iconHover medium"
+                    type="button"
+                    id="columnssort"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <i class="fa-light fa-table-columns"></i>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="columnssort">
+                    <li class="saltBg p-2 charcoal">
+                      <strong> Adjust Columns</strong>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item d-flex align-items-center"
+
+                      >
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="flexCheckDefault"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="flexCheckDefault"
+                          >
+                            ID
+                          </label>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item d-flex align-items-center"
+
+                      >
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="flexCheckDefault"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="flexCheckDefault"
+                          >
+                            Name
+                          </label>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item d-flex align-items-center"
+
+                      >
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="flexCheckDefault"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="flexCheckDefault"
+                          >
+                            Description
+                          </label>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item d-flex align-items-center"
+
+                      >
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="flexCheckDefault"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="flexCheckDefault"
+                          >
+                            Status
+                          </label>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item d-flex align-items-center"
+
+                      >
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="flexCheckDefault"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="flexCheckDefault"
+                          >
+                            Priority
+                          </label>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item d-flex align-items-center"
+
+                      >
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="flexCheckDefault"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="flexCheckDefault"
+                          >
+                            Date
+                          </label>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div> -->
+                <div class="dropdown w-auto">
+                  <button
+                    class="btn iconButton medium"
+                    type="button"
+                    id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <i class="fa-regular fa-ellipsis"></i>
+                  </button>
+                  <ul
+                    class="dropdown-menu"
+                    aria-labelledby="dropdownMenuButton1"
+                  >
+                    <li>
+                      <a class="dropdown-item p-1" (click)="exportData()">
+                        <button
+                          class="iconButton dropdown-iconBtn small"
+                          id="dropdownMenuButton1"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <i class="fa-solid fa-file-export"></i></button
+                        >Export to CSV
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="query-container perfect-scrollbar"
+          data-scrollbar="true"
+          tabindex="-1"
+          style="overflow-y: auto; outline: none"
+        >
+          <div class="scroll-content">
+            <div class="table-section">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th *ngFor="let column of columnNames">
+                      {{ column }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of reimbursementItems; let i = index" >
+                    <td *ngIf="pageNumber == 1" (click)="getReimbursementSummary(item, addcontents)">
+                      <a
+                        role="button"
+                        aria-controls="reimbursement-detailLabel"
+                        >{{ i + 1 }}</a
+                      >
+                    </td>
+                    <td *ngIf="pageNumber > 1" (click)="getReimbursementSummary(item, addcontents)">
+                      <a
+                        data-bs-toggle="offcanvas"
+                        href="#reimbursement-detail"
+                        role="button"
+                        aria-controls="reimbursement-detailLabel"
+                      >
+                        {{ i + 1 + pageSize * (pageNumber - 1) }}</a
+                      >
+                    </td>
+                    <td *ngFor="let column of desColumns" (click)="getReimbursementSummary(item, addcontents)">
+                      <a>
+                        <span
+                          [ngClass]="{
+                            'badge badge-md rounded-pill':
+                              item[column] === 'Pending' ||
+                              item[column] === 'Approved' ||
+                              item[column] === 'Rejected' ||
+                              item[column] === 'Canceled',
+                            grayfilled: item[column] === 'Pending',
+                            successbg: item[column] === 'Approved',
+                            errorbg: item[column] === 'Rejected',
+                            warningbg: item[column] === 'Canceled',
+                            '':
+                              item[column] !== 'Pending' &&
+                              item[column] !== 'Approved' &&
+                              item[column] !== 'Rejected' &&
+                              item[column] !== 'Canceled'
+                          }"
+                        >
+                        {{ column === 'totalExpense' ? (item[column] | number) : item[column] }}
+                        </span>
+                      </a>
+                    </td>
+                    <!-- <td>
+                      <div
+                        class="dropdown w-auto"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                      >
+                        <button
+                          class="iconButton small iconHover d-inline-block"
+                          id="dropdownMenuButton1"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="true"
+                        >
+                          <i class="far fa-ellipsis-v"></i>
+                        </button>
+                        <ul
+                          class="dropdown-menu custom-dropdown"
+                          aria-labelledby="dropdownMenuButton1"
+                        >
+                          <li>
+                            <a
+                              class="dropdown-item p-1"
+                              data-bs-toggle="offcanvas"
+                              href="#addpfreq"
+                              role="button"
+                              aria-controls="addpfreq"
+                              (click)="editReimbursement(item.reimbursementStatusId)"
+                            >
+                              <button class="iconButton dropdown-iconBtn small">
+                                <i class="fal fa-edit"></i></button
+                              >Edit
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item p-1"
+                              (click)="deleteReimbursement(item.reimbursementStatusId)"
+                            >
+                              <button
+                                class="iconButton dropdown-iconBtn small dropdown-item p-1"
+                              >
+                                <i class="fal fa-trash"></i>
+                              </button>
+                              Delete
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </td> -->
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <ng-container *ngIf="totalRecords > 10">
+            <div class="me-5">
+              <ul class="pagination justify-content-end">
+                <li class="page-item">
+                  <a
+                    class="page-link"
+                    (click)="prevPage()"
+                    [attr.disabled]="pageNumber === 1"
+                    >Previous</a
+                  >
+                </li>
+                <li class="page-item" *ngFor="let page of totalPagesArray()">
+                  <a
+                    class="page-link"
+                    (click)="changePage(page)"
+                    [class.active]="pageNumber === page"
+                    [style.color]="pageNumber === page ? 'blue' : 'black'"
+                    >{{ page }}</a
+                  >
+                </li>
+                <li class="page-item">
+                  <a
+                    class="page-link"
+                    (click)="nextPage()"
+                    [attr.disabled]="pageNumber === totalPages"
+                    >Next</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div
+
+ class="offcanvas offcanvas-small offcanvas-end"
+ [class.show]="showOffcanvas"
+  tabindex="-1"
+  id="addreimbursement"
+  aria-labelledby="addreimbursementLabel"
+  aria-modal="true"
+  role="dialog"
+> -->
+<section class="leaveoffcanvas">
+  <ng-template #addcontent let-offcanvas>
+  <div class="offcanvas-header bg-light">
+    <div class="row g-0 w-100">
+      <div class="col-md-6 d-flex align-items-center">
+        <h5 class="mb-0">Reimbursement Request</h5>
+      </div>
+      <div class="col-md-6 justify-content-end d-flex align-items-center pe-0">
+        <span
+          class="iconButton iconHower medium"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+          (click)="closeOffset(addcontent)"
+          ><i class="fa-light fa-times"></i
+        ></span>
+      </div>
+    </div>
+  </div>
+  <div class="offcanvas-body px-4">
+    <form [formGroup]="reimbursementForm" class="px-4">
+      <div class="mb-3">
+        <label for="" class="col-form-label"> Date</label>
+        <div class="iconholder">
+          <!-- <i class="fa-light fa-calendar-plus iconleft"></i> -->
+          <input
+            id="datepickerrange"
+            class="form-control flatpickr-input"
+            placeholder="Date"
+            type="date"
+            formControlName="ReimbursementDate"
+            [class.is-invalid]="
+              rF['ReimbursementDate'].invalid && rF['ReimbursementDate'].touched
+            "
+            [class.is-valid]="
+              rF['ReimbursementDate'].valid && rF['ReimbursementDate'].touched
+            "
+          />
+          <div class="invalid-feedback">
+            <div *ngIf="rF['ReimbursementDate'].errors?.['required']">
+              Reimbursement Date is required.
+            </div>
+          </div>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="" class="col-form-label"> Reimbursement Type</label>
+        <select
+          name=""
+          class="form-control"
+          formControlName="ReimbursementType"
+          [class.is-invalid]="
+            rF['ReimbursementType'].invalid && rF['ReimbursementType'].touched
+          "
+          [class.is-valid]="
+            rF['ReimbursementType'].valid && rF['ReimbursementType'].touched
+          "
+        >
+          <option [value]=null disabled>Select Reimbursement Type</option>
+          <option value="Dinner">Dinner</option>
+          <option value="Lunch">Lunch</option>
+          <option value="Other">Other</option>
+        </select>
+        <div class="invalid-feedback">
+          <div *ngIf="rF['ReimbursementType'].errors?.['required']">
+            Reimbursement Type is required.
+          </div>
+        </div>
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <div class="mb-3">
+        <label for="" class="col-form-label">Total Expense</label>
+        <input
+          class="form-control"
+          type="number"
+          formControlName="TotalExpense"
+          [class.is-invalid]="
+            rF['TotalExpense'].invalid && rF['TotalExpense'].touched || rF['TotalExpense'].value == 0
+          "
+          [class.is-valid]="
+            rF['TotalExpense'].valid && rF['TotalExpense'].touched
+          "
+        />
+
+        <div class="invalid-feedback">
+          <div *ngIf="rF['TotalExpense'].errors?.['required'] || rF['TotalExpense'].value == 0">
+            Total Expense is required.
+          </div>
+        </div>
+        <div *ngIf ="rF['TotalExpense'].value != 0" class="valid-feedback">Looks good!</div>
+      </div>
+
+      <div class="mb-3">
+        <label for="" class="col-form-label"> Receipts</label>
+        <input
+          type="file"
+          class="form-control"
+          multiple
+          formArrayName="Files"
+          (change)="onFileSelected($event)"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="" class="col-form-label">Notes</label>
+        <textarea
+          class="form-control"
+          placeholder="Write a note"
+          style="height: 100px"
+          formControlName="Notes"
+          [class.is-invalid]="rF['Notes'].invalid && rF['Notes'].touched"
+          [class.is-valid]="rF['Notes'].valid && rF['Notes'].touched"
+        ></textarea>
+        <div class="invalid-feedback">
+          <div *ngIf="rF['Notes'].errors?.['required']">Notes is required.</div>
+        </div>
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+    </form>
+  </div>
+  <footer class="bg-light p-3 text-end pe-5">
+    <button
+      type="button"
+      class="btn btn-primary btn-small sendleave"
+      (click)="submitForm(addcontent)"
+      [class.disabled]="isButtonDisabled"
+      style="margin-right: 10px"
+    >
+      Submit
+    </button>
+    <button class="btn btn-outline-danger btn-small" data-bs-toggle="offcanvas" (click)="closeOffset(addcontent)">
+      Cancel
+    </button>
+  </footer>
+<!-- </div> -->
+</ng-template>
+</section>
+
+<!-- <div
+
+  class="offcanvas w-50 offcanvas-end"
+  tabindex="-1"
+  id="reimbursement-detail"
+  aria-labelledby="reimbursement-detailLabel"
+  aria-modal="true"
+  role="dialog"
+> -->
+<ng-template #addcontents let-offcanvas>
+  <div class="offcanvas-header bg-light">
+    <div class="row g-0 w-100">
+      <div class="col-md-9">
+        <h5 class="mb-0">Reimbursement Summary</h5>
+      </div>
+      <div class="col-md-3 justify-content-end d-flex align-items-center pe-0">
+        <span
+          class="iconButton iconHower medium"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+          (click)="closeOffset(addcontents)"
+          ><i class="fa-light fa-times"></i
+        ></span>
+      </div>
+    </div>
+  </div>
+  <div class="offcanvas-body px-4">
+    <div class="list-group-section mb-3">
+      <ul class="list-group list-group-flush">
+        <li
+          class="list-group-item d-flex align-items-center justify-content-between px-4"
+        >
+          <span class="night90">Date </span>
+          <strong>{{ requesterDetails.reimbursementDate }}</strong>
+        </li>
+        <li
+          class="list-group-item d-flex align-items-center justify-content-between px-4"
+        >
+          <span class="night90">Expense Type</span>
+          <strong>{{ requesterDetails.reimbursementType }}</strong>
+        </li>
+        <li
+          class="list-group-item d-flex align-items-center justify-content-between px-4"
+        >
+          <span class="night90">Total Expense</span>
+          <strong>Rs. {{ requesterDetails.totalExpense | number }}</strong>
+        </li>
+        <li
+          class="list-group-item d-flex align-items-center justify-content-between px-4"
+        >
+          <span class="night90">Receipts</span>
+          <ul class="list-inline">
+            <li
+              *ngFor="let attachment of summaryAttachments"
+              class="list-inline-item bg-light border rounded d-inline-flex align-items-center py-2 px-4"
+            >
+              <span class="text-primary"
+                ><i class="fa-light fa-file"></i>
+              </span>
+              <span class="mx-2">{{ attachment.attachmentName }}</span>
+              <span>
+                <i class="fa-light fa-times"></i>
+              </span>
+            </li>
+            <!-- <li
+              class="list-inline-item bg-light border rounded d-inline-flex align-items-center py-2 px-4"
+            >
+              <span class="text-primary"
+                ><i class="fa-light fa-file"></i>
+              </span>
+              <span class="mx-2">bill2.jpg</span>
+              <span>
+                <i class="fa-light fa-times"></i>
+              </span>
+            </li> -->
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <!-- <div class="bg-light border p-3 rounded">
+      <strong>Note</strong>
+      <p class="m-0">{{requesterDetails.notes}}</p>
+    </div> -->
+    <!-- <h6 class="my-3 coal">May 17, 2023</h6> -->
+    <div class="p-3 skyTransBg night rounded d-flex align-items-center">
+      <span class="iconButton medium skyTrans20 night me-2">
+        <i class="fa-light fa-info"></i>
+      </span>
+      <p class="m-0">
+        You have requested <strong>reimbursement </strong> on
+        {{ requesterDetails.appliedDate }}
+      </p>
+    </div>
+    <div class="list-group-section pe-3 pt-4">
+      <div class="main_timeline">
+        <div class="pb-3 d-flex align-items-start timeline_item">
+          <div class="timeline_icon iconButton medium border">
+            <i class="fa-light coal fa-user"></i>
+          </div>
+          <div class="ps-5 timeline_content">
+            <div class="float-end d-flex align-items-center">
+              <span class="iconButton iconHover medium me-2"
+                ><i class="fa-light fa-message-lines"></i>
+              </span>
+              <span class="badge badge-md rounded-pill skyTransBg night"
+                >Applied</span
+              >
+            </div>
+            <strong>{{ requesterDetails.requester }} </strong>
+            <p class="mb-1 metal">
+              <small>{{ requesterDetails.appliedDate }}</small>
+            </p>
+            <div
+              class="bg-light border p-3 rounded"
+              *ngIf="requesterDetails.notes !== ''"
+            >
+              <strong>Note</strong>
+              <p class="m-0">
+                {{ requesterDetails.notes }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-3 d-flex align-items-start timeline_item"
+          *ngFor="let stage of requestStages"
+        >
+          <div
+            class="timeline_icon iconButton medium border"
+            [ngClass]="{ mintBg: stage.status === 1 }"
+          >
+            <i class="fa-light fa-user-tie"></i>
+          </div>
+          <div class="ps-5 timeline_content">
+            <div class="float-end d-flex align-items-center">
+              <span class="iconButton iconHover medium me-2"
+                ><i class="fa-light fa-message-lines"></i>
+              </span>
+              <span
+                *ngIf="stage.status === 1"
+                class="badge badge-md rounded-pill grayfilled"
+              >
+                Pending
+              </span>
+              <span
+                *ngIf="stage.status === 2"
+                class="badge badge-md rounded-pill successbg"
+                >Approved</span
+              >
+
+              <span
+                *ngIf="stage.status === 3"
+                class="badge badge-md rounded-pill errorbg"
+              >
+                Rejected
+              </span>
+              <span
+                *ngIf="stage.status === 5"
+                class="badge badge-md rounded-pill badgebg"
+              >
+                On Hold
+              </span>
+            </div>
+            <strong>{{ stage.approver }}<small></small> </strong>
+            <p class="mb-1 metal">
+              <small>{{ stage.modifiedDate }}</small>
+            </p>
+            <div
+              class="bg-light border p-3 rounded"
+              *ngIf="stage.description !== ''"
+            >
+              {{ stage.description }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="bg-light p-3 text-end pe-5">
+    <button
+      class="btn btn-primary btn-small"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+      (click)="closeOffset(addcontents)"
+      style="margin-right: 8px"
+    >
+      Cancel
+    </button>
+    <button *ngIf="!isAllPending && requesterDetails.statusId != 4"
+      class="btn btn-outline-danger btn-small cancelrequest"
+      data-bs-toggle="modal" data-bs-target="#cancelleaverequest"
+    >
+      Cancel Request
+    </button>
+  </footer>
+<!-- </div> -->
+</ng-template>
+<!-- <div [ngClass]="showOffcanvas ? 'modal-backdrop fade show' : ''"></div> -->
+<div
+  class="modal fade"
+  id="cancelleaverequest"
+  tabindex="-1"
+  aria-labelledby="cancelleaverequestLabel"
+  aria-modal="true"
+  role="dialog"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="edittagsLabel">Confirmation</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="py-5 px-4">
+          <div class="d-flex">
+            <span class="iconButton exlarge successdarkbg">
+              <i class="fa-light fa-circle-check fs-4"></i>
+            </span>
+            <div class="ms-3">
+              <h6>Are you sure you want to Cancel the OPD request</h6>
+              <p class="m-0">If you don’t save, your changes will be lost.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer saltBg">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-success closeleavereq"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="cancelRequest(requesterDetails.reimbursementId,addcontents)"
+        >
+          ok
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-toaster></app-toaster>

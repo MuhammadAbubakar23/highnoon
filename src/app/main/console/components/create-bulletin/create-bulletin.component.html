@@ -1,0 +1,213 @@
+<div class="agent-page-main-content">
+    <div
+      class="create-user console-body-wrapper footerheight"
+      data-scrollbar="true"
+      tabindex="-1"
+      style="overflow-y: scroll; height: 80vh; position: relative"
+    >
+      <div class="scroll-content">
+        <div class="wider-container">
+          <!-- <header class="tab-header">
+            <nav>
+              <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                <button
+                  class="nav-link active"
+                  id="user-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#user-detail"
+                  type="button"
+                  role="tab"
+                  aria-controls="user-detail"
+                  aria-selected="true"
+                >
+                  <h6>Details</h6>
+                </button>
+              </div>
+            </nav>
+          </header> -->
+          <div class="tab-body">
+            <div class="tab-content" id="nav-tabContent">
+              <div
+                id="user-detail"
+                class="tab-pane fade active show"
+                role="tabpanel"
+                aria-labelledby="user-tab"
+              >
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="team-detail-form-box mb-5">
+                      <form
+                        [formGroup]="bulletinForm"
+                        class="user-detail-form"
+                      >
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <input
+                              [class.is-invalid]="
+                                bF['title'].invalid && bF['title'].touched
+                              "
+                              [class.is-valid]="
+                                bF['title'].valid && bF['title'].touched
+                              "
+                              class="form-control"
+                              id="name"
+                              placeholder="Enter Title"
+                              formControlName="title"
+                            />
+                            <label for="first-name">Name</label>
+                            <div class="invalid-feedback">
+                              <div *ngIf="bF['title'].errors?.['required']">
+                                Bulletin Name is required.
+                              </div>
+                              <div *ngIf="bF['title'].errors?.['maxlength']">
+                                Bulletin Name be less than 100  characters.
+                              </div>
+                            </div>
+                            <div class="valid-feedback">Looks good!</div>
+                          </div>
+                        </div>
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <input
+                              [class.is-invalid]="
+                                bF['date'].invalid && bF['date'].touched
+                              "
+                              [class.is-valid]="
+                                bF['date'].valid && bF['date'].touched
+                              "
+                              class="form-control timepicker flatpickr-input"
+                              id="name"
+                              type="date"
+                              placeholder="Enter date"
+                              formControlName="date"
+                            />
+
+                            <label for="first-name">Date</label>
+                            <div class="invalid-feedback">
+                              <div *ngIf="bF['date'].errors?.['required']">
+                                Date is required.
+                              </div>
+                            </div>
+                            <div class="valid-feedback">Looks good!</div>
+                          </div>
+                        </div>
+                        <div class="floating-item mb-4">
+                            <div class="form-floating mb-2">
+                                <input
+                                [class.is-invalid]="
+                                    bF['details'].invalid && bF['details'].touched
+                                "
+                                [class.is-valid]="
+                                    bF['details'].valid && bF['details'].touched
+                                "
+                                class="form-control"
+                                id="name"
+                                placeholder="Enter details"
+                                formControlName="details"
+                                />
+                                <label for="first-name">Details</label>
+                                <div class="invalid-feedback">
+                                <div *ngIf="bF['details'].errors?.['required']">
+                                    Bulletin detail is required.
+                                </div>
+                                <div *ngIf="bF['details'].errors?.['maxlength']">
+                                    Bulletin Detail be less than 100  characters.
+                                </div>
+                                </div>
+                                <div class="valid-feedback">Looks good!</div>
+                            </div>
+                        </div>
+                        <!-- <div class="floating-item mb-4">
+                            <div class="form-floating mb-2">
+                                <input
+                                [class.is-invalid]="
+                                    bF['details'].invalid && bF['details'].touched
+                                "
+                                [class.is-valid]="
+                                    bF['details'].valid && bF['details'].touched
+                                "
+                                class="form-control"
+                                id="name"
+                                placeholder="Enter details"
+                                formControlName="details"
+                                />
+                                <label for="first-name">Details</label>
+                                <div class="invalid-feedback">
+                                <div *ngIf="bF['details'].errors?.['required']">
+                                    Bulletin detail is required.
+                                </div>
+                                <div *ngIf="bF['details'].errors?.['maxlength']">
+                                    Bulletin Detail be less than 100  characters.
+                                </div>
+                                </div>
+                                <div class="valid-feedback">Looks good!</div>
+                            </div>
+                        </div> -->
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <input
+                            type="file"
+                            class="form-control"
+                            id="name"
+                            formControlName="File"
+                            (change)="onFileSelected($event)"                    
+                            />
+                            <label for="first-name">
+                              'Add File'
+                            </label>                            
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="scrollbar-track scrollbar-track-x" style="display: none">
+        <div
+          class="scrollbar-thumb scrollbar-thumb-x"
+          style="width: 1638px; transform: translate3d(0px, 0px, 0px)"
+        ></div>
+      </div>
+      <div class="scrollbar-track scrollbar-track-y" style="display: block"></div>
+    </div>
+    <footer class="footer">
+      <div class="ps-3 pe-3">
+        <div
+          class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4"
+        >
+          <div class="row w-100">
+            <div class="col-md-4"></div>
+            <div class="col-md-8 justify-content-end d-flex">
+              <div class="buttons-wrap d-flex">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary btn-medium me-2 px-4"
+                   routerLink="/connect/console/bulletin"
+                >
+                  Back
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-success ms-e f-saveBtn btn-large d-none"
+                ></button>
+                <button
+                  type="button"
+                  class="btn skyBg ms-2 px-4 btn-medium saveBtn"
+                  (click)="submitForm()"
+                  [class.disabled]="bulletinForm.invalid"
+                >
+                Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+  

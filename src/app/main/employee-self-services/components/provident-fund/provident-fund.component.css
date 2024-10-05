@@ -1,0 +1,26 @@
+.query-container {
+  height: calc(100vh - 290px);
+  /* overflow: hidden;
+  &.active{
+    height: calc(100vh - 140px);
+  }
+  .table{
+   tr{
+
+     td{
+      &:nth-child(4){
+        max-width: 550px
+      }
+
+     }
+      .maintext{
+        @include text-truncate();
+        max-width: 700px;
+      }
+   }
+  } */
+}
+.badgebg {
+  background-color: #008CBA;
+  color: white;
+}

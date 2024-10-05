@@ -1,0 +1,911 @@
+<!-- <div class="floating-item mb-4" style="margin-left: 2in">
+  <pre>{{ genders | json }}</pre>
+  <div class="form-floating mb-2">
+    <select placeholder="Enter Gender">
+      <option *ngFor="let g of genders">
+        {{ g.name }}
+      </option>
+    </select>
+    <label for="first-name">Gender</label>
+    <div class="invalid-feedback">Please enter a Gender</div>
+    <div class="valid-feedback">Looks good!</div>
+  </div>
+</div> -->
+
+<div class="agent-page-main-content">
+  <div
+    class="create-user console-body-wrapper footerheight"
+    data-scrollbar="true"
+    tabindex="-1"
+    style="overflow-y: scroll; height: 80vh; position: relative"
+  >
+    <div class="scroll-content">
+      <div class="wider-container pt-3">
+        <header class="tab-header">
+          <nav>
+            <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+              <button
+                class="nav-link" [ngClass]="{'active':isDetails}"
+                id="user-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#user-detail"
+                type="button"
+                role="tab"
+                aria-controls="user-detail"
+                aria-selected="true"
+                (click)="changeTabs('details')"
+              >
+                <h6>Details</h6>
+              </button>
+              <button
+                class="nav-link"
+                [ngClass]="{'active':isAddress}"
+                id="address-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#address-detail"
+                type="button"
+                role="tab"
+                aria-controls="address-detail"
+                aria-selected="true"
+                (click)="changeTabs('address')"
+              >
+                <h6>Address</h6>
+              </button>
+              <button
+                class="nav-link"
+                [ngClass]="{'active':isBank}"
+                id="bank-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#bank-preference"
+                type="button"
+                role="tab"
+                aria-controls="bank-preference"
+                aria-selected="false"
+                tabindex="-1"
+                (click)="changeTabs('bank')"
+              >
+                <h6>Bank Details</h6>
+              </button>
+            </div>
+          </nav>
+        </header>
+        <div class="tab-body">
+          <div class="tab-content" id="nav-tabContent">
+            <form [formGroup]="employeeForm" class="user-detail-form">
+              <ng-container *ngIf="isDetails">
+                <div
+                  id="user-detail"
+                  class="tab-pane fade active show"
+                  role="tabpanel"
+                  aria-labelledby="user-tab"
+                >
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="team-detail-form-box mb-5">
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <input
+                              [class.is-invalid]="
+                                eF['title'].invalid && eF['title'].touched
+                              "
+                              [class.is-valid]="
+                                eF['title'].valid && eF['title'].touched
+                              "
+                              class="form-control"
+                              id="title"
+                              placeholder="Enter Title"
+                              formControlName="title"
+                            />
+                            <label for="first-name">Title</label>
+                            <div class="invalid-feedback">
+                              <div *ngIf="eF['title'].errors?.['required']">
+                                Title is required.
+                              </div>
+                              <div *ngIf="eF['title'].errors?.['maxlength']">
+                                Title must be less than 10  characters.
+                              </div>
+                            </div>
+                            <div class="valid-feedback">Looks good!</div>
+                          </div>
+                        </div>
+                        <div class="floating-item mb-4" *ngIf="currentId===0 || currentId===undefined">
+                          <div class="form-floating mb-2">
+                            <input
+                              [class.is-invalid]="
+                                eF['userName'].invalid &&
+                                eF['userName'].touched
+                              "
+                              [class.is-valid]="
+                                eF['userName'].valid && eF['userName'].touched
+                              "
+                              class="form-control"
+                              id="userName"
+                              placeholder="Enter userName"
+                              formControlName="userName"
+                            />
+                            <label for="first-name">User Name</label>
+                            <div class="invalid-feedback">
+                              <div *ngIf="eF['userName'].errors?.['required']">
+                                User Name is required.
+                              </div>
+                              <div *ngIf="eF['userName'].errors?.['maxlength']">
+                                User Name must be less than 100  characters.
+                              </div>
+                            </div>
+                            <div class="valid-feedback">Looks good!</div>
+                          </div>
+                        </div>
+                        <div class="floating-item mb-4"  *ngIf="currentId===0 || currentId===undefined">
+                          <div class="form-floating mb-2">
+                            <input
+                            type="password"
+                              [class.is-invalid]="
+                                eF['password'].invalid &&
+                                eF['password'].touched
+                              "
+                              [class.is-valid]="
+                                eF['password'].valid && eF['password'].touched
+                              "
+                              class="form-control"
+                              id="password"
+                              placeholder="Enter password"
+                              formControlName="password"
+                            />
+                            <label for="first-name">Password</label>
+                            <div class="invalid-feedback">
+                              <div *ngIf="eF['password'].errors?.['required']">
+                                Password is required.
+                              </div>
+                              <div *ngIf="eF['password'].errors?.['maxlength']">
+                                Password must be less than 100  characters.
+                              </div>
+                            </div>
+                            <div class="valid-feedback">Looks good!</div>
+                          </div>
+                        </div>
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <input
+                              [class.is-invalid]="
+                                eF['firstName'].invalid &&
+                                eF['firstName'].touched
+                              "
+                              [class.is-valid]="
+                                eF['firstName'].valid && eF['firstName'].touched
+                              "
+                              class="form-control"
+                              id="firstName"
+                              placeholder="Enter FirstName"
+                              formControlName="firstName"
+                            />
+                            <label for="first-name">First Name</label>
+                            <div class="invalid-feedback">
+                              <div *ngIf="eF['firstName'].errors?.['required']">
+                                First Name is required.
+                              </div>
+                              <div *ngIf="eF['firstName'].errors?.['maxlength']">
+                                First Name must be less than 100  characters.
+                              </div>
+                            </div>
+                            <div class="valid-feedback">Looks good!</div>
+                          </div>
+                        </div>
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <input
+                              [class.is-invalid]="
+                                eF['lastName'].invalid && eF['lastName'].touched
+                              "
+                              [class.is-valid]="
+                                eF['lastName'].valid && eF['lastName'].touched
+                              "
+                              class="form-control"
+                              id="lastName"
+                              placeholder="Enter LastName"
+                              formControlName="lastName"
+                            />
+                            <label for="first-name">Last Name</label>
+                            <div class="invalid-feedback">
+                              <div *ngIf="eF['lastName'].errors?.['required']">
+                                Last Name is required.
+                              </div>
+                              <div *ngIf="eF['lastName'].errors?.['maxlength']">
+                                Last Name must be less than 100  characters.
+                              </div>
+                            </div>
+                            <div class="valid-feedback">Looks good!</div>
+                          </div>
+                        </div>
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <input
+                              [class.is-invalid]="
+                                eF['email'].invalid && eF['email'].touched
+                              "
+                              [class.is-valid]="
+                                eF['email'].valid && eF['email'].touched
+                              "
+                              class="form-control"
+                              id="email"
+                              placeholder="Enter Email"
+                              formControlName="email"
+                            />
+                            <label for="first-name">Email</label>
+                            <div *ngIf="eF['alternateEmail'] && eF['alternateEmail'].errors">
+                              <!-- <div *ngIf="eF['alternateEmail'].errors['pattern']">
+                                Alternate Email is require
+                              </div> -->
+                              <div *ngIf="eF['alternateEmail'].errors['email']">
+                                Please enter a valid email address
+                              </div>
+                            </div>
+                            <div class="invalid-feedback">
+                              <div *ngIf="eF['email'] && eF['email'].errors">
+                                <div *ngIf="eF['email'].errors['required']">
+                                  Email format is required
+                                </div>
+                                <div *ngIf="eF['email'].errors['pattern']">
+                                  Email is required
+                                </div>
+                                <div *ngIf="eF['email'].errors['email']">
+                                  Please enter a valid email address
+                                </div>
+                              </div>
+                            </div>
+                            <div class="valid-feedback">Looks good!</div>
+                          </div>
+                        </div>
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <input
+                              [class.is-invalid]="
+                                eF['phone'].invalid && eF['phone'].touched
+                              "
+                              [class.is-valid]="
+                                eF['phone'].valid && eF['phone'].touched
+                              "
+                              class="form-control"
+                              id="phone"
+                              placeholder="Enter Phone"
+                              formControlName="phone"
+                            />
+                            <label for="first-name">Phone</label>
+                            <div class="invalid-feedback">
+
+                              <div *ngIf="eF['phone'].errors?.['maxlength']">
+                                Phone must be less than 500  characters.
+                              </div>
+                            </div>
+                            <div class="valid-feedback">Looks good!</div>
+                          </div>
+                        </div>
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <select
+                              class="form-select"
+                              id="gender"
+                              formControlName="gender"
+                            >
+                              <option disabled [value]="null">Select Gender</option>
+                              <option
+                                *ngFor="let key of getEnumKeys(genders)"
+                                [value]="key"
+                              >
+                                {{ genders[key] }}
+                              </option>
+                            </select>
+                            <!-- <label for="first-name">Gender</label> -->
+                            <!-- <div class="invalid-feedback">
+                              Please enter a Gender
+                            </div>
+                            <div class="valid-feedback">Looks good!</div> -->
+                          </div>
+                        </div>
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <select
+                              class="form-select"
+                              id="martialStatus"
+                              formControlName="martialStatus"
+                            >
+                            <option disabled [value]="null">Select Martial Status</option>
+                              <option
+                                *ngFor="let key of getEnumKeys(martialStatus)"
+                                [value]="key"
+                              >
+                                {{ martialStatus[key] }}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <div class="iconholder ms-2">
+                              <!-- <i class="fa-light fa-calendar-plus iconleft"></i> -->
+                              Birth Date:
+                              <input
+                                type="date"
+                                class="form-control"
+                                formControlName="birthDate"
+                              />
+                            </div>
+                            <!-- <input
+                              [class.is-invalid]="
+                                eF['birthDate'].invalid && eF['birthDate'].touched
+                              "
+                              [class.is-valid]="
+                                eF['birthDate'].valid && eF['birthDate'].touched
+                              "
+                              class="form-control"
+                              id="birthDate"
+                              placeholder="Enter birthDate"
+                              formControlName="birthDate"
+                              type="date"
+                            />
+                            <label for="first-name">Birth Date</label>
+                            <div class="invalid-feedback">
+                              Please enter a Birth Date
+                            </div>
+                            <div class="valid-feedback">Looks good!</div> -->
+                          </div>
+                        </div>
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <input
+                              [class.is-invalid]="
+                                eF['cnic'].invalid && eF['cnic'].touched
+                              "
+                              [class.is-valid]="
+                                eF['cnic'].valid && eF['cnic'].touched
+                              "
+                              class="form-control"
+                              id="cnic"
+                              placeholder="Enter Cnic"
+                              formControlName="cnic"
+                            />
+                            <label for="first-name">Cnic</label>
+                            <div class="invalid-feedback">
+                              Please enter a Cnic
+                            </div>
+                            <div class="valid-feedback">Looks good!</div>
+                          </div>
+                        </div>
+
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <div class="iconholder ms-2">
+                              Cnic Expiry Date:
+                              <input
+                                type="date"
+                                placeholder="CNIC Expiry Date"
+                                class="form-control"
+                                formControlName="cnicExpiry"
+                              />
+                            </div>
+                            <!-- <input
+                              [class.is-invalid]="
+                                eF['cnicExpiry'].invalid &&
+                                eF['cnicExpiry'].touched
+                              "
+                              [class.is-valid]="
+                                eF['cnicExpiry'].valid && eF['cnicExpiry'].touched
+                              "
+                              class="form-control"
+                              id="cnicExpiry"
+                              placeholder="Enter Cnic Expiry"
+                              formControlName="cnicExpiry"
+                              type="date"
+                            />
+                            <label for="first-name">Cnic Expiry</label>
+                            <div class="invalid-feedback">
+                              Please enter a Cnic Expiry
+                            </div> -->
+                            <div class="valid-feedback">Looks good!</div>
+                          </div>
+                        </div>
+
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <div class="iconholder ms-2">
+                              Joinig Date:
+                              <input
+                                type="date"
+                                class="form-control"
+                                formControlName="joinigDate"
+                              />
+                            </div>
+                            <!-- <input
+                              [class.is-invalid]="
+                                eF['joinigDate'].invalid &&
+                                eF['joinigDate'].touched
+                              "
+                              [class.is-valid]="
+                                eF['joinigDate'].valid && eF['joinigDate'].touched
+                              "
+                              class="form-control"
+                              id="joinigDate"
+                              placeholder="Enter Joinig Date"
+                              formControlName="joinigDate"
+                              type="text"
+                              bsDatepicker
+                              [bsConfig]="bsConfig"
+
+                            /> -->
+                            <div class="invalid-feedback">
+                              Please enter a Joinig Date
+                            </div>
+                            <div class="valid-feedback">Looks good!</div>
+                          </div>
+                        </div>
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <div class="iconholder ms-2">
+                              <!-- <i class="fa-light fa-calendar-plus iconleft"></i> -->
+                              Hiring Date
+                              <input
+                                type="date"
+
+                                class="form-control"
+
+                                formControlName="hiringDate"
+                              />
+                            </div>
+                            <!-- <input
+                              [class.is-invalid]="
+                                eF['joinigDate'].invalid &&
+                                eF['joinigDate'].touched
+                              "
+                              [class.is-valid]="
+                                eF['joinigDate'].valid && eF['joinigDate'].touched
+                              "
+                              class="form-control"
+                              id="joinigDate"
+                              placeholder="Enter Joinig Date"
+                              formControlName="joinigDate"
+                              type="text"
+                              bsDatepicker
+                              [bsConfig]="bsConfig"
+
+                            /> -->
+                            <div class="invalid-feedback">
+                              Please enter a Hiring Date
+                            </div>
+                            <div class="valid-feedback">Looks good!</div>
+                          </div>
+                        </div>
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <input
+                              [class.is-invalid]="
+                                eF['alternateEmail'].invalid &&
+                                eF['alternateEmail'].touched
+                              "
+                              [class.is-valid]="
+                                eF['alternateEmail'].valid &&
+                                eF['alternateEmail'].touched
+                              "
+                              class="form-control"
+                              id="alternateEmail"
+                              placeholder="Enter Alternate Email"
+                              formControlName="alternateEmail"
+                            />
+                            <label for="first-name">Alternate Email</label>
+                            <div class="invalid-feedback">
+                              <div *ngIf="eF['alternateEmail'] && eF['alternateEmail'].errors">
+                                <!-- <div *ngIf="eF['alternateEmail'].errors['pattern']">
+                                  Alternate Email is require
+                                </div> -->
+                                <div *ngIf="eF['alternateEmail'].errors['email']">
+                                  Please enter a valid email address
+                                </div>
+                              </div>
+
+                            </div>
+                            <div class="valid-feedback">Looks good!</div>
+                          </div>
+                        </div>
+                        <!-- <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <input
+                              class="form-control"
+                              id="picture"
+                              type="file" (change)="onFileSelected($event)"
+                            />
+                          </div>
+                        </div> -->
+
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <select
+                              class="form-select"
+                              id="employeeTypeId"
+                              formControlName="employeeTypeId"
+                            >
+                            <option disabled [value]="null">
+                               Select Employee Type
+                              </option>
+                              <option
+                                [value]="eT.employeeTypeId"
+                                *ngFor="let eT of employeeTypes"
+                              >
+                                {{ eT.typeName }}
+                              </option>
+                            </select>
+                            <!-- <label for="first-name">employeeTypeId</label> -->
+                            <!-- <div class="invalid-feedback">
+                              Please enter a Employee Type Id
+                            </div>
+                            <div class="valid-feedback">Looks good!</div> -->
+                          </div>
+                        </div>
+
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <select
+                              class="form-select"
+                              id="designationId"
+                              formControlName="designationId"
+                            >
+                            <option disabled [value]="null">
+                                 Select Designation
+                              </option>
+                              <option
+                                [value]="designation.designationId"
+                                *ngFor="let designation of designations"
+                              >
+                                {{ designation.title }}
+                              </option>
+                            </select>
+                            <!-- <label for="first-name">Designation</label> -->
+                            <!-- <div class="invalid-feedback">
+                              Please enter a Designation
+                            </div>
+                            <div class="valid-feedback">Looks good!</div> -->
+                          </div>
+                        </div>
+
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <select
+                              class="form-select"
+                              id="teamId"
+                              formControlName="teamId"
+                            >
+                            <option disabled [value]="null">
+                                Select Team
+                              </option>
+                              <option
+                                [value]="team.teamId"
+                                *ngFor="let team of teams"
+                              >
+                                {{ team.teamName }}
+                              </option>
+                            </select>
+                            <!-- <label for="first-name">Team</label> -->
+                            <!-- <div class="invalid-feedback">
+                              Please enter a Team
+                            </div>
+                            <div class="valid-feedback">Looks good!</div> -->
+                          </div>
+                        </div>
+
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <select
+                              class="form-select"
+                              id="jobTitleId"
+                              formControlName="jobTitleId"
+                            >
+                            <option disabled [value]="null">
+                                Select Job Title
+                              </option>
+                              <option
+                                [value]="jT.jobTitleId"
+                                *ngFor="let jT of jobTitles"
+                              >
+                                {{ jT.title }}
+                              </option>
+                            </select>
+                            <!-- <label for="first-name">jobTitleId</label> -->
+                            <!-- <div class="invalid-feedback">
+                              Please enter a Job Title
+                            </div>
+                            <div class="valid-feedback">Looks good!</div> -->
+                          </div>
+                        </div>
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <select
+                              class="form-select"
+                              id="managerId"
+                              formControlName="managerId"
+                            >
+                            <option disabled [value]="null">
+                                Select Manager
+                              </option>
+                              <option [value]="m.id" *ngFor="let m of managers">
+                                {{ m.firstName }}
+                              </option>
+                            </select>
+                            <!-- <label for="first-name">Manager</label>
+                            <div class="invalid-feedback">
+                              Please enter a Manager
+                            </div>
+                            <div class="valid-feedback">Looks good!</div> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="isAddress">
+                <div
+                  id="address-detail"
+                  class="tab-pane fade active show"
+                  role="tabpanel"
+                  aria-labelledby="address-tab"
+                >
+                  <div class="row">
+                    <div class="col-lg-12" formGroupName="address">
+                      <div class="floating-item mb-4">
+                        <div class="form-floating mb-2">
+                          <input
+                            class="form-control"
+                            id="curentAddress"
+                            placeholder="Enter Current Address"
+                            formControlName="curentAddress"
+                          />
+                          <label for="first-name">Current Address</label>
+                          <div class="invalid-feedback">
+                            <div *ngIf="eF['curentAddress'] && eF['curentAddress'].errors">
+                            <div *ngIf="eF['curentAddress'].errors?.['maxlength']">
+                              Current Address must be less than 200  characters.
+                            </div>
+                          </div>
+                          </div>
+                    <div class="valid-feedback">Looks good!</div>
+                        </div>
+                      </div>
+                      <div class="floating-item mb-4">
+                        <div class="form-floating mb-2">
+                          <input
+                            class="form-control"
+                            id="addressType"
+                            placeholder="Enter Address Type"
+                            formControlName="addressType"
+                          />
+                          <label for="first-name">Address Type</label>
+                          <div class="invalid-feedback">
+                            <div *ngIf="eF['addressType'] && eF['addressType'].errors">
+                            <div *ngIf="eF['addressType'].errors?.['maxlength']">
+                              Address Type must be less than 50  characters.
+                            </div>
+                            </div>
+                          </div>
+                    <div class="valid-feedback">Looks good!</div>
+                        </div>
+                      </div>
+                      <div class="floating-item mb-4">
+                        <div class="form-floating mb-2">
+                          <select
+                            class="form-select"
+                            id="cityId"
+                            formControlName="cityId"
+                          >
+                            <option disabled selected [value]="0">Select City</option>
+                            <option *ngFor="let c of cities" [value]="c.cityId">
+                              {{ c.name }}
+                            </option>
+                          </select>
+                          <!-- <label for="first-name">Gender</label> -->
+                          <!-- <div class="invalid-feedback">
+                        Please enter a Gender
+                      </div>
+                      <div class="valid-feedback">Looks good!</div> -->
+                        </div>
+                      </div>
+                      <!-- <div class="floating-item mb-4">
+                    <div class="form-floating mb-2">
+                      <select
+                        class="form-select"
+                        id="employeeId"
+                        formControlName="employeeId"
+                      >
+                      <option disabled selected [value]="0">Employee</option>
+                        <option [value]="e" *ngFor="let e of employees">
+                          {{ e }}
+                        </option>
+                      </select>
+                       <label for="first-name">Martial Status</label>
+                       <div class="invalid-feedback">
+                        Please enter a Martial Status
+                      </div>
+                      <div class="valid-feedback">Looks good!</div>
+                    </div>
+                  </div> -->
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="isBank">
+                <div
+                  id="bank-preference"
+                  class="tab-pane fade list-group-section active show"
+                  role="tabpanel"
+                  aria-labelledby="bank-tab"
+                >
+                  <div class="row mb-5">
+                    <div class="col-lg-12" formGroupName="bankDetails">
+                      <div class="floating-item mb-4">
+                        <div class="form-floating mb-2">
+                          <input
+                            class="form-control"
+                            id="banklName"
+                            placeholder="Enter Bank Name"
+                            formControlName="banklName"
+                          />
+                          <label for="first-name">Bank Name</label>
+                          <div class="invalid-feedback">
+
+                            <div *ngIf="eF['banklName'] && eF['banklName'].errors">
+                              <div *ngIf="eF['banklName'].errors?.['maxlength']">
+                                Bank Name must be less than 200  characters.
+                              </div>
+                              </div>
+                          </div>
+                    <div class="valid-feedback">Looks good!</div>
+                        </div>
+                      </div>
+                      <div class="floating-item mb-4">
+                        <div class="form-floating mb-2">
+                          <input
+                            class="form-control"
+                            id="branchName"
+                            placeholder="Enter Branch Name"
+                            formControlName="branchName"
+                          />
+                          <label for="first-name">Branch Name</label>
+                          <div class="invalid-feedback">
+
+
+                            <div *ngIf="eF['branchName'] && eF['branchName'].errors">
+                              <div *ngIf="eF['branchName'].errors?.['maxlength']">
+                                Branch Name must be less than 200  characters.
+                              </div>
+                              </div>
+                          </div>
+                    <div class="valid-feedback">Looks good!</div>
+                        </div>
+                      </div>
+
+                      <div class="floating-item mb-4">
+                        <div class="form-floating mb-2">
+                          <input
+                            class="form-control"
+                            id="accountNumber"
+                            placeholder="Enter Account Number"
+                            formControlName="accountNumber"
+
+                          />
+                          <label for="first-name">Account Number</label>
+                          <div class="invalid-feedback">
+                            <div *ngIf="eF['accountNumber'] && eF['accountNumber'].errors">
+                              <div *ngIf="eF['accountNumber'].errors?.['maxlength']">
+                                Account Number must be less than 100  characters.
+                              </div>
+                              </div>
+                          </div>
+                    <div class="valid-feedback">Looks good!</div>
+                        </div>
+                      </div>
+                      <div class="floating-item mb-4">
+                        <div class="form-floating mb-2">
+                          <input
+                            class="form-control"
+                            id="ibanNumber"
+                            placeholder="Enter Iban Number"
+                            formControlName="ibanNumber"
+                          />
+                          <label for="first-name">Iban Number</label>
+                          <div class="invalid-feedback">
+                            <div *ngIf="eF['ibanNumber'] && eF['ibanNumber'].errors">
+                              <div *ngIf="eF['ibanNumber'].errors?.['maxlength']">
+                                Iban Number must be less than 100  characters.
+                              </div>
+                              </div>
+                          </div>
+                    <div class="valid-feedback">Looks good!</div>
+                        </div>
+                      </div>
+                      <!-- <div class="floating-item mb-4">
+                  <div class="form-floating mb-2">
+                    <select
+                      class="form-select"
+                      id="employeeId"
+                      formControlName="employeeId"
+                    >
+                    <option disabled selected [value]="0">Employee</option>
+                      <option [value]="e" *ngFor="let e of employees">
+                        {{ e }}
+                      </option>
+                    </select>
+                  </div>
+                </div> -->
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scrollbar-track scrollbar-track-x" style="display: none">
+      <div
+        class="scrollbar-thumb scrollbar-thumb-x"
+        style="width: 1638px; transform: translate3d(0px, 0px, 0px)"
+      ></div>
+    </div>
+    <div class="scrollbar-track scrollbar-track-y" style="display: block"></div>
+  </div>
+  <footer class="footer">
+    <div class="ps-3 pe-3">
+      <div
+        class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4"
+      >
+        <div class="row w-100">
+          <div class="col-md-4"></div>
+          <div class="col-md-8 justify-content-end d-flex">
+            <div class="buttons-wrap d-flex">
+              <button
+                type="button"
+                class="btn btn-outline-secondary btn-medium me-2 px-4"
+                routerLink="/connect/console/employees"
+              >
+                Back
+              </button>
+              <button
+                type="button"
+                class="btn btn-success ms-e f-saveBtn btn-large d-none"
+
+              ></button>
+
+              <button
+              *ngIf="isDetails"
+                type="button"
+                class="btn skyBg ms-2 px-4 btn-medium saveBtn"
+                data-bs-toggle="modal"
+                data-bs-target=""
+                (click)="changeTabs('address')"
+              >
+                Next
+              </button>
+              <button
+              *ngIf="isAddress"
+                type="button"
+                class="btn skyBg ms-2 px-4 btn-medium saveBtn"
+                data-bs-toggle="modal"
+                data-bs-target=""
+                (click)="changeTabs('bank')"
+              >
+                Next
+              </button>
+              <button
+              *ngIf="isBank"
+                type="button"
+                class="btn skyBg ms-2 px-4 btn-medium saveBtn"
+                data-bs-toggle="modal"
+                data-bs-target=""
+                (click)="submitForm()"
+                [class.disabled]="employeeForm.invalid"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>

@@ -1,0 +1,539 @@
+<header class="main-header shadow-sm agent-header">
+  <div class="row justify-content-between">
+    <div class="col-lg-8">
+      <div class="dashboard-header-left d-flex align-items-center">
+        <div class="d-flex align-items-start flex-column">
+          <div class="d-flex align-items-center">
+            <nav>
+              <ol class="breadcrumb m-0">
+                <li class="breadcrumb-item active" style="margin-right: 20px">
+                  <span class="me-2" [innerHTML]="headerData.icon"> </span>
+                  <a
+                    *ngIf="headerData.tabs[0].url; else noUrl"
+                    (click)="navigateTab(headerData.tabs[0].url)"
+                    >{{ headerData.title }}</a
+                  >
+                  <ng-template #noUrl>
+                    <a>{{ headerData.title }}</a>
+                  </ng-template>
+                </li>
+                <li *ngIf="!headerData.isTab">
+                  <ng-container
+                    *ngIf="
+                      headerData &&
+                      headerData.tabs &&
+                      headerData.tabs.length > 0
+                    "
+                  >
+                    <a routerLink="{{ headerData.tabs[0].url }}">{{
+                      headerData.tabs[0].title
+                    }}</a>
+                  </ng-container>
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+        <nav
+          *ngIf="headerData.isTab"
+          class="navbar navbar-light bg-lightmain-navbar ps-5"
+        >
+          <div class="container-fluid p-0">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li
+                *ngFor="let tab of headerData.tabs"
+                class="nav-item"
+                role="presentation"
+              >
+                <button
+                  [ngClass]="{ 'nav-link': true, active: tab.isActive }"
+                  id="myattendance-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#myattendance"
+                  type="button"
+                  role="tab"
+                  aria-controls="myattendance"
+                  aria-selected="true"
+                  (click)="navigateTab(tab.url)"
+                >
+                  {{ tab.title }}
+                </button>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div class="col-lg-4 col-sm-4">
+      <div class="right-header-components">
+        <div class="dropdown dropdown-center create-button me-3 w-auto">
+          <button
+            class="iconButton medium notification iconHover custom-fa-col"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fal fa-plus"></i>
+          </button>
+          <ul
+            class="dropdown-menu custom-dropdown"
+            aria-labelledby="dropdownMenuButton1"
+          >
+            <li>
+              <a
+                class="dropdown-item p-1 d-flex align-items-baseline"
+                data-bs-toggle="offcanvas"
+                [routerLink]="['/connect/employee-self-services/my-leave']"
+                role="button"
+                aria-controls="offcanvasExample"
+              >
+                <button class="iconButton dropdown-iconBtn small">
+                  <i class="fa-light fa-ticket"></i></button
+                >Leave
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item p-1 d-flex align-items-baseline"
+                data-bs-toggle="offcanvas"
+                [routerLink]="['/connect/employee-self-services/attendance']"
+                role="button"
+                aria-controls="addattendance1"
+              >
+                <button class="iconButton dropdown-iconBtn small">
+                  <i class="fa-light fa-ticket"></i></button
+                >Attendance
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item p-1 d-flex align-items-baseline"
+                data-bs-toggle="offcanvas"
+                [routerLink]="['/connect/employee-self-services/benefits']"
+                role="button"
+                aria-controls="benefitreq"
+              >
+                <button class="iconButton dropdown-iconBtn small">
+                  <i class="fa-light fa-ticket"></i></button
+                >Benefit Request
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item p-1 d-flex align-items-baseline"
+                data-bs-toggle="offcanvas"
+                [routerLink]="[
+                  '/connect/employee-self-services/businesstravel'
+                ]"
+                role="button"
+                aria-controls="editscheular1"
+              >
+                <button class="iconButton dropdown-iconBtn small">
+                  <i class="fa-light fa-ticket"></i></button
+                >Business Travel
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div
+          class="dropdown dropdown-center custom-dropdown-list w-auto notify me-3"
+        >
+          <a
+            class="d-block"
+            id="dropdownUser1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            data-bs-auto-close="outside"
+          >
+            <button class="iconButton medium notification iconHover">
+              <i class="fal fa-bell notify-count"></i>
+              <span class="badge bg-danger rounded-pill">52</span>
+            </button>
+          </a>
+          <div
+            class="dropdown-menu full_dropdown p-0 text-small user-profile-dropdown shadow"
+            aria-labelledby="dropdownUser1"
+          >
+            <ul class="p-0 m-0">
+              <li class="notification-header dropdown-header p-0">
+                <ul class="w-100">
+                  <li>
+                    <div class="name-n-info">
+                      <h5 class="night m-0">Notifications</h5>
+                    </div>
+                    <a class="pb-1 pe-2 ps-2 pt-1 rounded-pill sky"
+                      >Mark all as Read</a
+                    >
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link active"
+                  id="all-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#all-tab-pane"
+                  type="button"
+                  role="tab"
+                  aria-controls="all-tab-pane"
+                  aria-selected="true"
+                >
+                  All
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="approvals-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#approvals-tab-pane"
+                  type="button"
+                  role="tab"
+                  aria-controls="approvals-tab-pane"
+                  aria-selected="false"
+                  tabindex="-1"
+                >
+                  Approvals
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="discussions-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#discussions-tab-pane"
+                  type="button"
+                  role="tab"
+                  aria-controls="discussions-tab-pane"
+                  aria-selected="false"
+                  tabindex="-1"
+                >
+                  Discussions
+                </button>
+              </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <div
+                class="tab-pane fade show active"
+                id="all-tab-pane"
+                role="tabpanel"
+                aria-labelledby="all-tab"
+                tabindex="0"
+              >
+                <ul class="p-0 m-0">
+                  <li class="notification-body dropdown-body w-100">
+                    <ul class="p-0 w-100 m-0">
+                      <li class="mt-2 p-2 ms-3 fw-semibold">Today</li>
+                      <li>
+                        <a class="dropdown-item active">
+                          <div class="ms-2 me-auto coal lh-1">
+                            <div class="night">
+                              Ticket #123456 has been assigned to you.
+                            </div>
+                            <small>2 hours ago</small>
+                          </div>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item">
+                          <div class="ms-2 me-auto coal lh-1">
+                            <div class="night">
+                              New high-priority ticket created: #987654
+                            </div>
+                            <small>1 day ago</small>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="mt-2 p-2 ms-3 fw-semibold">Yesterday</li>
+                      <li>
+                        <a class="dropdown-item">
+                          <div class="ms-2 me-auto coal lh-1">
+                            <div class="night">
+                              Ticket #789012 has been resolved.
+                            </div>
+                            <small>2 day ago</small>
+                          </div>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item">
+                          <div class="ms-2 me-auto coal lh-1">
+                            <div class="night">
+                              Ticket #32324 has been assigned to you.
+                            </div>
+                            <small>3 day ago</small>
+                          </div>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item">
+                          <div class="ms-2 me-auto coal lh-1">
+                            <div class="night">
+                              Ticket #789013 has been resolved.
+                            </div>
+                            <small>3 day ago</small>
+                          </div>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="notification-footer dropdown-footer p-0">
+                    <ul class="card-footer w-100">
+                      <li>
+                        <div class="w-100 p-2">
+                          <a
+                            class="btn text-center d-block sky notification-view-all-btn"
+                            >View all
+                            <i
+                              class="fa-light fa-arrow-up-right-from-square"
+                            ></i>
+                          </a>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="approvals-tab-pane"
+                role="tabpanel"
+                aria-labelledby="approvals-tab"
+                tabindex="0"
+              >
+                <ul class="p-0 m-0">
+                  <li class="notification-body dropdown-body w-100">
+                    <ul class="p-0 w-100 m-0">
+                      <li class="mt-2 p-2 ms-3 fw-semibold">Today</li>
+                      <li>
+                        <a class="dropdown-item active">
+                          <div class="ms-2 me-auto coal lh-1">
+                            <div class="night">
+                              Ticket #7890332 has been resolved.
+                            </div>
+                            <small>11:30 AM</small>
+                          </div>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item">
+                          <div class="ms-2 me-auto coal lh-1">
+                            <div class="night">
+                              Your average response time is low.
+                            </div>
+                            <small>11:30 AM</small>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="notification-footer dropdown-footer p-0">
+                        <ul class="card-footer w-100">
+                          <li>
+                            <div class="w-100 p-2">
+                              <a
+                                class="btn text-center d-block sky notification-view-all-btn"
+                                >View all
+                                <i
+                                  class="fa-light fa-arrow-up-right-from-square"
+                                ></i>
+                              </a>
+                            </div>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="discussions-tab-pane"
+                role="tabpanel"
+                aria-labelledby="discussions-tab"
+                tabindex="0"
+              >
+                <ul class="p-0 m-0">
+                  <li class="notification-body dropdown-body w-100">
+                    <ul class="p-0 w-100 m-0">
+                      <li class="mt-2 p-2 ms-3 fw-semibold">Today</li>
+                      <li>
+                        <a class="dropdown-item active">
+                          <div class="ms-2 me-auto coal lh-1">
+                            <div class="night">
+                              Your average response time is low.
+                            </div>
+                            <small>11:30 AM</small>
+                          </div>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item">
+                          <div class="ms-2 me-auto coal lh-1">
+                            <div class="night">
+                              New high-priority ticket created: #987654
+                            </div>
+                            <small>11:30 AM</small>
+                          </div>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item active">
+                          <div class="ms-2 me-auto coal lh-1">
+                            <div class="night">
+                              Your average response time is low.
+                            </div>
+                            <small>11:30 AM</small>
+                          </div>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item">
+                          <div class="ms-2 me-auto coal lh-1">
+                            <div class="night">
+                              Ticket #789012 has been resolved.
+                            </div>
+                            <small>1 day ago</small>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="notification-footer dropdown-footer p-0">
+                        <ul class="card-footer w-100">
+                          <li>
+                            <div class="w-100 p-2">
+                              <a
+                                class="btn text-center d-block sky notification-view-all-btn"
+                                >View all
+                                <i
+                                  class="fa-light fa-arrow-up-right-from-square"
+                                ></i>
+                              </a>
+                            </div>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dropdown custom-dropdown-list w-auto">
+          <a
+            class="link-dark text-decoration-none dropdown-toggle"
+            id="dropdownUser1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <em class="iconButton medium cherryTransBg night fw-bolder">{{
+              initial
+            }}</em>
+            <span class="online-n-offline"></span>
+            <div class="name-n-info">
+              <span class="name">{{ username }} </span>
+              <small>{{ designation }}</small>
+            </div>
+          </a>
+          <ul
+            class="dropdown-menu full_dropdown p-0 text-small user-profile-dropdown shadow"
+            aria-labelledby="dropdownUser1"
+          >
+            <li class="user-dropdown-header dropdown-header">
+              <ul>
+                <li>
+                  <a
+                    class="link-dark text-decoration-none"
+                    id="dropdownUser1"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <!-- <img
+                      src="https://github.com/mdo.png"
+                      class="profile-pic rounded-circle"
+                      alt="mdo"
+                      width="50"
+                      height="50"
+                    /> -->
+                    <em
+                      class="iconButton medium cherryTransBg night fw-bolder"
+                      >{{ initial }}</em
+                    >
+                    <span class="online-n-offline on-off-btn"></span>
+                    <div class="name-n-info lh-sm mx-3">
+                      <h6 class="night m-0">{{ username }}</h6>
+                      <small>{{ designation }}</small>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+              <button class="iconButton medium iconHover">
+                <i class="fal fa-cog"></i>
+              </button>
+            </li>
+            <li class="user-dropdown-body dropdown-body w-100 p-2">
+              <ul class="w-100">
+                <li class="dropdown-item w-100 p-3 fw-semibold">
+                  <a routerLink="/connect/deligation"> Assign Delegation </a>
+                </li>
+              </ul>
+            </li>
+            <li class="user-dropdown-body dropdown-body w-100 p-2">
+              <ul class="w-100">
+                <li class="dropdown-item w-100 px-2">
+                  <div class="d-flex align-items-center">
+                    <div class="svgbox me-2">
+                      <i class="fa-sharp fa-light fa-arrows-rotate"></i>
+                      <span class="iconButton fw-bolder bg-primary">TK</span>
+                    </div>
+                    <span>Taimoor Kasi</span>
+                  </div>
+                  <span
+                    class="btn rounded-pill successbg btn-sm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#assumedelegation"
+                    >Assume</span
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="user-dropdown-body dropdown-body w-100 p-2">
+              <ul class="w-100">
+                <li
+                  class="dropdown-item w-100 px-2"
+                  data-bs-toggle="modal"
+                  data-bs-target="#removedelegation"
+                >
+                  <div class="d-flex align-items-center">
+                    <div class="svgbox me-2">
+                      <i class="fa-sharp fa-light fa-arrows-rotate"></i>
+                      <span class="iconButton fw-bolder bg-primary">TK</span>
+                    </div>
+                    <span>Taimoor Kasi</span>
+                  </div>
+                  <span class="btn rounded-pill errorbg btn-sm">Remove</span>
+                </li>
+              </ul>
+            </li>
+            <li class="card-footer dropdown-footer p-2">
+              <ul class="w-100">
+                <li>
+                  <div class="w-100">
+                    <a
+                      class="btn radicalBg text-center btn-lg d-block"
+                      (click)="signOut()"
+                      >Sign Out</a
+                    >
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <a class="ps-3">
+          <img src="../../assets/images/Highnoon.svg" class="hclogo" alt="" />
+        </a>
+      </div>
+    </div>
+  </div>
+</header>

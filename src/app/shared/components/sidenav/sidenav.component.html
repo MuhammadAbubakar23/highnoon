@@ -1,0 +1,46 @@
+<div id="leftBarWrapper">
+  <div class="logo">
+    <a>
+      <p class="logoText">
+        <img src=" ../../assets/images/highnoon.connect.svg" alt="..." />
+      </p>
+      <p class="logoText">
+        <img src=" ../../assets/images/h.c.svg" alt="..." />
+      </p>
+    </a>
+  </div>
+
+  <ul class="list-group agent_nav_bar" id="agent-list">
+    <a
+      *ngFor="let menu of menus; let i = index"
+      (click)="activeMenu(i, menu.Name)"
+      [routerLink]="[menu.RouteName]"
+      [ngClass]="{ active: activeIndex === i }"
+      class="list-group-item list-group-item-action d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
+    >
+      <div class="list-group-text d-flex align-items-center">
+        <div class="iconButton medium">
+          <i [ngClass]="menu.iconClass"></i>
+        </div>
+        <div class="itemLabel">
+          {{ menu.DisplayName }}
+        </div>
+      </div>
+    </a>
+  </ul>
+
+  <div class="logo mb-0">
+    <a href="home.html">
+      <p class="logoText">
+        <img src="../../assets/images/enteract-full-logo.svg" alt="..." />
+      </p>
+      <p class="logoText">
+        <img
+          src="../../assets/images/enteract.helpdesk-white-sm.svg"
+          alt="..."
+        />
+      </p>
+    </a>
+  </div>
+</div>
+<div class="bottombar"></div>

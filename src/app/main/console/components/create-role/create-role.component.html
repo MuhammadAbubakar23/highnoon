@@ -1,0 +1,278 @@
+<ng-container *ngIf="!isUpdate">
+  <div class="agent-page-main-content">
+    <div
+      class="create-user console-body-wrapper footerheight"
+      data-scrollbar="true"
+      tabindex="-1"
+      style="overflow-y: scroll; height: 80vh; position: relative"
+    >
+      <div class="scroll-content">
+        <div class="wider-container">
+          <div class="tab-body">
+            <div class="tab-content" id="nav-tabContent">
+              <div
+                id="user-detail"
+                class="tab-pane fade active show"
+                role="tabpanel"
+                aria-labelledby="user-tab"
+              >
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="team-detail-form-box mb-5">
+                      <form [formGroup]="roleForm" class="user-detail-form">
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <input
+                              [class.is-invalid]="
+                                rF['name'].invalid && rF['name'].touched
+                              "
+                              [class.is-valid]="
+                                rF['name'].valid && rF['name'].touched
+                              "
+                              class="form-control"
+                              id="name"
+                              placeholder="Enter Name"
+                              formControlName="name"
+                            />
+                            <label for="first-name">Name</label>
+                            <div class="invalid-feedback">
+                              <div *ngIf="rF['name'].errors?.['required']">
+                                Role Name is required.
+                              </div>
+                              <div *ngIf="rF['name'].errors?.['maxlength']">
+                                Role Name be less than 20 characters.
+                              </div>
+                            </div>
+                            <div class="valid-feedback">Looks good!</div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="ps-3 pe-3">
+        <div
+          class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4"
+        >
+          <div class="row w-100">
+            <div class="col-md-4"></div>
+            <div class="col-md-8 justify-content-end d-flex">
+              <div class="buttons-wrap d-flex">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary btn-medium me-2 px-4"
+                  routerLink="/connect/console/roles"
+                >
+                  Back
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-success ms-e f-saveBtn btn-large d-none"
+                ></button>
+                <button
+                  type="button"
+                  class="btn skyBg ms-2 px-4 btn-medium saveBtn"
+                  data-bs-toggle="modal"
+                  data-bs-target=""
+                  (click)="submitForm()"
+                  [class.disabled]="roleForm.invalid"
+                >
+                Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="isUpdate">
+  <div class="agent-page-main-content">
+    <div
+      class="create-user console-body-wrapper footerheight"
+      data-scrollbar="true"
+      tabindex="-1"
+      style="overflow-y: scroll; height: 80vh; position: relative"
+    >
+      <div class="scroll-content">
+        <div class="wider-container pt-3">
+          <header class="tab-header">
+            <nav>
+              <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                <button
+                  class="nav-link active"
+                  id="user-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#user-detail"
+                  type="button"
+                  role="tab"
+                  aria-controls="user-detail"
+                  aria-selected="true"
+                >
+                  <h6>Details</h6>
+                </button>
+                <button
+                  class="nav-link"
+                  id="Permissions-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#Permissions-detail"
+                  type="button"
+                  role="tab"
+                  aria-controls="Permissions-detail"
+                  aria-selected="true"
+                >
+                  <h6>Permissions</h6>
+                </button>
+              </div>
+            </nav>
+          </header>
+          <div class="tab-body">
+            <div class="tab-content" id="nav-tabContent">
+              <form [formGroup]="roleForm" class="user-detail-form">
+                <div
+                  id="user-detail"
+                  class="tab-pane fade active show"
+                  role="tabpanel"
+                  aria-labelledby="user-tab"
+                >
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="team-detail-form-box mb-5">
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <input
+                              [class.is-invalid]="
+                                rF['name'].invalid && rF['name'].touched
+                              "
+                              [class.is-valid]="
+                                rF['name'].valid && rF['name'].touched
+                              "
+                              class="form-control"
+                              id="name"
+                              placeholder="Enter name"
+                              formControlName="name"
+                            />
+                            <label for="first-name">name</label>
+                            <div class="invalid-feedback">
+                              Please enter a name
+                            </div>
+                            <div class="valid-feedback">Looks good!</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  id="Permissions-detail"
+                  class="tab-pane fade"
+                  role="tabpanel"
+                  aria-labelledby="Permissions-tab"
+                >
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <ul>
+                        <li *ngFor="let item of permissions1; index as j">
+                          <span
+                            class="cursor-pointer caret"
+                            [ngClass]="
+                              item.expand
+                                ? 'fas fa-caret-down'
+                                : 'fas fa-caret-right'
+                            "
+                            (click)="item.expand = !item.expand"
+                          ></span>
+                          <span
+                            class="mx-1"
+                            [ngClass]="
+                              item.isChecked
+                                ? 'fas fa-check-square'
+                                : checkMinusSquare(item)
+                                ? 'fas fa-minus-square'
+                                : 'far fa-square'
+                            "
+                            (click)="checkParent(j)"
+                          >
+                          </span>
+                          <span
+                            class="cursor-pointer"
+                            (click)="item.expand = !item.expand"
+                            >{{ item.name }}</span
+                          >
+                          <ul [class.d-none]="!item.expand">
+                            <li *ngFor="let child of item.childs; index as k">
+                              <span
+                                class="mr-1"
+                                [ngClass]="
+                                  child.isChecked
+                                    ? 'fas fa-check-square'
+                                    : 'far fa-square'
+                                "
+                                (click)="checkChild(j, k)"
+                              >
+                              </span>
+                              <span class="cursor-pointer">{{
+                                child.name
+                              }}</span>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="ps-3 pe-3">
+        <div
+          class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4"
+        >
+          <div class="row w-100">
+            <div class="col-md-4"></div>
+            <div class="col-md-8 justify-content-end d-flex">
+              <div class="buttons-wrap d-flex">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary btn-medium me-2 px-4"
+                  data-bs-toggle="modal"
+                  data-bs-target=""
+                >
+                  Back
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-success ms-e f-saveBtn btn-large d-none"
+                ></button>
+                <button
+                  type="button"
+                  class="btn skyBg ms-2 px-4 btn-medium saveBtn"
+                  data-bs-toggle="modal"
+                  data-bs-target=""
+                  (click)="submitForm()"
+                  [class.disabled]="roleForm.invalid"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</ng-container>

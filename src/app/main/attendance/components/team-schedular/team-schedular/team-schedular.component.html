@@ -1,0 +1,698 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-jelly-box"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+<div class="content-box-wrapper d-flex w-100">
+  <div class="middle-content d-flex">
+    <div class="page-content-wrapper">
+      <div
+        class="agent-page-main-content px-4"
+        style="overflow: hidden; outline: none"
+        tabindex="-1"
+      >
+        <div class="tab-content" id="myTabContent">
+          <div
+            class="tab-pane fade show active"
+            id="myScheduler"
+            role="tabpanel"
+            aria-labelledby="myScheduler-tab"
+          >
+            <div class="row mt-4">
+              <div class="col-lg-4 col-md-6">
+                <div class="card dashboard-card">
+                  <div class="card-body d-flex align-items-center">
+                    <div class="iconButton medium me-3 successbg">
+                      <i class="fa-light fa-calendar"></i>
+                    </div>
+                    <div>
+                      <p class="silver mb-1 text-uppercase">total</p>
+                      <h5 class="m-0">{{ total }} Hours</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6">
+                <div class="card dashboard-card">
+                  <div class="card-body d-flex align-items-center">
+                    <div class="iconButton medium me-3 skyTransBg night">
+                      <i class="fa-light fa-calendar"></i>
+                    </div>
+                    <div>
+                      <p class="silver mb-1 text-uppercase">Regular</p>
+                      <h5 class="m-0">{{ regular }} Hours</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6">
+                <div class="card dashboard-card">
+                  <div class="card-body d-flex align-items-center">
+                    <div class="iconButton medium me-3 bg-primary20 night">
+                      <i class="fa-light fa-calendar"></i>
+                    </div>
+                    <div>
+                      <p class="silver mb-1 text-uppercase">OVERTIMe</p>
+                      <h5 class="m-0">{{ overtime }}</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="filter-container">
+              <div class="row justify-content-between">
+                <div class="col-md-7">
+                  <ul class="list-group list-group-horizontal border-0">
+                    <li class="list-group-item border-0 p-0 me-2">
+                      <div class="icon-input search_field">
+                        <i class="fa-light fa-magnifying-glass"></i>
+                        <input
+                          class="form-control"
+                          placeholder="Search.. "
+                          [(ngModel)]="searchText"
+                        />
+                      </div>
+                    </li>
+                    <li class="list-group-item border-0 ms-2 pe-0">
+                      <span class="coal">From</span>
+                    </li>
+                    <li class="list-group-item border-0 p-0 me-2">
+                      <div class="ms-2">
+                        <input
+                          [(ngModel)]="startDate"
+                          class="form-control timepicker flatpickr-input"
+                          value="From"
+                          type="date"
+                          (change)="resetEndDate()"
+                        />
+                      </div>
+                    </li>
+                    <li class="list-group-item border-0 ms-2 pe-0">
+                      <span class="coal">To</span>
+                    </li>
+                    <li class="list-group-item border-0 p-0 mx-2">
+                      <div class="ms-2">
+                        <input
+                          [(ngModel)]="endDate"
+                          class="form-control timepicker flatpickr-input"
+                          type="date"
+                          (change)="filterByDate()"
+                        />
+                      </div>
+                    </li>
+                    <li
+                      class="list-group-item border-0 iconButton iconHover medium"
+                      aria-label="..."
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="bottom"
+                      data-bs-original-title="Refresh"
+                      (click)="refreshPage()"
+                    >
+                      <i class="fal fa-redo-alt"></i>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-5">
+                  <div
+                    class="filters-opt d-flex align-items-center justify-content-end"
+                  >
+                    <div class="dropdown ms-2 me-2 w-auto">
+                      <button
+                        class="btn btn-success ice"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="true"
+                        id="adddd"
+                      >
+                        <i class="fa-light fa-plus"></i> Create Roster
+                      </button>
+                      <ul
+                        class="dropdown-menu"
+                        aria-labelledby="adddd"
+                        data-popper-placement="bottom-start"
+                        style="
+                          position: absolute;
+                          inset: 0px auto auto 0px;
+                          margin: 0px;
+                          transform: translate(1612px, 239px);
+                        "
+                      >
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            routerLink="/connect/attendance/roster/team/bulk-upload"
+                          >
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <span class="iconButton medium emeraldTransBg"
+                                  ><i class="fa-light fa-user"></i
+                                ></span>
+                              </div>
+                              <div class="flex-grow-1 ms-2">
+                                <h6 class="m-0">Bulk Roster Upload</h6>
+                                <small class="silver"
+                                  >Upload bulk Employees (max 150)</small
+                                >
+                              </div>
+                            </div>
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            role="button"
+                            (click)="resetForm(addcontent)"
+                          >
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <span class="iconButton medium oceanTransBg">
+                                  <i class="fa-light fa-file-lines"></i>
+                                </span>
+                              </div>
+                              <div class="flex-grow-1 ms-2">
+                                <h6 class="m-0">Create Roster</h6>
+                                <small class="silver"
+                                  >Create Roster Manually</small
+                                >
+                              </div>
+                            </div>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="dropdown w-auto rounded">
+                      <button
+                        class="btn iconButton iconHover medium"
+                        type="button"
+                        id="sorting1"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        <i class="fa-regular fa-arrow-down-short-wide"></i>
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="sorting1">
+                        <li class="saltBg p-2 charcoal">
+                          <strong> Sort By</strong>
+                        </li>
+                        <li *ngFor="let column of sortingColumns">
+                          <a
+                            class="dropdown-item d-flex align-items-center"
+                            (click)="sortDataBy(column)"
+                          >
+                            {{ column }}
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div class="dropdown w-auto">
+                      <button
+                        class="btn iconButton medium"
+                        type="button"
+                        id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        <i class="fa-regular fa-ellipsis"></i>
+                      </button>
+                      <ul
+                        class="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton1"
+                      >
+                        <li>
+                          <a class="dropdown-item p-1" (click)="exportData()">
+                            <button
+                              class="iconButton dropdown-iconBtn small"
+                              id="dropdownMenuButton1"
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              <i class="fa-solid fa-file-export"></i></button
+                            >Export to CSV
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="query-container perfect-scrollbar"
+              data-scrollbar="true"
+              tabindex="-1"
+              style="overflow-y: auto; outline: none"
+            >
+              <div class="scroll-content">
+                <div class="table-section">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th *ngFor="let column of columnNames">
+                          {{ column }}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of schedularItems; let i = index">
+                        <td *ngIf="pageNumber == 1">{{ i + 1 }}</td>
+                        <td *ngIf="pageNumber > 1">
+                          {{ i + 1 + pageSize * (pageNumber - 1) }}
+                        </td>
+                        <td *ngFor="let column of desColumns">
+                          {{ item[column] }}
+                        </td>
+<!--
+                        <td>
+                          <div
+                            class="dropdown w-auto"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                          >
+                            <button
+                              class="iconButton small iconHover d-inline-block"
+                              id="dropdownMenuButton1"
+                              data-bs-toggle="dropdown"
+                              aria-expanded="true"
+                            >
+                              <i class="far fa-ellipsis-v"></i>
+                            </button>
+                            <ul
+                              class="dropdown-menu custom-dropdown"
+                              aria-labelledby="dropdownMenuButton1"
+                            >
+                              <li>
+                                <a
+                                  class="dropdown-item p-1"
+                                  (click)="
+                                    editSchedular(item.scheduleId, addcontent)
+                                  "
+                                >
+                                  <button
+                                    class="iconButton dropdown-iconBtn small"
+                                  >
+                                    <i class="fal fa-edit"></i></button
+                                  >Edit
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </td> -->
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <ng-container *ngIf="totalRecords > pageSize">
+                <div class="me-5">
+                  <ul class="pagination justify-content-end">
+                    <li class="page-item">
+                      <a
+                        class="page-link"
+                        (click)="prevPage()"
+                        [attr.disabled]="pageNumber === 1"
+                        >Previous</a
+                      >
+                    </li>
+                    <ng-container *ngFor="let page of visiblePages()">
+                      <li
+                        class="page-item"
+                        [ngClass]="{ disabled: page === -1 }"
+                      >
+                        <a
+                          class="page-link"
+                          (click)="changePage(page)"
+                          [class.active]="pageNumber === page"
+                          >{{ page === -1 ? "..." : page }}</a
+                        >
+                      </li>
+                    </ng-container>
+                    <li class="page-item">
+                      <a
+                        class="page-link"
+                        (click)="nextPage()"
+                        [attr.disabled]="pageNumber === totalPages"
+                        >Next</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #addcontent let-offcanvas>
+  <div class="offcanvas-header bg-light">
+    <div class="row g-0 w-100">
+      <div class="col-md-6 d-flex align-items-center">
+        <h5 class="mb-0">Change Roster</h5>
+      </div>
+      <div class="col-md-6 justify-content-end d-flex align-items-center pe-0">
+        <span
+          class="iconButton iconHower medium"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+          (click)="closeOffset(addcontent)"
+          ><i class="fa-light fa-times"></i
+        ></span>
+      </div>
+    </div>
+  </div>
+  <div class="offcanvas-body px-4">
+    <form [formGroup]="scheduleForm">
+      <div
+        class="mb-3"
+        *ngIf="scheduleForm.controls['scheduleId'].value != null"
+      >
+        <div class="row">
+          <div class="col">
+            <div class="mb-3">
+              <div class="d-flex align-items-center justify-content-between">
+                <label for="" class="col-form-label">Roster Date</label>
+              </div>
+              <div class="iconholder">
+                <input
+                  formControlName="date"
+                  class="form-control timepicker flatpickr-input"
+                  type="date"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3" *ngIf="scheduleForm.controls['scheduleId'].value == null || scheduleForm.controls['scheduleId'].value == 0">
+        <div class="form-floating mb-2">
+          <ng-select
+            [multiple]="isMultiple"
+            placeholder="Select Employee"
+            formControlName="userId"
+            [class.is-invalid]="sF['userId'].invalid && sF['userId'].touched"
+            [class.is-valid]="sF['userId'].valid && sF['userId'].touched"
+          >
+            <ng-option
+              *ngFor="let employee of employees"
+              [value]="employee.userId"
+              >{{ employee.userId }} : {{ employee.userName }} - {{ employee.teamName }}</ng-option
+            >
+          </ng-select>
+          <div class="invalid-feedback">
+            <div *ngIf="sF['userId'].errors?.['required']">
+              Employee is required.
+            </div>
+          </div>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class="mb-3">
+          <label for="" class="col-form-label">Schedule</label>
+          <select class="form-select" aria-label="" formControlName="shiftId"
+            [class.is-invalid]="sF['shiftId'].invalid && sF['shiftId'].touched"
+            [class.is-valid]="sF['shiftId'].valid && sF['shiftId'].touched"
+          >
+            <option [value]=null selected disabled>Select Schedule</option>
+            <option *ngFor="let shift of shiftItems" [ngValue]="shift.shiftIdId">
+              {{shift.shiftName}}
+            </option>
+          </select>
+          <div class="invalid-feedback">
+            <div *ngIf="sF['shiftId'].errors?.['required']">
+              Please select a schedule!
+            </div>
+          </div>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="mb-3">
+              <label for="" class="d-block">&nbsp;</label>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="pickuprequired"
+                  formControlName="generalShift" (change)="toggleDateEndReadonly(scheduleForm.get('generalShift').value)">
+                <label class="form-check-label" for="pickuprequired">
+                  General Shift
+                </label>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3" *ngIf="scheduleForm.controls['scheduleId'].value == null || scheduleForm.controls['scheduleId'].value == 0">
+        <div class="row">
+          <div class="col">
+            <div class="mb-3">
+              <div class="d-flex align-items-center justify-content-between">
+                <label for="" class="col-form-label">From</label>
+              </div>
+              <div class="iconholder">
+                <input
+                  formControlName="dateStart"
+                  [class.is-invalid]="
+                    sF['dateStart'].invalid && sF['dateStart'].touched
+                  "
+                  [class.is-valid]="
+                    sF['dateStart'].valid && sF['dateStart'].touched
+                  "
+                  class="form-control timepicker flatpickr-input"
+                  type="date"
+                />
+                <div class="invalid-feedback">
+                  <div *ngIf="sF['dateStart'].errors?.['required']">
+                    Start Date is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3">
+              <div class="d-flex align-items-center justify-content-between">
+                <label for="" class="col-form-label">To</label>
+              </div>
+              <div class="iconholder">
+                <input
+                  formControlName="dateEnd"
+                  class="form-control timepicker flatpickr-input"
+                  type="date"
+                  (change)="addCustomValidator2()"
+                />
+              </div>
+              <div *ngIf="isDurationOk2()" class="text-danger">
+                 To Date must be greater than From Date.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-body">
+        <div class="row">
+          <div class="col">
+            <div class="mb-3">
+              <label for="" class="col-form-label">Check-In</label>
+              <input class="form-control" type="text" [value]="getShiftProperty('checkIn')" readonly>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="mb-3">
+              <label for="" class="col-form-label">Check-Out</label>
+              <input class="form-control" type="text" [value]="getShiftProperty('checkOut')" readonly>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="mb-3">
+              <label for="" class="col-form-label">Break-In</label>
+              <input class="form-control" type="text" [value]="getShiftProperty('breakIn')" readonly>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="mb-3">
+              <label for="" class="col-form-label">Break-Out</label>
+              <input class="form-control" type="text" [value]="getShiftProperty('breakOut')" readonly>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="row">
+          <div class="col">
+            <div class="mb-3">
+                <label for="" class="d-block">&nbsp;</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="pickuprequired"
+                    formControlName="isWeekend">
+                  <label class="form-check-label" for="pickuprequired">
+                    isWeekend
+                  </label>
+                </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+      <div class="mb-3">
+        <label for="" class="col-form-label">Location</label>
+        <select
+          name=""
+          class="form-select"
+          formControlName="location"
+          [class.is-invalid]="sF['location'].invalid && sF['location'].touched"
+          [class.is-valid]="sF['location'].valid && sF['location'].touched"
+        >
+          <option [value]=null disabled selected>Select Location</option>
+          <option
+            [value]="location.description"
+            *ngFor="let location of locations"
+          >
+            {{ location.description }}
+          </option>
+        </select>
+        <div class="invalid-feedback">
+          <div *ngIf="sF['location'].errors?.['required']">
+            Location is required.
+          </div>
+        </div>
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <div class="mb-3">
+        <label for="" class="col-form-label">Notes</label>
+        <textarea
+          formControlName="notes"
+          [class.is-invalid]="sF['notes'].invalid && sF['notes'].touched"
+          [class.is-valid]="sF['notes'].valid && sF['notes'].touched"
+          class="form-control"
+          placeholder="Write a notes"
+          style="height: 100px"
+        ></textarea>
+        <div class="invalid-feedback">
+          <div *ngIf="sF['notes'].errors?.['required']">Note is required.</div>
+        </div>
+      <!-- <div
+      class="accordion mb-4"
+      id="accordionExample"
+      formArrayName="scheduleDays"
+      *ngIf="scheduleForm.controls['scheduleId'].value == null"
+      >
+        <div *ngFor="let day of scheduleDays.controls; let i = index">
+          <div class="accordion-item" [formGroupName]="i">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                [attr.data-bs-target]="'#collapse' + i"
+                aria-expanded="false"
+                [attr.aria-controls]="'collapse' + i"
+              >
+                {{ day.value.dayName }}
+              </button>
+            </h2>
+            <div
+              [id]="'collapse' + i"
+              class="accordion-collapse collapse"
+              data-bs-parent="#accordionExample"
+            >
+              <div class="accordion-body">
+                <div class="row">
+                  <div class="mb-3">
+                    <label for="" class="col-form-label">Shift</label>
+                    <select class="form-select" aria-label="" formControlName="shiftId">
+                      <option [value]="null" selected disabled>Select shift</option>
+                      <option *ngFor="let shift of shiftItems" [ngValue]="shift.shiftIdId">
+                        {{shift.shiftName}}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="col">
+                    <div class="mb-3">
+                      <label for="" class="d-block">&nbsp;</label>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="pickuprequired"
+                          formControlName="isWeekend">
+                        <label class="form-check-label" for="pickuprequired">
+                          isWeekend
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-body">
+                    <div class="row">
+                      <div class="col">
+                        <div class="mb-3">
+                          <label for="" class="col-form-label">Check-In</label>
+                          <input class="form-control" type="text" [value]="getShiftPropertyArray('checkIn', i)" readonly>
+                        </div>
+                      </div>
+
+                      <div class="col">
+                        <div class="mb-3">
+                          <label for="" class="col-form-label">Check-Out</label>
+                          <input class="form-control" type="text" [value]="getShiftPropertyArray('checkOut', i)" readonly>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col">
+                        <div class="mb-3">
+                          <label for="" class="col-form-label">Break-In</label>
+                          <input class="form-control" type="text" [value]="getShiftPropertyArray('breakIn', i)" readonly>
+                        </div>
+                      </div>
+
+                      <div class="col">
+                        <div class="mb-3">
+                          <label for="" class="col-form-label">Break-Out</label>
+                          <input class="form-control" type="text" [value]="getShiftPropertyArray('breakOut', i)" readonly>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+
+      </div>
+    </form>
+  </div>
+  <footer class="bg-light p-3 text-end pe-5">
+    <button
+      type="button"
+      class="btn btn-primary btn-small sendleave"
+      (click)="submitForm(addcontent)"
+      [class.disabled]="isButtonDisabled"
+      style="margin-right: 10px"
+    >
+      Submit
+    </button>
+    <button
+      class="btn btn-outline-danger btn-small"
+      data-bs-toggle="offcanvas"
+      (click)="closeOffset(addcontent)"
+    >
+      Cancel
+    </button>
+  </footer>
+</ng-template>
+<!-- </div> -->
+
+<app-toaster></app-toaster>

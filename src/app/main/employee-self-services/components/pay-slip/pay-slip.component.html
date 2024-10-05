@@ -1,0 +1,815 @@
+<div class="content-box-wrapper d-flex w-100">
+  <div class="middle-content d-flex">
+    <div class="page-content-wrapper">
+      <div class="agent-page-main-content px-4">
+        <div class="filter-container mb-4">
+          <div class="row justify-content-between">
+            <div class="col-md-7">
+              <ul class="list-group list-group-horizontal border-0">
+                <!-- <li class="list-group-item border-0 p-0 me-2">
+                  <div class="icon-input">
+                    <i class="fa-light fa-magnifying-glass"></i>
+                    <input
+                      class="form-control"
+                      placeholder="Search.. "
+                      [(ngModel)]="text"
+                      (input)="generalFilter()"
+                    />
+                  </div>
+                </li>
+                <li class="list-group-item border-0 p-0 me-2">
+                  <div class="iconholder ms-2">
+                    <input
+                      [(ngModel)]="startDate"
+                      class="form-control timepicker flatpickr-input"
+                      type="date"
+                      (change)="resetEndDate()"
+                    />
+                  </div>
+                </li>
+                <li class="list-group-item border-0 p-0 me-2">
+                  <div class="iconholder ms-2">
+                    <input
+                      [(ngModel)]="endDate"
+                      class="form-control timepicker flatpickr-input"
+                      type="date"
+                      (change)="filterByDate()"
+                    />
+                  </div>
+                </li> -->
+                <!-- <li class="list-group-item border-0 p-0 me-2">
+                  <div class="icon-input search_field">
+                    <i class="fa-light fa-magnifying-glass"></i>
+                    <input
+                      class="form-control"
+                      placeholder="Search.. "
+                      [(ngModel)]="text"
+                      (input)="generalFilter()"
+                    />
+                  </div>
+                </li> -->
+                <li class="list-group-item border-0 ms-2 pe-0">
+                  <span class="coal">From</span>
+                </li>
+                <li class="list-group-item border-0 p-0 me-2">
+                  <div class="ms-2">
+                    <input
+                      [(ngModel)]="startDate"
+                      class="form-control timepicker flatpickr-input"
+                      value="From"
+                      type="date"
+                      (change)="resetEndDate()"
+                    />
+                  </div>
+                </li>
+                <li class="list-group-item border-0 ms-2 pe-0">
+                  <span class="coal">To</span>
+                </li>
+                <li class="list-group-item border-0 p-0 mx-2">
+                  <div class="ms-2">
+                    <input
+                      [(ngModel)]="endDate"
+                      class="form-control timepicker flatpickr-input"
+                      type="date"
+                      (change)="filterByDate()"
+                    />
+                  </div>
+                </li>
+                <li
+                  class="list-group-item border-0 iconButton iconHover medium"
+                  aria-label="..."
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="bottom"
+                  data-bs-original-title="Refresh"
+                  (click)="refreshPage()"
+                >
+                  <i class="fal fa-redo-alt"></i>
+                </li>
+
+                <li
+                  class="list-group-item border-top-0 iconButton medium iconHover border-bottom-0 border-start-0 after-select-fun"
+                  aria-label="..."
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="bottom"
+                  data-bs-original-title="Delete"
+                  style="display: none"
+                >
+                  <i class="fal fa-trash"></i>
+                </li>
+              </ul>
+            </div>
+
+            <div class="col-md-5">
+              <div
+                class="filters-opt d-flex align-items-center justify-content-end"
+              ></div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="query-container perfect-scrollbar"
+          data-scrollbar="true"
+          tabindex="-1"
+          style="overflow-y: auto; outline: none"
+        >
+          <div class="scroll-content">
+            <div class="table-section">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th *ngFor="let column of columnNames">
+                      {{ column }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- <tr>
+                  <td>
+                    <a> </a>
+                    <div class="d-flex align-items-center">
+                      <a>
+                        <span class="iconButton lightGreyBg medium me-2">
+                          <i class="fa-light fa-money-check-dollar"></i>
+                        </span>
+                      </a>
+                      <p class="mb-1 darkblue">
+                        <a> </a
+                        ><a
+                          class="dropdown-item p-1 d-flex align-items-baseline"
+                          data-bs-toggle="modal"
+                          data-bs-target="#twofactor"
+                        >
+                          Pay slip - Jun 2023
+                        </a>
+                      </p>
+                    </div>
+                  </td>
+                  <td>June 02, 2023</td>
+
+                </tr> -->
+                  <tr *ngFor="let item of payslipItems; let i = index">
+                    <td *ngIf="pageNumber == 1">
+                      {{ i + 1 }}
+                    </td>
+                    <td *ngIf="pageNumber > 1">
+                      {{ i + 1 + pageSize * (pageNumber - 1) }}
+                    </td>
+                    <td *ngFor="let column of desColumns">
+                      <div
+                        class="d-flex align-items-center"
+                        *ngIf="column === 'paySlip'; else others"
+                      >
+                        <a>
+                          <span class="iconButton lightGreyBg medium me-2">
+                            <i class="fa-light fa-money-check-dollar"></i>
+                          </span>
+                        </a>
+                        <p class="mb-1 darkblue">
+                          <a> </a
+                          ><a
+                            class="dropdown-item p-1 d-flex align-items-baseline"
+                            data-bs-toggle="modal"
+                            data-bs-target="#twofactor"
+                            (click)="sendOtpByEmail(item.salarySlipId, false)"
+                          >
+                            {{ item[column] }}
+                          </a>
+                        </p>
+                      </div>
+                      <ng-template #others>
+                        <span>
+                          {{ item[column] }}
+                        </span></ng-template
+                      >
+                    </td>
+                    <td>
+                      <button
+                        class="btn iconButton medium iconHover"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        data-bs-title="Download"
+                        data-bs-toggle="modal"
+                        data-bs-target="#twofactor"
+                        (click)="sendOtpByEmail(item.salarySlipId, true)"
+                      >
+                        <i class="fal fa-download"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <ng-container *ngIf="totalRecords > pageSize">
+            <div class="me-5">
+              <ul class="pagination justify-content-end">
+                <li class="page-item">
+                  <a
+                    class="page-link"
+                    (click)="prevPage()"
+                    [attr.disabled]="pageNumber === 1"
+                    >Previous</a
+                  >
+                </li>
+                <ng-container *ngFor="let page of visiblePages()">
+                  <li class="page-item" [ngClass]="{ disabled: page === -1 }">
+                    <a
+                      class="page-link"
+                      (click)="changePage(page)"
+                      [class.active]="pageNumber === page"
+                      >{{ page === -1 ? "..." : page }}</a
+                    >
+                  </li>
+                </ng-container>
+                <li class="page-item">
+                  <a
+                    class="page-link"
+                    (click)="nextPage()"
+                    [attr.disabled]="pageNumber === totalPages"
+                    >Next</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  [class.show]="false"
+  id="twofactor"
+  tabindex="-1"
+  aria-labelledby="twofactorLabel"
+  aria-modal="true"
+  role="dialog"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body p-5">
+        <div class="text-center">
+          <div class="mb-4">
+            <img
+              src="../images/twofa.svg"
+              class="img-fluid d-inline-block"
+              alt=""
+            />
+          </div>
+          <h3>Two Factor Authentication</h3>
+          <!-- <p class="coal mb-5">
+            Enter the code we have sent to your email address ******gmail.com
+          </p> -->
+          <p class="coal mb-5">
+            Enter the code we have sent to your email address
+          </p>
+          <p>Type your 6 digit security code</p>
+
+          <div
+            class="d-flex mb-4 flex-wrap align-items-center justify-content-center"
+          >
+            <!-- <input
+              class="form-control fs-3 bg-transparent w-60px h-60px text-center"
+            />
+            <input
+              class="form-control fs-3 bg-transparent w-60px h-60px text-center"
+            />
+            <input
+              class="form-control fs-3 bg-transparent w-60px h-60px text-center"
+            />
+            <input
+              class="form-control fs-3 bg-transparent w-60px h-60px text-center"
+            />
+            <input
+              class="form-control fs-3 bg-transparent w-60px h-60px text-center"
+            />
+            <input
+              class="form-control fs-3 bg-transparent w-60px h-60px text-center"
+            /> -->
+            <!-- <ngx-otp-input
+              [config]="otpInputConfig"
+              (otpChange)="handeOtpChange($event)"
+              (fill)="handleFillEvent($event)"
+
+            >
+            </ngx-otp-input> -->
+            <form></form>
+            <ng-otp-input
+              #ngOtpInput
+              (onInputChange)="onOtpChange($event)"
+              [config]="{ length: 6 }"
+            >
+            </ng-otp-input>
+          </div>
+
+          <div class="mb-5">
+            <button
+              type="button"
+              class="btn btn-primary btn-lg openmenu"
+              data-bs-dismiss="modal"
+              (click)="submitOtp()"
+            >
+              Submit
+            </button>
+          </div>
+          <p class="mb-0 coal">{{ errorMessage }}</p>
+          <p *ngIf="isTimer">
+            Resend it in
+            <strong class="text-primary"> {{ formattedTimeLeft }}</strong>
+          </p>
+          <ng-container *ngIf="!isTimer">
+            <p class="d-block">
+              Didn’t get the code ?
+              <a
+                class="fw-semibold text-primary"
+                (click)="sendOtpByEmail(currentsalarySlipId, isPdf)"
+              >
+                Resend
+              </a>
+
+              or
+              <a class="fw-semibold text-primary">Call Us</a>
+            </p>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="offcanvas w-75 offcanvas-end"
+  [ngClass]="{ show: isShow }"
+  tabindex="-1"
+  id="payslipdetail"
+  aria-labelledby="payslipdetailLabel"
+  aria-modal="true"
+  role="dialog"
+>
+  <div class="offcanvas-body">
+    <span
+      (click)="hideSalerySlip()"
+      class="iconButton iconHower medium position-absolute top-0 end-0"
+      style="margin-right: 10px"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+      ><i class="fa-light fa-times"></i
+    ></span>
+
+    <table class="table payslip-th m-0">
+      <tbody>
+        <tr>
+          <td>
+            <img
+              src="https://connectapi-staging.highnoon.com.pk/LogoHighnoon.png"
+              class="img-fluid payslip-logo"
+              alt=""
+            />
+          </td>
+          <td class="text-center">
+            <h4>HIGHNOON LABORATORIES LIMITED</h4>
+            <p>Salary Slip for the Month of July 2022</p>
+          </td>
+          <td class="text-end">
+            <dl class="text-end" style="margin-top: 10px">
+              <dt>Published</dt>
+              <dd>
+                <strong class="badge badge-primary10">Date</strong>
+                {{ paySlipDetails.salaryDate }}
+              </dd>
+              <dd>
+                <strong class="badge badge-primary10">At</strong>
+                {{ paySlipDetails.salaryTime }}
+              </dd>
+              <dd>
+                <strong class="badge badge-primary10">By</strong> ABAP_DEV
+              </dd>
+            </dl>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table table-header mb-5">
+      <thead>
+        <tr>
+          <th>Employee</th>
+          <th>Employee ID</th>
+          <th>Employment Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ paySlipDetails.employeeName }}</td>
+          <td>{{ paySlipDetails.employeeId }}</td>
+          <td>{{ paySlipDetails.employeeType }}</td>
+        </tr>
+      </tbody>
+      <thead>
+        <tr>
+          <th>CNIC</th>
+          <th>Designation</th>
+          <th>Department</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ paySlipDetails.cnic }}</td>
+          <td>{{ paySlipDetails.designation }}</td>
+          <td>{{ paySlipDetails.department }}</td>
+        </tr>
+      </tbody>
+
+      <thead>
+        <tr>
+          <th>Date of Joining</th>
+          <th>Grade</th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ paySlipDetails.joinigDate }}</td>
+          <td>{{ paySlipDetails.grade }}</td>
+          <td>{{ paySlipDetails.location }}</td>
+        </tr>
+      </tbody>
+
+      <thead>
+        <tr>
+          <th>Bank</th>
+          <th>Account No.</th>
+          <th>Service Period</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ paySlipDetails.bank }}</td>
+          <td>{{ paySlipDetails.accountNo }}</td>
+          <td>{{ paySlipDetails.servicePeriod }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="table-section">
+      <table
+        class="table payslip-description table-bordered mb-5"
+        style="
+          width: 100%;
+          color: #000;
+          caption-side: bottom;
+          border-collapse: collapse;
+          font-family: 'Arial', sans-serif;
+          margin-bottom: 0 !important;
+        "
+      >
+        <tbody>
+          <tr>
+            <td
+              style="
+                padding: 0;
+                text-align: left;
+                font-size: 14px;
+                vertical-align: top;
+                border: 1px solid #dee2e6 !important;
+              "
+            >
+              <table
+                class="table"
+                style="width: 100%; border-collapse: collapse"
+              >
+                <thead
+                  style="
+                    border-bottom: 1px solid #e4722b;
+                    border-color: #e4722b;
+                    text-align: left;
+                  "
+                >
+                  <tr>
+                    <th style="font-size: 14px; padding: 8px">
+                      <strong>Gross Salary</strong>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let section of paySlipDetails.grossSections">
+                    <td
+                      style="
+                        padding: 8px;
+                        text-align: left;
+                        font-size: 14px;
+                        vertical-align: middle;
+                        border-bottom: 1px solid #dee2e6;
+                      "
+                    >
+                      <div
+                        class="d-flex align-items-center justify-content-between"
+                        style="
+                          -webkit-box-align: center !important;
+                          -ms-flex-align: center !important;
+                          align-items: center !important;
+                          -webkit-box-pack: justify !important;
+                          -ms-flex-pack: justify !important;
+                          justify-content: space-between !important;
+                          display: flex !important;
+                        "
+                      >
+                        <span> {{ section.grossTitle }}</span>
+                        <strong>{{ section.grossSalary | number }}</strong>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+            <td
+              style="
+                padding: 0;
+                text-align: left;
+                font-size: 14px;
+                vertical-align: top;
+                border: 1px solid #dee2e6 !important;
+              "
+            >
+              <table
+                class="table"
+                style="width: 100%; border-collapse: collapse"
+              >
+                <thead
+                  style="
+                    border-bottom: 1px solid #e4722b;
+                    border-color: #e4722b;
+                    text-align: left;
+                  "
+                >
+                  <tr>
+                    <th style="font-size: 14px; padding: 8px">
+                      <strong>Other Payments</strong>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let section of paySlipDetails.othersPayments">
+                    <td
+                      style="
+                        padding: 8px;
+                        text-align: left;
+                        font-size: 14px;
+                        vertical-align: middle;
+                        border-bottom: 1px solid #dee2e6;
+                      "
+                    >
+                      <div
+                        class="d-flex align-items-center justify-content-between"
+                        style="
+                          -webkit-box-align: center !important;
+                          -ms-flex-align: center !important;
+                          align-items: center !important;
+                          -webkit-box-pack: justify !important;
+                          -ms-flex-pack: justify !important;
+                          justify-content: space-between !important;
+                          display: flex !important;
+                        "
+                      >
+                        <span>{{ section.otherPaymentTitle }}</span>
+                        <strong>{{ section.otherPayment | number }}</strong>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+            <td
+              style="
+                padding: 0;
+                text-align: left;
+                font-size: 14px;
+                vertical-align: top;
+                border: 1px solid #dee2e6 !important;
+              "
+            >
+              <table
+                class="table"
+                style="width: 100%; border-collapse: collapse"
+              >
+                <thead
+                  style="
+                    border-bottom: 1px solid #e4722b;
+                    border-color: #e4722b;
+                    text-align: left;
+                  "
+                >
+                  <tr>
+                    <th style="font-size: 14px; padding: 8px">
+                      <strong> Deductions</strong>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let section of paySlipDetails.deductions">
+                    <td
+                      style="
+                        padding: 8px;
+                        text-align: left;
+                        font-size: 14px;
+                        vertical-align: middle;
+                        border-bottom: 1px solid #dee2e6;
+                      "
+                    >
+                      <div
+                        class="d-flex align-items-center justify-content-between"
+                        style="
+                          -webkit-box-align: center !important;
+                          -ms-flex-align: center !important;
+                          align-items: center !important;
+                          -webkit-box-pack: justify !important;
+                          -ms-flex-pack: justify !important;
+                          justify-content: space-between !important;
+                          display: flex !important;
+                        "
+                      >
+                        <span> {{ section.deductionTitle }}</span>
+                        <strong>{{ section.deduction | number }}</strong>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td
+              style="
+                background-color: #eee;
+                padding: 8px;
+                text-align: left;
+                font-size: 16px;
+                vertical-align: middle;
+                border-bottom: 1px solid #dee2e6;
+              "
+            >
+              <div
+                class="d-flex align-items-center justify-content-between"
+                style="
+                  -webkit-box-align: center !important;
+                  -ms-flex-align: center !important;
+                  align-items: center !important;
+                  -webkit-box-pack: justify !important;
+                  -ms-flex-pack: justify !important;
+                  justify-content: space-between !important;
+                  display: flex !important;
+                "
+              >
+                <strong> Total</strong>
+                <strong>{{ paySlipDetails.totalGrossSalary | number }}</strong>
+              </div>
+            </td>
+            <td
+              style="
+                background-color: #eee;
+                padding: 8px;
+                text-align: left;
+                font-size: 16px;
+                vertical-align: middle;
+                border-bottom: 1px solid #dee2e6;
+              "
+            >
+              <div
+                class="d-flex align-items-center justify-content-between"
+                style="
+                  -webkit-box-align: center !important;
+                  -ms-flex-align: center !important;
+                  align-items: center !important;
+                  -webkit-box-pack: justify !important;
+                  -ms-flex-pack: justify !important;
+                  justify-content: space-between !important;
+                  display: flex !important;
+                "
+              >
+                <strong> Total</strong>
+                <strong>{{ paySlipDetails.totalOtherPayment | number }}</strong>
+              </div>
+            </td>
+            <td
+              style="
+                background-color: #eee;
+                padding: 8px;
+                text-align: left;
+                font-size: 16px;
+                vertical-align: middle;
+                border-bottom: 1px solid #dee2e6;
+              "
+            >
+              <div
+                class="d-flex align-items-center justify-content-between"
+                style="
+                  -webkit-box-align: center !important;
+                  -ms-flex-align: center !important;
+                  align-items: center !important;
+                  -webkit-box-pack: justify !important;
+                  -ms-flex-pack: justify !important;
+                  justify-content: space-between !important;
+                  display: flex !important;
+                "
+              >
+                <strong> Total</strong>
+                <strong>{{ paySlipDetails.totalDeduction | number }}</strong>
+              </div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <h4>Income Tax</h4>
+    <div class="table-section mb-5">
+      <table class="table singletable table-sm">
+        <thead>
+          <tr>
+            <th>Taxable Income</th>
+            <th>Tax Slab</th>
+            <th>Tax Liability</th>
+            <th>Tax Paid Till Date</th>
+            <th>Annual Tax</th>
+            <th>Tax Payable</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ paySlipDetails.taxableAmount | number }}</td>
+            <td>{{ paySlipDetails.taxSlabv }}</td>
+            <td>{{ paySlipDetails.taxLiability | number }}</td>
+            <td>{{ paySlipDetails.taxPaidTillDate | number }}</td>
+            <td>{{ paySlipDetails.taxAnnual | number }}</td>
+            <td>{{ paySlipDetails.taxPayable | number }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Provident Fund</h4>
+    <div class="table-section mb-5">
+      <table class="table singletable table-sm">
+        <thead>
+          <tr>
+            <th>Member Contribution</th>
+            <th>Company Contribution</th>
+            <th>Member Profit</th>
+            <th>Company Profit</th>
+            <th>PF Withdrawals</th>
+            <th>PF Loan</th>
+            <th>PF Installment</th>
+            <th>PF Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ paySlipDetails.memberContribution | number }}</td>
+            <td>{{ paySlipDetails.companyContribution | number }}</td>
+            <td>{{ paySlipDetails.memberProfit | number }}</td>
+            <td>{{ paySlipDetails.companyProfit | number }}</td>
+            <td>{{ paySlipDetails.withDrawals | number }}</td>
+            <td>{{ paySlipDetails.pfLoan | number }}</td>
+            <td>{{ paySlipDetails.installment | number }}</td>
+            <td>{{ paySlipDetails.pFBalance | number }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Loan Details</h4>
+    <div class="table-section">
+      <table class="table singletable table-sm">
+        <thead>
+          <tr>
+            <th>Loan Name</th>
+            <th>Loan Granted</th>
+            <th>Loan Paid</th>
+            <th>Balance Amount</th>
+            <th>Installment</th>
+            <th>Remaining Installment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let loan of paySlipDetails.loanDetails">
+            <td>{{ loan.loanName }}</td>
+            <td>{{ loan.loanGranted | number }}</td>
+            <td>{{ loan.loanPaid | number }}</td>
+            <td>{{ loan.loanBalance | number }}</td>
+            <td>{{ loan.loanInstallment | number }}</td>
+            <td>{{ loan.remainingInstallment | number }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      <small
+        >This is computer generated document, does not need signature.</small
+      >
+    </p>
+  </div>
+</div>
+<div [ngClass]="isShow ? 'modal-backdrop fade show' : ''"></div>
+<app-toaster></app-toaster>

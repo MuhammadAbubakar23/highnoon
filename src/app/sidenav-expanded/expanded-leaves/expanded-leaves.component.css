@@ -1,0 +1,7 @@
+.active {
+  font-weight: bold;
+}
+
+.horizontal-rotate {
+  transform: rotate(90deg);
+}

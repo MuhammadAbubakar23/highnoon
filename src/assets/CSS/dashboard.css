@@ -1,0 +1,148 @@
+.bs-datepicker {
+  box-shadow: none;
+}
+.bs-datepicker .bs-media-container {
+  display: block;
+}
+
+.bs-datepicker-container {
+  width: 100%;
+  padding: 0;
+}
+.datepnew .bottom {
+  width: 100%;
+}
+
+.theme-orange .bs-datepicker-head {
+  background-color: #e4722b;
+}
+.theme-orange .bs-datepicker-body table td span.selected,
+.theme-orange .bs-datepicker-body table td.selected span,
+.theme-orange .bs-datepicker-body table td span[class*="select-"]:after,
+.theme-orange .bs-datepicker-body table td[class*="select-"] span:after {
+  background-color: #e4722b;
+}
+.theme-orange .bs-datepicker-body table td.week span {
+  color: #e4722b;
+}
+
+.caelndarholder {
+  .datepickerinline {
+    display: none;
+  }
+
+  .flatpickr-calendar {
+    width: 100%;
+  }
+}
+
+.hierarchy {
+  overflow: hidden;
+  padding: 24px;
+
+  .skyTransBg {
+    background-color: rgb(163, 212, 249) !important;
+  }
+
+  .mintTransBg {
+    background-color: rgb(143, 247, 201) !important;
+  }
+
+  .cherryTransBg {
+    background-color: rgb(224, 179, 235) !important;
+  }
+
+  .berryTransBg {
+    background-color: rgb(209, 198, 255) !important;
+  }
+
+  .oceanTransBg {
+    background-color: rgb(170, 223, 255) !important;
+  }
+
+  .roseTransBg {
+    background-color: #ffc2ec !important;
+  }
+
+  > li {
+    position: relative;
+
+    .list-inline {
+      display: flex;
+
+      li {
+        position: relative;
+        &:first-child {
+          .h-item {
+            border: 1.5px solid #2196f3;
+          }
+        }
+        &:after {
+          content: "";
+          height: 1px;
+          width: 80px;
+          background-color: #ddd;
+          position: absolute;
+          left: 20px;
+          top: 40px;
+        }
+
+        &:last-child {
+          &:after {
+            background-color: transparent;
+            width: 0;
+          }
+        }
+      }
+    }
+
+    &:after {
+      content: "";
+      height: 160px;
+      width: 1px;
+      background-color: #ddd;
+      position: absolute;
+      left: 26px;
+      top: 0px;
+    }
+
+    &:last-child {
+      &:after {
+        background-color: transparent;
+        height: 0;
+      }
+    }
+  }
+
+  .h-item {
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 50px;
+    margin: 20px 8px;
+    position: relative;
+    z-index: 1;
+    width: 36px;
+    height: 36px;
+    border-radius: 50px;
+    text-align: center;
+    line-height: 36px;
+    z-index: 1;
+
+    span,
+    strong {
+      position: relative;
+      z-index: 5;
+    }
+  }
+}
+
+.fixed-footer {
+  position: fixed;
+  left: 70px;
+  bottom: 0;
+  padding: 1rem;
+  background-color: #ffffff;
+  width: calc(100% - 70px);
+  text-align: right;
+  height: 70px;
+}

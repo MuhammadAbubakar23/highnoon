@@ -1,0 +1,132 @@
+<div class="content-box-wrapper d-flex w-100">
+  <div class="middle-content d-flex">
+    <div class="page-content-wrapper">
+      <div
+        class="agent-page-main-content console-body-wrapper px-4"
+        data-scrollbar="true"
+        tabindex="-1"
+        style="overflow: auto; outline: none"
+      >
+        <div
+          class="scroll-content"
+          style="transform: translate3d(0px, 0px, 0px)"
+        >
+          <div class="tab-content" id="myTabContent">
+            <div
+              class="tab-pane fade active show"
+              id="myblogs"
+              role="tabpanel"
+              aria-labelledby="myblogs-tab"
+            >
+              <div>
+                <div
+                  class="justify-content-end pagination mt-3"
+                  *ngIf="!this.isTabs"
+                >
+                  <a
+                    routerLink="/connect/console/create-policies-articles"
+                    class="me-2"
+                  >
+                    <button type="button" class="btn btn-success">
+                      <i class="fal fa-plus me-2"></i>
+                      Create Article
+                    </button>
+                  </a>
+                </div>
+              </div>
+              <div class="row blogrow my-4 align-items-start">
+                <div
+                  class="col-md-6 col-lg-4 col-xl-4 col-xxl-3"
+                  *ngFor="let item of articleItems"
+                >
+                  <div class="card" (click)="getArticle(item.policyArticleId)">
+                    <a>
+                      <img
+                        [src]="imageBaseUrl + '/' + item.attachmentUrl"
+                        class="card-img-top"
+                        alt="..."
+                    /></a>
+
+                    <!-- <a
+                    target="_blank"
+                    [href]="
+                      imageBaseUrl + '/' + item['attachmentUrl']
+                    "
+                    >{{ item["attachmentName"] }}</a
+                  > -->
+                    <div class="card-body">
+                      <h4 class="card-title mb-3">
+                        {{ item.name }}
+                      </h4>
+                      <p>
+                        {{ item.description | slice : 0 : 100 }}
+                      </p>
+                      <p class="silver">
+                        <small>{{ item.date | date : "mediumDate" }}</small>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="col-md-6 col-lg-4 col-xl-4 col-xxl-3">
+                  <div class="card">
+                    <a href="handbookdetail.html">
+                      <img
+                        src="../images/p2.png"
+                        class="card-img-top"
+                        alt="..."
+                    /></a>
+                    <div class="card-body">
+                      <h4 class="card-title mb-3">Plant for Pakistan 2023</h4>
+                      <p>
+                        Our purpose – enriching life – inspires us and guides us
+                        to consistently deliver quality products.
+                      </p>
+                      <p class="silver"><small>December 14, 2023</small></p>
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+              <nav aria-label="Page navigation example">
+                <ng-container *ngIf="totalRecords > pageSize">
+                  <div class="me-5">
+                    <ul class="pagination justify-content-end">
+                      <li class="page-item">
+                        <a
+                          class="page-link"
+                          (click)="prevPage()"
+                          [attr.disabled]="pageNumber === 1"
+                          >Previous</a
+                        >
+                      </li>
+                      <ng-container *ngFor="let page of visiblePages()">
+                        <li
+                          class="page-item"
+                          [ngClass]="{ disabled: page === -1 }"
+                        >
+                          <a
+                            class="page-link"
+                            (click)="changePage(page)"
+                            [class.active]="pageNumber === page"
+                            >{{ page === -1 ? "..." : page }}</a
+                          >
+                        </li>
+                      </ng-container>
+                      <li class="page-item">
+                        <a
+                          class="page-link"
+                          (click)="nextPage()"
+                          [attr.disabled]="pageNumber === totalPages"
+                          >Next</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </ng-container>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

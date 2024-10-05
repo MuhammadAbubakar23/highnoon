@@ -1,0 +1,259 @@
+<div id="signupWrapper">
+  <div class="col-md-6">
+    <aside>
+      <div class="left-body">
+        <div class="logo mb-5">
+          <img src="./images/ibex-enteract-engage.svg" width="300" alt="" />
+        </div>
+
+        <div class="iconsbox">
+          <span class="iconButton iconfacebook">
+            <i class="fa-brands fa-facebook-f"></i
+          ></span>
+          <span class="iconButton icontiktok">
+            <i class="fa-light fa-files"></i
+          ></span>
+          <span class="iconButton icontwitter d-none">
+            <i class="fa-brands fa-twitter"></i
+          ></span>
+          <span class="iconButton iconwhatsapp"
+            ><i class="fa-brands fa-whatsapp"></i
+          ></span>
+          <span class="iconButton icongoogle">
+            <i class="fa-brands fa-google"></i
+          ></span>
+          <span class="iconButton iconyoutube">
+            <i class="fa-brands fa-youtube"></i
+          ></span>
+          <span class="iconButton iconlinkedin"
+            ><i class="fa-brands fa-linkedin-in"></i
+          ></span>
+          <span class="iconButton iconinstagram">
+            <i class="fa-brands fa-instagram"></i
+          ></span>
+        </div>
+        <div class="illustration">
+          <img src=" ../../assets/images/illustration.svg" alt="image" />
+        </div>
+      </div>
+
+      <div class="circlebg topleft"></div>
+      <div class="circlebg bottomright"><p></p></div>
+    </aside>
+  </div>
+
+  <div class="logo">
+    <div class="text-center">
+      <div class="logo mb-5">
+        <img
+          src="../../assets/images/ibex-enteract-engage.svg"
+          width="300"
+          alt=""
+        />
+      </div>
+      <div class="left-content-wrap" id="registration-form-wrap">
+        <form [formGroup]="registerForm">
+          <div id="registration-form" *ngIf="showregAccount">
+            <div class="center-content">
+              <h4 class="darkerblue">Register your account!</h4>
+              <h6 class="metal mb-4">Register your account!</h6>
+              <div class="form w-100">
+                <div class="form-floating mb-2">
+                  <input
+                    class="form-control"
+                    [class.is-invalid]="
+                      rF['userName'].invalid && rF['userName'].touched
+                    "
+                    [class.is-valid]="
+                      rF['userName'].valid && rF['userName'].touched
+                    "
+                    id="register-username"
+                    placeholder="enter username"
+                    value="Vishal Rathore"
+                    formControlName="userName"
+                  />
+                  <label for="register-username">Username </label>
+                  <div class="invalid-feedback">Please enter a username</div>
+                  <div class="valid-feedback">Looks good!</div>
+                </div>
+                <div class="form-floating mb-2">
+                  <input
+                    class="form-control"
+                    [class.is-invalid]="
+                      rF['firstName'].invalid && rF['firstName'].touched
+                    "
+                    [class.is-valid]="
+                      rF['firstName'].valid && rF['firstName'].touched
+                    "
+                    id="register-username"
+                    placeholder="First Name"
+                    value="Vishal Rathore"
+                    formControlName="firstName"
+                  />
+                  <label for="register-username">First Name </label>
+                  <div class="invalid-feedback">Please enter a First Name</div>
+                  <div class="valid-feedback">Looks good!</div>
+                </div>
+                <div class="form-floating mb-2">
+                  <input
+                    class="form-control"
+                    [class.is-invalid]="
+                      rF['lastName'].invalid && rF['lastName'].touched
+                    "
+                    [class.is-valid]="
+                      rF['lastName'].valid && rF['lastName'].touched
+                    "
+                    id="register-username"
+                    placeholder="enter Last Name"
+                    value="Vishal Rathore"
+                    formControlName="lastName"
+                  />
+                  <label for="register-username">Last Name </label>
+                  <div class="invalid-feedback">Please enter a Last Name</div>
+                  <div class="valid-feedback">Looks good!</div>
+                </div>
+
+                <div class="form-floating mb-2">
+                  <input
+                    type="email"
+                    class="form-control"
+                    [class.is-invalid]="
+                      rF['email'].invalid && rF['email'].touched
+                    "
+                    [class.is-valid]="rF['email'].valid && rF['email'].touched"
+                    id="register-email"
+                    placeholder="enter a email"
+                    value="vishalr21@outlook.com"
+                    formControlName="email"
+                  />
+                  <label for="register-">Email</label>
+                  <div class="invalid-feedback">
+                    <div *ngIf="rF['email'] && rF['email'].errors">
+                    <div *ngIf="rF['email'].errors['required']">
+                      Email format is required
+                    </div>
+                    <div *ngIf="rF['email'].errors['pattern']">
+                      Email is required
+                    </div>
+                    <div *ngIf="rF['email'].errors['email']">
+                      Please enter a valid email address
+                    </div>
+                    </div>
+                  </div>
+                  <div class="valid-feedback">Looks good!</div>
+                </div>
+                <div class="form-floating mb-2">
+                  <input
+                    class="form-control"
+                    [class.is-invalid]="
+                      rF['phoneNumber'].invalid && rF['phoneNumber'].touched
+                    "
+                    [class.is-valid]="
+                      rF['phoneNumber'].valid && rF['phoneNumber'].touched
+                    "
+                    id="register-username"
+                    placeholder="enter Phone Number"
+                    value="Vishal Rathore"
+                    formControlName="phoneNumber"
+                  />
+                  <label for="register-username">Phone Number </label>
+                  <div class="invalid-feedback">
+                    Please enter a Phone Number
+                  </div>
+                  <div class="valid-feedback">Looks good!</div>
+                </div>
+                <div class="form-floating mb-2 password set-password">
+                  <input
+                    type="password"
+                    class="form-control"
+                    [class.is-invalid]="
+                      rF['password'].invalid && rF['password'].touched
+                    "
+                    [class.is-valid]="
+                      rF['password'].valid && rF['password'].touched
+                    "
+                    id="register-reset-password"
+                    placeholder="reset password"
+                    formControlName="password"
+                  />
+                  <!-- <i class="fas fa-eye-slash show-pass metal"></i> -->
+                  <label for="register-reset-password">Password</label>
+                  <div class="invalid-feedback">Please enter a Password</div>
+                  <div class="valid-feedback">Looks good!</div>
+                </div>
+                <!-- <div class="form-floating mb-2 password set-password">
+                  <input
+                    type="password"
+                    class="form-control"
+                    [class.is-invalid]="
+                      rF['ConfirmPassword'].invalid &&
+                      rF['ConfirmPassword'].touched
+                    "
+                    [class.is-valid]="
+                      rF['ConfirmPassword'].valid &&
+                      rF['ConfirmPassword'].touched &&
+                      !passwordMatchError
+                    "
+                    id="register-confirm-password"
+                    placeholder="confirm password"
+                    formControlName="ConfirmPassword"
+                  />
+                   <i class="fas fa-eye-slash show-pass metal"></i>
+                  <label for="register-confirm-password"
+                    >Confirm Password</label
+                  >
+                  <div class="invalid-feedback">
+                    Please enter a Confirm Password
+                  </div>
+                  <div class="valid-feedback">Looks good!</div>
+                  <div *ngIf="passwordMatchError" class="text-danger">
+                    Password does not match
+                  </div>
+                 <div
+                    *ngIf="
+                      rF['ConfirmPassword'].invalid &&
+                      rF['ConfirmPassword'].touched
+                    "
+                  >
+                    <div
+                      *ngIf="
+                        rF['ConfirmPassword'].errors &&
+                        rF['ConfirmPassword'].errors['required']
+                      "
+                    >
+                      Please enter a Confirm Password
+                    </div>
+                  </div>
+                </div> -->
+                <div class="form-btn d-flex justify-content-center">
+                  <a
+                    type="button"
+                    class="btn btn-success w-100"
+                    (click)="onSubmit()"
+                    [class.disabled]="registerForm.invalid"
+                    >Next</a
+                  >
+                </div>
+                <div>
+                  <p class="silver">
+                    back to
+                    <a
+                      type="submit"
+                      class="text-info"
+                      id="back-login"
+                      routerLink="/auth/login"
+                      >Sign in</a
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<app-toaster></app-toaster>

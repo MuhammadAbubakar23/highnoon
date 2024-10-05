@@ -1,0 +1,318 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-jelly-box"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+<div
+  class="team-user-wrap console-body-wrapper inbox-container"
+  data-scrollbar="true"
+  tabindex="-1"
+  style="overflow: hidden; outline: none"
+>
+  <div class="scroll-content">
+    <div class="row h-auto justify-content-center">
+      <div class="col-md-11">
+        <div class="tab-content" id="nav-tabContent">
+          <div
+            id="members"
+            class="tab-pane fade list-group-section active show"
+            role="tabpanel"
+            aria-labelledby="members-tab"
+          >
+            <div class="w-100 inbox-container">
+              <div class="filter-container">
+                <div class="row">
+                  <div class="col-md-5">
+                    <ul class="list-group list-group-horizontal border-0">
+                      <li class="list-group-item border-0 p-0">
+                        <div class="icon-input">
+                          <i class="fa-light fa-magnifying-glass"></i>
+                          <input
+                            class="form-control"
+                            placeholder="Search .. "
+                            [(ngModel)]="text"
+                            (input)="generalFilter()"
+                          />
+                        </div>
+                      </li>
+                      <li
+                        class="list-group-item border-0 refreshicon iconHover iconButton medium rounded-circle"
+                        aria-label="..."
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        data-bs-original-title="Refresh"
+                        (click)="resetinput()" 
+                      >
+                        <i class="fal fa-redo"></i>
+                      </li>
+                      <li
+                        class="list-group-item after-select-fun iconHover iconButton medium rounded-circle"
+                        aria-label="..."
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        data-bs-original-title="Delete"
+                        style="display: none"
+                      >
+                        <i class="fal fa-trash"></i>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-md-7">
+                    <div class="d-flex align-items-center justify-content-end">
+                      <a
+                        routerLink="/connect/console/create-benefit-type"
+                        class="me-2"
+                      >
+                        <button type="button" class="btn btn-success">
+                          <i class="fal fa-plus me-2"></i>
+                          Create Benefit Type
+                        </button>
+                      </a>
+                      <!-- <a
+                        class="btn btn-success ice me-2"
+                        data-bs-toggle="offcanvas"
+                        href="#invitemembers"
+                        role="button"
+                        aria-controls="invitemembers"
+                      >
+                        <i class="fa-light fa-plus"></i> Invite Members
+                      </a> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="query-container perfect-scrollbar"
+                data-scrollbar="true"
+                tabindex="-1"
+                style="overflow-y: auto; outline: none"
+              >
+                <div class="scroll-content">
+                  <div
+                    class="alert alert-secondary text-center email-info-alert p-2"
+                    role="alert"
+                  >
+                    All <strong>09</strong> candidates on this page are
+                    selected.
+                    <a
+                      href="javascript:void(0);"
+                      class="all-conversation fw-bold sky btn"
+                      >Select all 09 Candidates</a
+                    >
+                    <a
+                      href="javascript:void(0);"
+                      class="clear-selection"
+                      style="display: none"
+                      >Clear selection</a
+                    >
+                  </div>
+
+                  <div class="table-section">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <!-- <th *ngIf="showCheckboxes">
+                            <ul class="list-group list-group-horizontal border-0 p-0">
+                              <li class="list-group-item border-0 all-check-boxes p-0">
+                                <input class="form-check-input" type="checkbox" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Check All">
+                              </li>
+                            </ul>
+                            -->
+                          <th>ID</th>
+                          <th *ngFor="let column of columnNames">
+                            {{ column }}
+                          </th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          *ngFor="let item of benefitTypeItems; let i = index"
+                        >
+                          <td *ngIf="pageNumber == 1">{{ i + 1 }}</td>
+                          <td *ngIf="pageNumber > 1">
+                            {{ i + 1 + pageSize * (pageNumber - 1) }}
+                            <!-- <td *ngIf="showCheckboxes"><input class="form-check-input me-1" type="checkbox" aria-label="..."></td> -->
+                          </td>
+
+                          <td *ngFor="let column of desColumns">
+                            {{ item[column] }}
+                          </td>
+                          <td>
+                            <div
+                              class="dropdown w-auto"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                            >
+                              <button
+                                class="iconButton small iconHover d-inline-block"
+                                id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="true"
+                              >
+                                <i class="far fa-ellipsis-v"></i>
+                              </button>
+                              <ul
+                                class="dropdown-menu custom-dropdown"
+                                aria-labelledby="dropdownMenuButton1"
+                              >
+                                <li>
+                                  <a
+                                    class="dropdown-item p-1"
+                                    (click)="
+                                      editBenefitType(item.benefitTypeId)
+                                    "
+                                  >
+                                    <button
+                                      class="iconButton dropdown-iconBtn small"
+                                    >
+                                      <i class="fal fa-edit"></i></button
+                                    >Edit
+                                  </a>
+                                </li>
+                                <li>
+                                  <a
+                                    class="dropdown-item p-1"
+                                    (click)="
+                                      deleteBenefitType(item.benefitTypeId)
+                                    "
+                                  >
+                                    <button
+                                      class="iconButton dropdown-iconBtn small dropdown-item p-1"
+                                    >
+                                      <i class="fal fa-trash"></i>
+                                    </button>
+                                    Delete
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <ng-container *ngIf="totalRecords > pageSize">
+                  <div class="me-5">
+                    <ul class="pagination justify-content-end">
+                      <li class="page-item">
+                        <a class="page-link" (click)="prevPage()" [attr.disabled]="pageNumber === 1">Previous</a>
+                      </li>
+                      <ng-container *ngFor="let page of visiblePages()">
+                        <li class="page-item" [ngClass]="{ 'disabled': page === -1 }">
+                          <a class="page-link" (click)="changePage(page)" [class.active]="pageNumber === page">{{ page === -1 ? '...' : page }}</a>
+                        </li>
+                      </ng-container>
+                      <li class="page-item">
+                        <a class="page-link" (click)="nextPage()" [attr.disabled]="pageNumber === totalPages">Next</a>
+                      </li>
+                    </ul>
+                  </div>
+                </ng-container>
+
+              </div>
+            </div>
+          </div>
+          <div
+            id="pending"
+            class="tab-pane fade list-group-section"
+            role="tabpanel"
+            aria-labelledby="pending-tab"
+          >
+            <div class="w-100 inbox-container">
+              <div class="filter-container">
+                <div class="row">
+                  <div class="col-md-5">
+                    <ul class="list-group list-group-horizontal border-0">
+                      <li class="list-group-item border-0 p-0">
+                        <div class="icon-input">
+                          <i class="fa-light fa-magnifying-glass"></i>
+                          <input
+                            class="form-control"
+                            placeholder="Search .. "
+                          />
+                        </div>
+                      </li>
+                      <li
+                        class="list-group-item border-0 refreshicon iconHover iconButton medium rounded-circle"
+                        aria-label="..."
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        data-bs-original-title="Refresh"
+                      >
+                        <i class="fal fa-redo"></i>
+                      </li>
+                      <li
+                        class="list-group-item after-select-fun iconHover iconButton medium rounded-circle"
+                        aria-label="..."
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        data-bs-original-title="Delete"
+                        style="display: none"
+                      >
+                        <i class="fal fa-trash"></i>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-md-7">
+                    <div class="d-flex align-items-center justify-content-end">
+                      <a routerLink="/console/create-benefit-type" class="me-2">
+                        <button type="button" class="btn btn-success">
+                          <i class="fal fa-plus me-2"></i>
+                          Create Benefit Type
+                        </button>
+                      </a>
+                      <!-- <a
+                        class="btn btn-success ice me-2"
+                        data-bs-toggle="offcanvas"
+                        href="#invitemembers"
+                        role="button"
+                        aria-controls="invitemembers"
+                      >
+                        <i class="fa-light fa-plus"></i> Invite Members
+                      </a> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="query-container perfect-scrollbar"
+                data-scrollbar="true"
+                tabindex="-1"
+                style="overflow: hidden; outline: none"
+              >
+                <div class="scroll-content">
+                  <div
+                    class="alert alert-secondary text-center email-info-alert p-2"
+                    role="alert"
+                  >
+                    All <strong>09</strong> candidates on this page are
+                    selected.
+                    <a
+                      href="javascript:void(0);"
+                      class="all-conversation fw-bold sky btn"
+                      >Select all 09 Candidates</a
+                    >
+                    <a
+                      href="javascript:void(0);"
+                      class="clear-selection"
+                      style="display: none"
+                      >Clear selection</a
+                    >
+                  </div>
+                  <div class="table-section"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-toaster></app-toaster>
+</div>

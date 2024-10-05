@@ -1,0 +1,26 @@
+<nav id="left-sidebar-expand" class="">
+  <div class="leftbar-console-expanded">
+    <div class="sidebar-header pe-3 ps-3">
+      <h5 class="fw-bold mt-3 ms-1">
+        <a>{{customVal[0]}}</a>
+      </h5>
+    </div>
+    <ul class="list-group console-list mt-2" data-scrollbar="data-scrollbar">
+
+
+      <li class="list-group-item list-group-item-action" [routerLinkActive]="'active-link'">
+        <a [routerLink]="['/connect/schedular/summary1']" class="d-flex align-items-center">
+          {{customVal[1]}}
+
+        </a>
+      </li>
+      <li class="list-group-item list-group-item-action">
+        <a [routerLink]="['/connect/schedular/myrequestes']" class="d-flex align-items-center">
+          {{customVal[2]}}
+        </a>
+      </li>
+
+    </ul>
+  </div>
+  <a class="panelToggle" (click)="toggleNavTest()"></a>
+</nav>

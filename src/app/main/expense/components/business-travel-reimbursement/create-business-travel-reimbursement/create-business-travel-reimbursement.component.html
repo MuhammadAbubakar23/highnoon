@@ -1,0 +1,403 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
+    <p style="color: white">Loading...</p>
+</ngx-spinner>
+<div class="content-box-wrapper d-flex w-100">
+    <div class="middle-content d-flex">
+        <div class="business-detail w-100">
+            <div class="row align-items-start g-0 w-100">
+                <div class="col-md-8">
+                    <section class="detail-left bt-details mb-4">
+                        <div class="headerWrap bg-primary10 py-4 px-5">
+                            <div class="d-flex align-items-center mb-3">
+                                <span class="iconButton large fw-bold me-4">
+                                    <img src="../images/avatar-3.png" class="rounded img-fluid" data-bs-toggle="tooltip"
+                                        data-bs-placement="top" data-bs-title="Kamran Ali " alt="">
+                                </span>
+                                <div>
+                                    <div class="d-flex align-items-center mb-2">
+                                        <h5 class="text-dark me-3">{{requesterDetails.userName}} </h5>
+                                    </div>
+                                    <ul class="list-inline m-0">
+                                        <li class="list-inline-item">
+                                            <span class="iconButton small d-inline-flex iceBg"><i
+                                                    class="fa-light fa-envelope"></i> </span>
+                                            <strong class="text-primary ms-2"> {{requesterDetails.email}} </strong>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <span class="iconButton small d-inline-flex iceBg"><i
+                                                    class="fa-light fa-phone"></i> </span>
+                                            <strong class="text-primary ms-2">{{requesterDetails.phoneNumber}} </strong>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div *ngFor="let details of travelReimbursementSummaryDetails; let i = index">
+                            <div class="accordion bt-accordion" [id]="'accordionExample' + i">
+                                <div class="accordion-item mb-3">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button" type="button"
+                                            [attr.data-bs-toggle]="'collapse'"
+                                            [attr.data-bs-target]="'#collapseOne' + i" aria-expanded="true"
+                                            [attr.aria-controls]="'collapseOne' + i">
+                                            <div class="d-flex align-items-center justify-content-between pe-4 w-100">
+                                                <div class="text-start">
+                                                    <h3 class="m-0">{{details.fromCity}}</h3>
+                                                    <h6 class="m-0">{{details.fromCity}}, {{details.countryFrom}}</h6>
+                                                </div>
+                                                <div class="text-center">
+                                                    {{sharedMethods.convertToShortDate(details.departureDate)}}
+                                                    -{{sharedMethods.convertToShortDate(details.returnDate)}}
+                                                    <div
+                                                        class="dotlist d-flex align-items-center justify-content-between">
+                                                        <span>
+                                                            <i class="fa-sharp fa-light fa-circle night"></i>
+                                                        </span>
+                                                        <span>
+                                                            <i class="fa-light fa-plane text-primary"></i>
+                                                        </span>
+                                                        <span>
+                                                            <i class="fa-sharp fa-light fa-circle night"></i>
+                                                        </span>
+                                                    </div>
+                                                    <span class="badge badge-md rounded-pill bg-primary20 night">
+                                                        {{details.tripType}}
+                                                    </span>
+                                                    <span class="badge badge-md rounded-pill grayfilled night">
+                                                        {{details.travelClass}}
+                                                    </span>
+                                                </div>
+                                                <div class="text-end">
+                                                    <h3 class="m-0">{{details.toCity}}</h3>
+                                                    <h6 class="m-0">{{details.toCity}}, {{details.countryTo}}</h6>
+                                                </div>
+                                            </div>
+                                        </button>
+                                    </h2>
+                                    <div [id]="'collapseOne' + i" class="accordion-collapse collapse"
+                                        [class.show]="i === 0" [attr.aria-labelledby]="'headingOne' + i">
+
+                                        <div class="accordion-body">
+
+                                            <div class="row mb-4">
+                                                <div class="col-3">
+                                                    <span for="" class="coal">Travelling By</span>
+                                                    <p class="m-0 fw-semibold text-truncate">{{details.travelBy}}</p>
+                                                </div>
+                                                <div class="col-3">
+                                                    <span for="" class="coal">Travel Time Preference</span>
+                                                    <p class="m-0 fw-semibold text-truncate">
+                                                        {{details.travelPreferenceTimeFrom}} -
+                                                        {{details.travelPreferenceTimeTo}}
+                                                    </p>
+                                                </div>
+                                                <div class="col-3">
+                                                    <span for="" class="coal">Advance Currency</span>
+                                                    <p class="m-0 fw-semibold text-truncate">{{details.advanceCurrency | number}}
+                                                        PKR</p>
+                                                </div>
+                                                <div class="col-3">
+                                                    <span for="" class="coal">Pickup</span>
+                                                    <p class="m-0 fw-semibold text-truncate">{{details.pickUpRequired}}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="accordion inneraccordion m-0" id="bt-inneracc">
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header">
+                                                        <button class="accordion-button" type="button"
+                                                            data-bs-toggle="collapse" data-bs-target="#accomodation"
+                                                            aria-expanded="true" aria-controls="accomodation">
+                                                            Accomodation
+                                                        </button>
+                                                    </h2>
+                                                    <div id="accomodation" class="accordion-collapse collapse show"
+                                                        data-bs-parent="#bt-inneracc">
+                                                        <div class="accordion-body">
+                                                            <div class="row mb-4">
+                                                                <div class="col-3">
+                                                                    <span for="" class="coal">Start End Date</span>
+                                                                    <p class="m-0 fw-semibold text-truncate">
+                                                                        {{sharedMethods.convertToShortDate(details.accomodationStartDate)}}
+                                                                        -
+                                                                        {{sharedMethods.convertToShortDate(details.accomodationEndDate)}}
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-3">
+                                                                    <span for="" class="coal">My Contact Number</span>
+                                                                    <p class="m-0 fw-semibold text-truncate">
+                                                                        {{details.contactNumber}} </p>
+                                                                </div>
+
+                                                            </div>
+                                                            <ul class="list-inline">
+                                                                <li *ngFor="let file of details.travelRequisitionAttachmentDetails"
+                                                                    class="list-inline-item bg-light border rounded d-inline-flex align-items-center py-2 px-4">
+                                                                    <span class="text-primary"><i
+                                                                            class="fa-light fa-file"></i></span>
+                                                                    <span class="mx-2">{{file.attachmentName}}</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <form [formGroup]="travelReimbursementForm" action>
+                                                    <ul class="dynamic-list"
+                                                        formArrayName="addTravelReimbursementDetails">
+                                                        <li *ngFor="let trip of getTrip(travelReimbursementForm); let j=index"
+                                                            [formGroupName]="j">
+                                                            <div
+                                                                *ngIf="trip.value.travelRequisitionDetailId == details.travelRequisitionDetailId">
+                                                                <!-- <span class="edd-count">{{j}}</span> -->
+                                                                <span class="edd-count">O</span>
+                                                                <div class="list-items">
+                                                                    <div class="card bg-light w-100">
+                                                                        <div class="card-body">
+                                                                            <div class="row mb-3">
+                                                                                <div class="col-4">
+                                                                                    <label for="">Expense Type</label>
+                                                                                    <select class="form-select"
+                                                                                        aria-label=""
+                                                                                        formControlName="expenseType"
+                                                                                        (change)="addAmount()"
+                                                                                        [class.is-invalid]="
+                                                                                    tRDFCurrent(trip)['expenseType'].invalid && tRDFCurrent(trip)['expenseType'].touched
+                                                                                    " [class.is-valid]="
+                                                                                    tRDFCurrent(trip)['expenseType'].valid && tRDFCurrent(trip)['expenseType'].touched
+                                                                                    ">
+                                                                                        <option [value]="null" selected
+                                                                                            disabled>Exchange Rate
+                                                                                            Attachment</option>
+                                                                                        <option
+                                                                                            *ngFor="let expenseType of expenseTypeItems"
+                                                                                            [ngValue]="expenseType.expenseTypeId">
+                                                                                            {{expenseType.expenseTypeName}}
+                                                                                        </option>
+                                                                                    </select>
+                                                                                    <div class="invalid-feedback">
+                                                                                        <div
+                                                                                            *ngIf="tRDFCurrent(trip)['expenseType'].errors?.['required']">
+                                                                                            Expense Type is required.
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="valid-feedback">Looks
+                                                                                        good!</div>
+                                                                                </div>
+                                                                                <div class="col">
+                                                                                    <label for="">Departure Date</label>
+                                                                                    <div class="iconholder">
+                                                                                        <input name=""
+                                                                                            id="datepickerrange"
+                                                                                            class="form-control flatpickr-input"
+                                                                                            placeholder="Date"
+                                                                                            type="date"
+                                                                                            formControlName="departureDate"
+                                                                                            [class.is-invalid]="
+                                                                                            tRDFCurrent(trip)['departureDate'].invalid && tRDFCurrent(trip)['departureDate'].touched
+                                                                                            " [class.is-valid]="
+                                                                                            tRDFCurrent(trip)['departureDate'].valid && tRDFCurrent(trip)['departureDate'].touched
+                                                                                            ">
+                                                                                        <div class="invalid-feedback">
+                                                                                            <div
+                                                                                                *ngIf="tRDFCurrent(trip)['departureDate'].errors?.['required']">
+                                                                                                Departure Date Type is
+                                                                                                required.
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="valid-feedback">
+                                                                                            Looks good!</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-2">
+                                                                                    <label for="">Day/Amount</label>
+                                                                                    <input name="" class="form-control"
+                                                                                        formControlName="dayAmount"
+                                                                                        [class.is-invalid]="
+                                                                                        tRDFCurrent(trip)['dayAmount'].invalid && tRDFCurrent(trip)['dayAmount'].touched
+                                                                                        " [class.is-valid]="
+                                                                                        tRDFCurrent(trip)['dayAmount'].valid && tRDFCurrent(trip)['dayAmount'].touched
+                                                                                        ">
+                                                                                    <div class="invalid-feedback">
+                                                                                        <div
+                                                                                            *ngIf="tRDFCurrent(trip)['dayAmount'].errors?.['required']">
+                                                                                            Day Amount is required.
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="valid-feedback">Looks
+                                                                                        good!</div>
+                                                                                </div>
+                                                                                <div class="col-2">
+                                                                                    <label for=""> Rate</label>
+                                                                                    <input name="" class="form-control"
+                                                                                        formControlName="rate"
+                                                                                        [class.is-invalid]="
+                                                                                        tRDFCurrent(trip)['rate'].invalid && tRDFCurrent(trip)['rate'].touched
+                                                                                        " [class.is-valid]="
+                                                                                        tRDFCurrent(trip)['rate'].valid && tRDFCurrent(trip)['rate'].touched
+                                                                                        ">
+                                                                                    <div class="invalid-feedback">
+                                                                                        <div
+                                                                                            *ngIf="tRDFCurrent(trip)['rate'].errors?.['required']">
+                                                                                            Rate is required.
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="valid-feedback">Looks
+                                                                                        good!</div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row mb-3">
+
+                                                                                <div class="col-2">
+                                                                                    <label for="">Claim Amount</label>
+                                                                                    <input name="" class="form-control" (change)="addAmount()"
+                                                                                        formControlName="claimAmount"
+                                                                                        [class.is-invalid]="
+                                                                                        tRDFCurrent(trip)['claimAmount'].invalid && tRDFCurrent(trip)['claimAmount'].touched
+                                                                                        " [class.is-valid]="
+                                                                                        tRDFCurrent(trip)['claimAmount'].valid && tRDFCurrent(trip)['claimAmount'].touched
+                                                                                        ">
+                                                                                    <div class="invalid-feedback">
+                                                                                        <div
+                                                                                            *ngIf="tRDFCurrent(trip)['claimAmount'].errors?.['required']">
+                                                                                            Claim Amount is required.
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="valid-feedback">Looks
+                                                                                        good!</div>
+                                                                                </div>
+                                                                                <div class="col-6">
+                                                                                    <label for="">Description</label>
+                                                                                    <input name="" class="form-control"
+                                                                                        formControlName="description"
+                                                                                        [class.is-invalid]="
+                                                                                        tRDFCurrent(trip)['description'].invalid && tRDFCurrent(trip)['description'].touched
+                                                                                        " [class.is-valid]="
+                                                                                        tRDFCurrent(trip)['description'].valid && tRDFCurrent(trip)['description'].touched
+                                                                                        ">
+                                                                                    <div class="invalid-feedback">
+                                                                                        <div
+                                                                                            *ngIf="tRDFCurrent(trip)['description'].errors?.['required']">
+                                                                                            Description is required.
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="valid-feedback">Looks
+                                                                                        good!</div>
+                                                                                </div>
+                                                                                <div class="col-md-4">
+                                                                                    <div class="mb-3">
+                                                                                        <label for="formFile"
+                                                                                            class="form-label">Attachments</label>
+                                                                                        <input #formFileInput
+                                                                                            class="form-control"
+                                                                                            type="file" id="formFile"
+                                                                                            multiple
+                                                                                            (change)="onFileSelected($event, j, trip)"
+                                                                                            >
+                                                                                            <!-- [class.is-invalid]="!isAttachmentValid(j)" -->
+                                                                                        <!-- <div class="invalid-feedback">
+                                                                                            Attachments are required.
+                                                                                        </div> -->
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <ul class="list-inline">
+                                                                                <li *ngFor="let file of selectedFiles[j];"
+                                                                                    class="list-inline-item bg-light border rounded d-inline-flex align-items-center p-2">
+                                                                                    <span class="text-primary"><i
+                                                                                            class="fa-light fa-file"></i>
+                                                                                    </span>
+                                                                                    <span
+                                                                                        class="mx-2">{{file.name}}</span>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+
+                                                        <li>
+                                                            <span class="edd-count grayfilled">
+                                                                <i class="fa-light fa-trash"
+                                                                    (click)="deleteTripFromLast(details.travelRequisitionDetailId)"></i>
+                                                            </span>
+                                                            <div class="list-items">
+                                                                <button class="btn btn-success"
+                                                                    (click)="addTripFromFront(details.travelRequisitionDetailId)"><i
+                                                                        class="fa-light fa-plus"></i>
+                                                                    Add More</button>
+                                                            </div>
+                                                        </li>
+
+                                                    </ul>
+                                                </form>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                    </section>
+                </div>
+                <div class="col-md-4">
+                    <aside class="h-100vh iceBg">
+                        <ul class="nav nav-tabs tasktabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                    data-bs-target="#home-tab-pane" type="button" role="tab"
+                                    aria-controls="home-tab-pane" aria-selected="true">Summary</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel"
+                                aria-labelledby="home-tab" tabindex="0">
+
+                                <div class="list-group-section mt-4">
+                                    <ul class="list-group list-group-flush">
+                                        <div *ngFor="let expenses of expenseTypes">
+                                            <li class="list-group-item d-flex align-items-center justify-content-between">
+                                                <span class="coal">{{expenses.name}}</span>
+                                                <strong>{{expenses.amount | number}}Rs</strong>
+                                            </li>
+                                        </div>
+                                        <li class="list-group-item d-flex align-items-center justify-content-between">
+                                            <h4>Total Expense</h4>
+                                            <h4>{{totalExpense | number}} Rs</h4>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </aside>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <footer class="fixed-footer">
+        <button class="btn btn-lg btn-success-light btn-small" type="button" data-bs-toggle="modal"
+            data-bs-target="#confirmation-bt" (click)="submitForm()">Save</button>
+        <a routerLink="/connect/expense/businesstravelreimbursement" class="me-2">
+            <button class="btn btn-lg btn-outline-secondary btn-small">Cancel</button>
+        </a>
+    </footer>
+</div>

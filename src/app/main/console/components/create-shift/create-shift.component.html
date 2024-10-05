@@ -1,0 +1,199 @@
+<div class="agent-page-main-content">
+    <div
+      class="create-user console-body-wrapper footerheight"
+      data-scrollbar="true"
+      tabindex="-1"
+      style="overflow-y: scroll; height: 80vh; position: relative"
+    >
+      <div class="scroll-content">
+        <div class="wider-container">
+          <div class="tab-body">
+            <div class="tab-content" id="nav-tabContent">
+              <div
+                id="user-detail"
+                class="tab-pane fade active show"
+                role="tabpanel"
+                aria-labelledby="user-tab"
+              >
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="team-detail-form-box mb-5">
+                      <form [formGroup]="shiftForm" class="user-detail-form">
+                        <div class="floating-item mb-4">
+                          <div class="form-floating mb-2">
+                            <input
+                              [class.is-invalid]="csf['scheduleName'].invalid && csf['scheduleName'].touched"
+                              [class.is-valid]="csf['scheduleName'].valid && csf['scheduleName'].touched"
+                              class="form-control"
+                              id="name"
+                              placeholder="Enter Name"
+                              formControlName="scheduleName"
+                            />
+                            <label for="first-name">Schedule Name</label>
+                            <div class="invalid-feedback">
+                              <div *ngIf="csf['scheduleName'].errors?.['required']">
+                                Schedule Name is required.
+                              </div>
+                              <div *ngIf="csf['scheduleName'].errors?.['maxlength']">
+                                Schedule must be less than 100 characters.
+                              </div>
+                            </div>
+                            <div class="valid-feedback">Looks good!</div>
+                          </div>
+
+
+                          <div class="mb-3">
+                            <label for="" class="col-form-label">Check-in Date Time</label>
+                            <div class="iconholder">
+                              <!-- <i class="fa-light fa-calendar-plus iconleft"></i> -->
+                              <input
+                                type="time"
+                                class="form-control"
+                                formControlName="checkInDateTime"
+                                step="1"
+                              />
+                            </div>
+                          </div>
+                          <div class="mb-3">
+                            <label for="" class="col-form-label">Check-Out Date Time</label>
+                            <div class="iconholder">
+                              <!-- <i class="fa-light fa-calendar-plus iconleft"></i> -->
+                              <input
+                                (change)="addCustomValidatorCheck()"
+                                type="time"
+                                class="form-control"
+                                formControlName="checkOutDateTime"
+                                [class.is-invalid]="
+                                  csf['checkOutDateTime'].invalid && csf['checkOutDateTime'].touched
+                                "
+                                [class.is-valid]="
+                                  csf['checkOutDateTime'].valid &&
+                                  csf['checkOutDateTime'].touched &&
+                                  !isCheckoutGreater
+                                "
+                                step="1"
+                              />
+                            </div>
+                          </div>
+                          <div *ngIf="isCheckoutGreater" class="text-danger">
+                            Check-out time must be greater than check-in time.
+                          </div>
+
+
+
+                          <div class="mb-3">
+                            <label for="" class="col-form-label">Break-in Time</label>
+                            <div class="iconholder">
+                              <!-- <i class="fa-light fa-calendar-plus iconleft"></i> -->
+                              <input
+                                type="time"
+                                class="form-control"
+                                formControlName="breakInTime"
+                                step="1"
+                              />
+                            </div>
+                          </div>
+                          <div class="mb-3">
+                            <label for="" class="col-form-label">Break-Out Time</label>
+                            <div class="iconholder">
+                              <!-- <i class="fa-light fa-calendar-plus iconleft"></i> -->
+                              <input
+                                (change)="addCustomValidatorCheck()"
+                                type="time"
+                                class="form-control"
+                                formControlName="breakOutTime"
+                                [class.is-invalid]="
+                                  csf['breakOutTime'].invalid && csf['breakOutTime'].touched
+                                "
+                                [class.is-valid]="
+                                  csf['breakOutTime'].valid &&
+                                  csf['breakOutTime'].touched &&
+                                  !isBreakoutGreater
+                                "
+                                step="1"
+                              />
+                            </div>
+                          </div>
+                          <div *ngIf="isBreakoutGreater" class="text-danger">
+                            Break-out time must be greater than Break-in time.
+                          </div>
+                          <div class="form-floating mb-2">
+                            <!-- <label for="" class="col-form-label">Check-In Location</label> -->
+                            <select
+                              name=""
+                              class="form-select"
+                              formControlName="location"
+                              [class.is-invalid]="csf['location'].invalid && csf['location'].touched"
+                              [class.is-valid]="csf['location'].valid && csf['location'].touched"
+                            >
+                              <option [value]="null" disabled selected>Select Location</option>
+                              <option
+                                [value]="location.description"
+                                *ngFor="let location of locations"
+                              >
+                                {{ location.description }}
+                              </option>
+                            </select>
+                            <div class="invalid-feedback">
+                              <div *ngIf="csf['location'].errors?.['required']">
+                                Location is required.
+                              </div>
+                            </div>
+                            <div class="valid-feedback">Looks good!</div>
+                          </div>
+
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="scrollbar-track scrollbar-track-x" style="display: none">
+        <div
+          class="scrollbar-thumb scrollbar-thumb-x"
+          style="width: 1638px; transform: translate3d(0px, 0px, 0px)"
+        ></div>
+      </div>
+      <div class="scrollbar-track scrollbar-track-y" style="display: block"></div>
+    </div>
+    <footer class="footer">
+      <div class="ps-3 pe-3">
+        <div
+          class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4"
+        >
+          <div class="row w-100">
+            <div class="col-md-4"></div>
+            <div class="col-md-8 justify-content-end d-flex">
+              <div class="buttons-wrap d-flex">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary btn-medium me-2 px-4"
+                  routerLink="/connect/console/schedule"
+                >
+                  Back
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-success ms-e f-saveBtn btn-large d-none"
+                ></button>
+                <button
+                  type="button"
+                  class="btn skyBg ms-2 px-4 btn-medium saveBtn"
+                  data-bs-toggle="modal"
+                  data-bs-target=""
+                  (click)="submitForm()"
+                  [class.disabled]="shiftForm.invalid"
+                >
+                Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>

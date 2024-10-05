@@ -1,0 +1,1980 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-jelly-box"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+<div class="content-box-wrapper d-flex w-100">
+  <div class="middle-content d-flex">
+    <div class="page-content-wrapper">
+      <div class="agent-page-main-content px-4 detail-left">
+        <div class="row mt-4 h-auto align-items-start">
+          <div class="col-md-3">
+            <div class="card dashboard-card">
+              <div class="card-body d-flex align-items-center">
+                <div class="iconButton medium me-3 skyTransBg">
+                  <i class="fa-light fa-calendar-star"></i>
+                </div>
+                <div>
+                  <p class="silver mb-1 text-uppercase">Total Requests</p>
+                  <h5 class="m-0">{{ totalRequest }}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card dashboard-card">
+              <div class="card-body d-flex align-items-center">
+                <div class="iconButton medium me-3 successbg night">
+                  <i class="fa-light fa-check"></i>
+                </div>
+                <div>
+                  <p class="silver mb-1 text-uppercase">Approved</p>
+                  <h5 class="m-0">{{ approved }}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card dashboard-card">
+              <div class="card-body d-flex align-items-center">
+                <div class="iconButton medium me-3 errorbg night">
+                  <i class="fa-light fa-times"></i>
+                </div>
+                <div>
+                  <p class="silver mb-1 text-uppercase">Rejected</p>
+                  <h5 class="m-0">{{ rejected }}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card dashboard-card">
+              <div class="card-body d-flex align-items-center">
+                <div class="iconButton medium me-3 grayfilled night">
+                  <i class="fa-regular fa-spinner"></i>
+                </div>
+                <div>
+                  <p class="silver mb-1 text-uppercase">Pending</p>
+                  <h5 class="m-0">{{ pending }}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="filter-container">
+          <div class="row justify-content-between">
+            <div class="col-md-7">
+              <ul class="list-group list-group-horizontal border-0">
+                <!-- <li class="list-group-item border-0 p-0 me-2">
+                  <div class="icon-input search_field">
+                    <i class="fa-light fa-magnifying-glass"></i>
+                    <input
+                      class="form-control"
+                      placeholder="Search.. "
+                      [(ngModel)]="text"
+                      (input)="generalFilter()"
+                    />
+                  </div>
+                </li>
+                <li class="list-group-item border-0 p-0 me-2">
+                  <div class="iconholder ms-2">
+                    <input
+                      [(ngModel)]="startDate"
+                      class="form-control timepicker flatpickr-input"
+                      type="date"
+                      (change)="resetEndDate()"
+                    />
+                  </div>
+                </li>
+                <li class="list-group-item border-0 p-0 me-2">
+                  <div class="iconholder ms-2">
+                    <input
+                      [(ngModel)]="endDate"
+                      class="form-control timepicker flatpickr-input"
+                      type="date"
+                      (change)="filterByDate()"
+                    />
+                  </div>
+                </li> -->
+                <li class="list-group-item border-0 p-0 me-2">
+                  <div class="icon-input search_field">
+                    <i class="fa-light fa-magnifying-glass"></i>
+                    <input
+                      class="form-control"
+                      placeholder="Search.. "
+                      [(ngModel)]="text"
+                      (input)="generalFilter()"
+                    />
+                  </div>
+                </li>
+                <li class="list-group-item border-0 ms-2 pe-0">
+                  <span class="coal">From</span>
+                </li>
+                <li class="list-group-item border-0 p-0 me-2">
+                  <div class="ms-2">
+                    <input
+                      [(ngModel)]="startDate"
+                      class="form-control timepicker flatpickr-input"
+                      value="From"
+                      type="date"
+                      (change)="resetEndDate()"
+                    />
+                  </div>
+                </li>
+                <li class="list-group-item border-0 ms-2 pe-0">
+                  <span class="coal">To</span>
+                </li>
+                <li class="list-group-item border-0 p-0 mx-2">
+                  <div class="ms-2">
+                    <input
+                      [(ngModel)]="endDate"
+                      class="form-control timepicker flatpickr-input"
+                      type="date"
+                      (change)="filterByDate()"
+                    />
+                  </div>
+                </li>
+                <li class="list-group-item border-0 p-0 me-2">
+                  <div class="dropdown w-auto">
+                    <button
+                      class="btn dropdown-toggle"
+                      type="button"
+                      id="dropdownMenuButton1"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      {{ selectedBenefitStatus || "Status" }}
+                    </button>
+                    <ul
+                      class="dropdown-menu custom-dropdown"
+                      aria-labelledby="dropdownMenuButton1"
+                    >
+                      <li *ngFor="let ls of benefitStatusKeys">
+                        <a class="dropdown-item" (click)="filterByStatus(ls)">{{
+                          ls
+                        }}</a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+
+                <li
+                  class="list-group-item border-0 iconButton iconHover medium"
+                  aria-label="..."
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="bottom"
+                  data-bs-original-title="Refresh"
+                  (click)="refreshPage()"
+                >
+                  <i class="fal fa-redo-alt"></i>
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-5">
+              <div
+                class="filters-opt d-flex align-items-center justify-content-end"
+              >
+                <a
+                  class="btn btn-success ms-auto"
+                  data-bs-toggle="offcanvas"
+                  role="button"
+                  aria-controls="benefitreq"
+                  (click)="openEnd(addcontent)"
+                >
+                  Add Request
+                </a>
+                <div class="dropdown w-auto rounded">
+                  <button
+                    class="btn iconButton iconHover medium"
+                    type="button"
+                    id="sorting1"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <i class="fa-regular fa-arrow-down-short-wide"></i>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="sorting1">
+                    <li class="saltBg p-2 charcoal">
+                      <strong> Sort By</strong>
+                    </li>
+                    <li *ngFor="let column of desColumns">
+                      <a
+                      class="dropdown-item d-flex align-items-center"
+                      (click)="sortDataBy(column)"
+                      >
+                      {{ column }}
+                    </a>
+                    </li>
+                    <!-- <li>
+                      <a
+                        class="dropdown-item d-flex align-items-center"
+
+                      >
+                        ID
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item d-flex align-items-center"
+
+                      >
+                        Name
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item d-flex align-items-center"
+
+                      >
+                        Status
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item d-flex align-items-center"
+
+                      >
+                        Priority
+                      </a>
+                    </li> -->
+                  </ul>
+                </div>
+                <!-- <div class="dropdown w-auto mx-2">
+                  <button
+                    class="btn iconButton iconHover medium"
+                    type="button"
+                    id="columnssort"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <i class="fa-light fa-table-columns"></i>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="columnssort">
+                    <li class="saltBg p-2 charcoal">
+                      <strong> Adjust Columns</strong>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item d-flex align-items-center"
+
+                      >
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="flexCheckDefault"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="flexCheckDefault"
+                          >
+                            ID
+                          </label>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item d-flex align-items-center"
+
+                      >
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="flexCheckDefault"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="flexCheckDefault"
+                          >
+                            Name
+                          </label>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item d-flex align-items-center"
+
+                      >
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="flexCheckDefault"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="flexCheckDefault"
+                          >
+                            Description
+                          </label>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item d-flex align-items-center"
+
+                      >
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="flexCheckDefault"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="flexCheckDefault"
+                          >
+                            Status
+                          </label>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item d-flex align-items-center"
+
+                      >
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="flexCheckDefault"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="flexCheckDefault"
+                          >
+                            Priority
+                          </label>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item d-flex align-items-center"
+
+                      >
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="flexCheckDefault"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="flexCheckDefault"
+                          >
+                            Date
+                          </label>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div> -->
+                <div class="dropdown w-auto">
+                  <ul
+                    class="dropdown-menu"
+                    aria-labelledby="dropdownMenuButton1"
+                  >
+                    <li>
+                      <a class="dropdown-item p-1" (click)="exportData()">
+                        <button
+                          class="iconButton dropdown-iconBtn small"
+                          id="dropdownMenuButton1"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <i class="fa-solid fa-file-export"></i></button
+                        >Export to CSV
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="query-container perfect-scrollbar"
+          data-scrollbar="true"
+          tabindex="-1"
+          style="overflow-y: auto; outline: none"
+        >
+          <div class="scroll-content">
+            <div class="table-section">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th *ngFor="let column of columnNames">
+                      {{ column }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of benefitsItems; let i = index">
+                    <td *ngIf="pageNumber == 1">
+                      <a
+                        (click)="getBenefitsSummary(item, addcontents)"
+
+                        role="button"
+                        aria-controls="vehicleRequest"
+                        >{{ i + 1 }}</a
+                      >
+                    </td>
+                    <td *ngIf="pageNumber > 1">
+                      <a
+                        (click)="getBenefitsSummary(item,addcontents)"
+
+                        role="button"
+                        aria-controls="vehicleRequest"
+                      >
+                        {{ i + 1 + pageSize * (pageNumber - 1) }}</a
+                      >
+                    </td>
+                    <td *ngFor="let column of desColumns" (click)="getBenefitsSummary(item,addcontents)" >
+                      <a>
+                      <span
+                        [ngClass]="{
+                          'badge badge-md rounded-pill':
+                            item[column] === 'Pending' ||
+                            item[column] === 'Approved' ||
+                            item[column] === 'Rejected' ||
+                            item[column] === 'Canceled',
+                          grayfilled: item[column] === 'Pending',
+                          successbg: item[column] === 'Approved',
+                          errorbg: item[column] === 'Rejected',
+                          warningbg: item[column] === 'Canceled',
+                          '':
+                            item[column] !== 'Pending' &&
+                            item[column] !== 'Approved' &&
+                            item[column] !== 'Rejected' &&
+                            item[column] !== 'Canceled'
+                        }"
+                      >
+                        {{ item[column] }}
+                      </span>
+                      </a>
+                    </td>
+                    <!-- <td>
+                      <div
+                        class="dropdown w-auto"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                      >
+                        <button
+                          class="iconButton small iconHover d-inline-block"
+                          id="dropdownMenuButton1"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="true"
+                        >
+                          <i class="far fa-ellipsis-v"></i>
+                        </button>
+                        <ul
+                          class="dropdown-menu custom-dropdown"
+                          aria-labelledby="dropdownMenuButton1"
+                        >
+                          <li>
+                                  <a
+                                    class="dropdown-item p-1"
+                                    (click)="editBenefit(item.benefitId)"
+                                  >
+                                    <button
+                                      class="iconButton dropdown-iconBtn small"
+                                    >
+                                      <i class="fal fa-edit"></i></button
+                                    >Edit
+                                  </a>
+                                </li>
+                                <li>
+                                  <a
+                                    class="dropdown-item p-1"
+                                    (click)="deleteBenefit(item.benefitId)"
+                                  >
+                                    <button
+                                      class="iconButton dropdown-iconBtn small dropdown-item p-1"
+                                    >
+                                      <i class="fal fa-trash"></i>
+                                    </button>
+                                    Delete
+                                  </a>
+                                </li>
+                        </ul>
+                      </div>
+                    </td> -->
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <ng-container *ngIf="totalRecords > pageSize">
+            <div class="me-5">
+              <ul class="pagination justify-content-end">
+                <li class="page-item">
+                  <a
+                    class="page-link"
+                    (click)="prevPage()"
+                    [attr.disabled]="pageNumber === 1"
+                    >Previous</a
+                  >
+                </li>
+                <ng-container *ngFor="let page of visiblePages()">
+                  <li class="page-item" [ngClass]="{ disabled: page === -1 }">
+                    <a
+                      class="page-link"
+                      (click)="changePage(page)"
+                      [class.active]="pageNumber === page"
+                      >{{ page === -1 ? "..." : page }}</a
+                    >
+                  </li>
+                </ng-container>
+                <li class="page-item">
+                  <a
+                    class="page-link"
+                    (click)="nextPage()"
+                    [attr.disabled]="pageNumber === totalPages"
+                    >Next</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div
+  class="offcanvas offcanvas-small offcanvas-end"
+  [class.show]="showOffcanvas"
+  tabindex="-1"
+  id="benefitreq"
+  aria-labelledby="benefitreqLabel"
+  aria-modal="true"
+  role="dialog"
+> -->
+<section class="leaveoffcanvas">
+  <ng-template #addcontent let-offcanvas>
+  <div class="offcanvas-header bg-light">
+    <div class="row g-0 w-100">
+      <div class="col-md-6 d-flex align-items-center">
+        <h5 class="mb-0">Benefit Request</h5>
+      </div>
+      <div class="col-md-6 justify-content-end d-flex align-items-center pe-0">
+        <span
+          class="iconButton iconHower medium"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+          (click)="cancel(addcontent)"
+          ><i class="fa-light fa-times"></i
+        ></span>
+      </div>
+    </div>
+  </div>
+  <div class="offcanvas-body px-4">
+    <form [formGroup]="requestForm" class="px-4">
+      <div class="mb-3">
+        <label for="" class="col-form-label">Date </label>
+        <div class="iconholder">
+          <!-- <i class="fa-light fa-calendar-plus iconleft"></i> -->
+          <input
+            name=""
+            id="datepicker"
+            class="form-control flatpickr-input"
+            placeholder="Date"
+            formControlName="BenefitDate"
+            [class.is-invalid]="
+              bRF['BenefitDate'].invalid && bRF['BenefitDate'].touched
+            "
+            [class.is-valid]="
+              bRF['BenefitDate'].valid && bRF['BenefitDate'].touched
+            "
+            type="date"
+          />
+          <div class="invalid-feedback">
+            <div *ngIf="bRF['BenefitDate'].errors?.['required']">
+              Benefit Date is required.
+            </div>
+          </div>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="" class="col-form-label">Benefits Type</label>
+        <select
+          name=""
+          id="benefittype"
+          class="form-select"
+          (change)="onBenefitTypeChange($event)"
+          formControlName="BenefitTypeId"
+          [class.is-invalid]="
+            bRF['BenefitTypeId'].invalid && bRF['BenefitTypeId'].touched
+          "
+          [class.is-valid]="
+            bRF['BenefitTypeId'].valid && bRF['BenefitTypeId'].touched
+          "
+        >
+          <option [value]="null" selected disabled>Select Benefit Type</option>
+          <option [value]="bT.benefitTypeId" *ngFor="let bT of benefitTypes">
+            {{ bT.type }}
+          </option>
+          <!-- <option value="0" selected="">Official Vehicle Request</option>
+          <option value="1">Employee Interest Free Loan</option>
+          <option value="2">Official Mobile Package</option>
+          <option value="3">Mobile Allowance Request</option>
+          <option value="4">Internet Device</option>
+          <option value="5">Apply Fuel Card</option>
+          <option value="6">Subsidized Medicine</option> -->
+        </select>
+        <div class="invalid-feedback">
+          <div *ngIf="bRF['BenefitTypeId'].errors?.['required']">
+            Benefit Type is required.
+          </div>
+        </div>
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+
+      <div
+        formGroupName="BenefitTypeForm"
+        *ngIf="showVehicleRequest"
+        class="border bg-light rounded p-3 mb-3"
+        id="vehiclerequest"
+      >
+        <h5 class="mb-4">Official Vehicle Request</h5>
+        <div class="row mb-3">
+          <div class="col">
+            <label for="" class="col-form-label">Required with driver </label>
+            <select
+              class="form-select"
+              formControlName="DriverRequired"
+              [class.is-invalid]="
+                bVF['DriverRequired'].invalid && bVF['DriverRequired'].touched
+              "
+              [class.is-valid]="
+                bVF['DriverRequired'].valid && bVF['DriverRequired'].touched
+              "
+            >
+              <option [value]="true" selected="">Yes</option>
+              <option [value]="false">No</option>
+            </select>
+            <div class="invalid-feedback">
+              <div *ngIf="bVF['DriverRequired'].errors?.['required']">
+                Driver Required Field is required.
+              </div>
+            </div>
+            <div class="valid-feedback">Looks good!</div>
+          </div>
+          <div class="col">
+            <label for="" class="col-form-label"
+              >Intra-city/inter-City Travel
+            </label>
+            <select
+              name=""
+              class="form-select"
+              formControlName="TravelType"
+              [class.is-invalid]="
+                bVF['TravelType'].invalid && bVF['TravelType'].touched
+              "
+              [class.is-valid]="
+                bVF['TravelType'].valid && bVF['TravelType'].touched
+              "
+            >
+              <option value="Intra City">Intra City</option>
+              <option value="Inter City">Inter City</option>
+            </select>
+            <div class="invalid-feedback">
+              <div *ngIf="bVF['TravelType'].errors?.['required']">
+                Travel Type is required.
+              </div>
+            </div>
+            <div class="valid-feedback">Looks good!</div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col">
+            <label for="" class="col-form-label">Valid Driving License </label>
+            <select
+              name=""
+              class="form-select"
+              formControlName="DrivingLicense"
+              [class.is-invalid]="
+                bVF['DrivingLicense'].invalid && bVF['DrivingLicense'].touched
+              "
+              [class.is-valid]="
+                bVF['DrivingLicense'].valid && bVF['DrivingLicense'].touched
+              "
+            >
+              <option [value]="true" selected="">Yes</option>
+              <option [value]="false">No</option>
+            </select>
+            <div class="invalid-feedback">
+              <div *ngIf="bVF['DrivingLicense'].errors?.['required']">
+                Driving License is required.
+              </div>
+            </div>
+            <div class="valid-feedback">Looks good!</div>
+          </div>
+          <div class="col">
+            <label for="" class="col-form-label"> Driving License Number</label>
+            <input
+              class="form-control"
+              formControlName="LicenseNumber"
+              [class.is-invalid]="
+                bVF['LicenseNumber'].invalid && bVF['LicenseNumber'].touched
+              "
+              [class.is-valid]="
+                bVF['LicenseNumber'].valid && bVF['LicenseNumber'].touched
+              "
+            />
+            <div class="invalid-feedback">
+              <div *ngIf="bVF['LicenseNumber'].errors?.['required']">
+                License Number is required.
+              </div>
+            </div>
+            <div class="valid-feedback">Looks good!</div>
+          </div>
+        </div>
+        <!-- -->
+        <div class="mb-3 row">
+          <div class="col">
+            <label for="" class="col-form-label">Required From </label>
+            <div class="iconholder">
+              <!-- <i class="fa-light fa-calendar-plus iconleft"></i> -->
+              <input
+                id="datepick"
+                class="form-control flatpickr-input"
+                placeholder="Date"
+                type="date"
+                formControlName="RequiredFrom"
+                [class.is-invalid]="
+                  bVF['RequiredFrom'].invalid && bVF['RequiredFrom'].touched
+                "
+                [class.is-valid]="
+                  bVF['RequiredFrom'].valid && bVF['RequiredFrom'].touched
+                "
+              />
+              <div class="invalid-feedback">
+                <div *ngIf="bVF['RequiredFrom'].errors?.['required']">
+                  Required From is required.
+                </div>
+              </div>
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+          </div>
+          <div class="col">
+            <label for="" class="col-form-label">Required To </label>
+            <div class="iconholder">
+              <!-- <i class="fa-light fa-calendar-plus iconleft"></i> -->
+              <input
+                (change)="addCustomValidator()"
+                name=""
+                id="datepick"
+                class="form-control flatpickr-input"
+                placeholder="Date"
+                formControlName="RequiredTo"
+                [class.is-invalid]="
+                  bVF['RequiredTo'].invalid && bVF['RequiredTo'].touched
+                "
+                [class.is-valid]="
+                  bVF['RequiredTo'].valid &&
+                  bVF['RequiredTo'].touched &&
+                  !isDurationOk
+                "
+                type="date"
+              />
+              <div class="invalid-feedback">
+                <div *ngIf="bVF['RequiredTo'].errors?.['required']">
+                  Required To is required.
+                </div>
+              </div>
+
+              <div *ngIf="isDurationOk" class="text-danger">
+                Required-to Date should be greater than Required-from
+              </div>
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        formGroupName="BenefitTypeForm"
+        *ngIf="showInterestFreeLoan"
+        class="border bg-light rounded p-3 mb-3"
+        id="interestfreeloan"
+      >
+        <h5 class="mb-4">Employee Interest Free Loan</h5>
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <p class="silver mb-0">Maximum Loan Available Limit</p>
+          <h6 class="m-0 p-2 border successbg night rounded">
+            PKR {{ availabilityLimit }}
+          </h6>
+        </div>
+        <!-- <div class="d-flex align-items-center justify-content-between mb-3">
+          <p class="silver mb-0">Amount Already Availed</p>
+          <h6 class="m-0 p-2 border skyTransBg night rounded">PKR 30,000</h6>
+        </div> -->
+        <div class="row">
+          <div class="col">
+            <label for="tex" class="form-label"> Amount Required</label>
+            <input
+              class="form-control"
+              type="number"
+              formControlName="AmountRequired"
+              [class.is-invalid]="
+                bILF['AmountRequired'].invalid && bILF['AmountRequired'].touched
+              "
+              [class.is-valid]="
+                bILF['AmountRequired'].valid && bILF['AmountRequired'].touched
+              "
+            />
+            <div class="invalid-feedback">
+              <div *ngIf="bILF['AmountRequired'].errors?.['required']">
+                Amount Required Field is required.
+              </div>
+            </div>
+            <div class="valid-feedback">Looks good!</div>
+          </div>
+          <div class="col">
+            <label for="tex" class="form-label">Load TIme Period </label>
+            <div class="iconholder">
+              <!-- <i class="fa-light fa-calendar-plus iconleft"></i> -->
+              <input
+                name=""
+                id="datepick"
+                class="form-control flatpickr-input"
+                placeholder="Date"
+                formControlName="TimePeriod"
+                type="date"
+                [class.is-invalid]="
+                  bILF['TimePeriod'].invalid && bILF['TimePeriod'].touched
+                "
+                [class.is-valid]="
+                  bILF['TimePeriod'].valid && bILF['TimePeriod'].touched
+                "
+              />
+              <div class="invalid-feedback">
+                <div *ngIf="bILF['TimePeriod'].errors?.['required']">
+                  Time Period is required.
+                </div>
+              </div>
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        formGroupName="BenefitTypeForm"
+        *ngIf="showMobilePackage"
+        class="border bg-light rounded p-3 mb-3"
+        id="mobilepackage"
+      >
+        <h5 class="mb-4">Official Mobile Package</h5>
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <p class="silver mb-0">Maximum Available Limit</p>
+          <h6 class="m-0 p-2 border successbg rounded">
+            PKR {{ availabilityLimit }}
+          </h6>
+        </div>
+        <div class="mb-3">
+          <label for="tex" class="form-label"
+            >Eligible for Mobile Allowance</label
+          >
+          <select
+            name=""
+            class="form-select"
+            formControlName="EligibleForAllowance"
+            [class.is-invalid]="
+              bMPF['EligibleForAllowance'].invalid &&
+              bMPF['EligibleForAllowance'].touched
+            "
+            [class.is-valid]="
+              bMPF['EligibleForAllowance'].valid &&
+              bMPF['EligibleForAllowance'].touched
+            "
+          >
+            <option [value]="true">Yes</option>
+            <option [value]="false">No</option>
+          </select>
+          <div class="invalid-feedback">
+            <div *ngIf="bMPF['EligibleForAllowance'].errors?.['required']">
+              EligibleForAllowance is required.
+            </div>
+          </div>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+      </div>
+      <div
+        formGroupName="BenefitTypeForm"
+        *ngIf="showAllowanceRequest"
+        class="border bg-light rounded p-3 mb-3"
+        id="mobileallowance"
+      >
+        <h5>Mobile Allowance Request</h5>
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <p class="silver mb-0">Maximum Available Limit</p>
+          <h6 class="m-0 p-2 border successbg rounded">PKR 3,000</h6>
+        </div>
+        <div class="mb-3">
+          <label for="tex" class="form-label"
+            >Package Topup Required in Current Month</label
+          >
+          <select
+            name=""
+            class="form-select"
+            formControlName="TopupRequiredCurrentMonth"
+            [class.is-invalid]="
+              bMAF['TopupRequiredCurrentMonth'].invalid &&
+              bMAF['TopupRequiredCurrentMonth'].touched
+            "
+            [class.is-valid]="
+              bMAF['TopupRequiredCurrentMonth'].valid &&
+              bMAF['TopupRequiredCurrentMonth'].touched
+            "
+          >
+            <option [value]="true">Yes</option>
+            <option [value]="false">No</option>
+          </select>
+          <div class="invalid-feedback">
+            <div *ngIf="bMAF['TopupRequiredCurrentMonth'].errors?.['required']">
+              TopupRequiredCurrentMonth is required.
+            </div>
+          </div>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+      </div>
+
+      <div
+        formGroupName="BenefitTypeForm"
+        *ngIf="showInternetDevice"
+        class="border bg-light rounded p-3 mb-3"
+        id="internetdevice"
+      >
+        <h5 class="mb-4">Internet Device</h5>
+        <div class="mb-3">
+          <label for="text" class="form-label">Type of Device Required</label>
+          <select
+            name=""
+            class="form-control"
+            formControlName="DeviceType"
+            [class.is-invalid]="
+              bIDF['DeviceType'].invalid && bIDF['DeviceType'].touched
+            "
+            [class.is-valid]="
+              bIDF['DeviceType'].valid && bIDF['DeviceType'].touched
+            "
+          >
+            <option value="" disabled>Select Device Type</option>
+            <option value="Data Sim">Data Sim</option>
+            <option value="Dongle">Dongle</option>
+            <option value="4G Device">4G Device</option>
+          </select>
+          <div class="invalid-feedback">
+            <div *ngIf="bIDF['DeviceType'].errors?.['required']">
+              DeviceType is required.
+            </div>
+          </div>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+        <div class="mb-3">
+          <label for="tex" class="form-label">ISP Pref 1</label>
+          <input
+            class="form-control"
+            formControlName="Preference1"
+            [class.is-invalid]="
+              bIDF['Preference1'].invalid && bIDF['Preference1'].touched
+            "
+            [class.is-valid]="
+              bIDF['Preference1'].valid && bIDF['Preference1'].touched
+            "
+          />
+          <div class="invalid-feedback">
+            <div *ngIf="bIDF['Preference1'].errors?.['required']">
+              Preference1 is required.
+            </div>
+          </div>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+        <div class="mb-3">
+          <label for="tex" class="form-label">ISP Pref 2</label>
+          <input
+            class="form-control"
+            formControlName="Preference2"
+            [class.is-invalid]="
+              bIDF['Preference2'].invalid && bIDF['Preference2'].touched
+            "
+            [class.is-valid]="
+              bIDF['Preference2'].valid && bIDF['Preference2'].touched
+            "
+          />
+          <div class="invalid-feedback">
+            <div *ngIf="bIDF['Preference2'].errors?.['required']">
+              Preference2 is required.
+            </div>
+          </div>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+      </div>
+
+      <div
+        formArrayName="BenefitTypeForm"
+        *ngIf="showApplyFuelCard"
+        class="border rounded p-3 mb-3"
+        id="applyfuelcard"
+      >
+        <h5>Apply Fuel Card</h5>
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <p class="silver mb-0">Monthly Fuel Limit</p>
+          <h6 class="m-0 p-2 border successbg rounded">
+            {{ availabilityLimit }} Litre
+          </h6>
+        </div>
+        <div class="row align-items-end">
+          <div class="col-11">
+            <div class="table-section">
+              <table class="table mb-0" id="fueltable">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Purchased Liters</th>
+                    <th>Per Liter Amount</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let fuelCardFormGroup of bTAF.controls;
+                      let i = index
+                    "
+                    [formGroupName]="i"
+                  >
+                    <td>
+                      <div class="iconholder">
+                        <!-- <i class="fa-light fa-calendar-plus iconleft"></i> -->
+                        <input
+                          name=""
+                          id="datepick"
+                          class="form-control flatpickr-input"
+                          placeholder="Date"
+                          formControlName="Date"
+                          [class.is-invalid]="
+                            fuelCardFormGroup['controls']['Date'].invalid &&
+                            fuelCardFormGroup['controls']['Date'].touched
+                          "
+                          [class.is-valid]="
+                            fuelCardFormGroup['controls']['Date'].valid &&
+                            fuelCardFormGroup['controls']['Date'].touched
+                          "
+                          type="date"
+                        />
+                        <!-- <div class="invalid-feedback">
+                          <div *ngIf="fuelCardFormGroup['controls']['Date'].errors?.['required']">
+                            Date is required.
+                          </div>
+                        </div>
+                        <div class="valid-feedback">Looks good!</div> -->
+                      </div>
+                    </td>
+                    <td>
+                      <input
+                        class="form-control"
+                        formControlName="PurchasedLiters"
+                        type="number"
+                        [class.is-invalid]="
+                          fuelCardFormGroup['controls']['PurchasedLiters']
+                            .invalid &&
+                          fuelCardFormGroup['controls']['PurchasedLiters']
+                            .touched
+                        "
+                        [class.is-valid]="
+                          fuelCardFormGroup['controls']['PurchasedLiters']
+                            .valid &&
+                          fuelCardFormGroup['controls']['PurchasedLiters']
+                            .touched
+                        "
+                      />
+                      <!-- <div class="invalid-feedback">
+                        <div *ngIf="fuelCardFormGroup['controls']['PurchasedLiters'].errors?.['required']">
+                          PurchasedLiters is required.
+                        </div>
+                      </div>
+                      <div class="valid-feedback">Looks good!</div> -->
+                    </td>
+                    <td>
+                      <input
+                        class="form-control"
+                        formControlName="AmountPerLiter"
+                        type="number"
+                        [class.is-invalid]="
+                          fuelCardFormGroup['controls']['AmountPerLiter']
+                            .invalid &&
+                          fuelCardFormGroup['controls']['AmountPerLiter']
+                            .touched
+                        "
+                        [class.is-valid]="
+                          fuelCardFormGroup['controls']['AmountPerLiter']
+                            .valid &&
+                          fuelCardFormGroup['controls']['AmountPerLiter']
+                            .touched
+                        "
+                      />
+                      <!-- <div class="invalid-feedback">
+                        <div *ngIf="fuelCardFormGroup['controls']['AmountPerLiter'].errors?.['required']">
+                          AmountPerLiter is required.
+                        </div>
+                      </div>
+                      <div class="valid-feedback">Looks good!</div> -->
+                    </td>
+                    <td>
+                      <input
+                        class="form-control"
+                        formControlName="Total"
+                        type="number"
+                        [class.is-invalid]="
+                          fuelCardFormGroup['controls']['Total'].invalid &&
+                          fuelCardFormGroup['controls']['Total'].touched
+                        "
+                        [class.is-valid]="
+                          fuelCardFormGroup['controls']['Total'].valid &&
+                          fuelCardFormGroup['controls']['Total'].touched
+                        "
+                      />
+                      <!-- <div class="invalid-feedback">
+                        <div *ngIf="fuelCardFormGroup['controls']['Total'].errors?.['required']">
+                          Total is required.
+                        </div>
+                      </div>
+                      <div class="valid-feedback">Looks good!</div> -->
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-1">
+            <span class="iconButton small bg-primary ms-auto mb-2 addrow">
+              <i class="fa-light fa-plus" (click)="addFuelControl()"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        formArrayName="BenefitTypeForm"
+        *ngIf="showSubsidizedMedicine"
+        class="border bg-light rounded p-3 mb-3"
+        id="subsidizedmedicine"
+      >
+        <h5>Subsidized Medicine</h5>
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <p class="silver mb-0">Maximum Available Limit</p>
+          <h6 class="m-0 p-2 border successbg rounded">
+            PKR {{ availabilityLimit }}
+          </h6>
+        </div>
+        <div class="filter-container">
+          <div class="row justify-content-between">
+            <div class="col-md-7">
+              <ul class="list-group list-group-horizontal border-0">
+                <li class="list-group-item border-0 p-0 me-2">
+                  <div class="icon-input search_field">
+                    <i class="fa-light fa-magnifying-glass"></i>
+                    <input class="form-control" placeholder="Search.. " />
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive table-scroll">
+          <table class="table table-middle table-sm">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Market Price</th>
+                <th>Subsidized Price</th>
+                <th width="15%">Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let medicineFormGroup of bTAF.controls; let i = index"
+                [formGroupName]="i"
+              >
+                <td>{{ medicineFormGroup.get("Name").value }}</td>
+                <td>PKR. {{ medicineFormGroup.get("MarketPrice").value }}</td>
+                <td>
+                  PKR. {{ medicineFormGroup.get("SubsidizedPrice").value }}
+                </td>
+                <td>
+                  <input
+                    (change)="addArrayCustomValidator()"
+                    type="number"
+                    class="form-control"
+                    min="0"
+                    onkeyup="if(this.value<0){this.value= this.value * -1}"
+                    formControlName="Quantity"
+                    [class.is-invalid]="!isQuantityOk"
+                    [class.is-valid]="isQuantityOk"
+                  />
+                  <div *ngIf="!isQuantityOk" class="text-danger">
+                    Please Enter Quantity
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Attachments(optional)</label>
+        <input
+          #formFileInput
+          class="form-control"
+          type="file"
+          id="formFile"
+          multiple
+          (change)="onFileSelected($event)"
+        />
+      </div>
+      <ul class="list-inline">
+        <li
+          *ngFor="let file of selectedFiles; let i = index"
+          class="list-inline-item bg-light border rounded d-inline-flex align-items-center py-2 px-4"
+        >
+          <span class="text-primary"><i class="fa-light fa-file"></i> </span>
+          <span class="mx-2">{{ file.name }}</span>
+          <span>
+            <i class="fa-light fa-times" (click)="removeFile(i)"></i>
+          </span>
+        </li>
+      </ul>
+      <div class="mb-3">
+        <label for="" class="col-form-label">Notes</label>
+        <textarea
+          class="form-control"
+          placeholder="Write a note"
+          style="height: 100px"
+          formControlName="Notes"
+          [class.is-invalid]="bRF['Notes'].invalid && bRF['Notes'].touched"
+          [class.is-valid]="bRF['Notes'].valid && bRF['Notes'].touched"
+        ></textarea>
+        <div class="invalid-feedback">
+          <div *ngIf="bRF['Notes'].errors?.['required']">Note is required.</div>
+        </div>
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+    </form>
+  </div>
+  <footer class="bg-light p-3 text-end pe-5">
+    <button
+      type="button"
+      class="btn btn-primary btn-small sendleave"
+      (click)="submitForm(addcontent)"
+      [class.disabled]="isButtonDisabled"
+      style="margin-right: 10px"
+    >
+      Submit
+    </button>
+    <button
+      class="btn btn-outline-danger btn-small"
+      data-bs-toggle="offcanvas"
+      (click)="cancel(addcontent)"
+    >
+      Cancel
+    </button>
+  </footer>
+<!-- </div> -->
+</ng-template>
+</section>
+
+<form [formGroup]="requestForm" class="px-4">
+  <!-- <div
+    class="offcanvas w-50 offcanvas-end"
+    tabindex="-1"
+    id="vehicleRequest"
+    aria-labelledby="vehicleRequestLabel"
+    aria-modal="true"
+    role="dialog"
+  > -->
+  <ng-template #addcontents let-offcanvas>
+
+    <div class="offcanvas-header bg-light">
+      <div class="row g-0 w-100">
+        <div class="col-md-9">
+          <h5 class="mb-0">Benefits Summary</h5>
+        </div>
+        <div
+          class="col-md-3 justify-content-end d-flex align-items-center pe-0"
+        >
+          <span
+            class="iconButton iconHower medium"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+            (click)="closeOffset(addcontents)"
+            ><i class="fa-light fa-times"></i
+          ></span>
+        </div>
+      </div>
+    </div>
+    <div class="offcanvas-body px-4">
+      <div class="list-group-section mb-3">
+        <ul class="list-group list-group-flush">
+          <li
+            class="list-group-item d-flex align-items-center justify-content-between px-4"
+          >
+            <span class="night90">Date </span>
+            <strong>{{ requesterDetails.benefitDate }}</strong>
+          </li>
+        </ul>
+      </div>
+
+      <div
+        formGroupName="BenefitTypeForm"
+        *ngIf="showVehicleRequest"
+        class="border bg-light rounded p-3 mb-3"
+        id="vehiclerequest"
+      >
+        <h5 class="mb-4">Official Vehicle Request</h5>
+        <div class="row mb-3">
+          <div class="col">
+            <label for="" class="col-form-label">Required with driver </label>
+            <select class="form-select" formControlName="DriverRequired">
+              <option [value]="true" selected="">Yes</option>
+              <option [value]="false">No</option>
+            </select>
+          </div>
+          <div class="col">
+            <label for="" class="col-form-label"
+              >Intra-city/inter-City Travel
+            </label>
+            <select name="" class="form-select" formControlName="TravelType">
+              <option value="Intra City">Intra City</option>
+              <option value="Inter City">Inter City</option>
+            </select>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col">
+            <label for="" class="col-form-label">Valid Driving License </label>
+            <select
+              name=""
+              class="form-select"
+              formControlName="DrivingLicense"
+            >
+              <option [value]="true" selected="">Yes</option>
+              <option [value]="false">No</option>
+            </select>
+          </div>
+          <div class="col">
+            <label for="" class="col-form-label"> Driving License Number</label>
+            <input class="form-control" formControlName="LicenseNumber" />
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <div class="col">
+            <label for="" class="col-form-label">Required From </label>
+            <div class="iconholder">
+              <!-- <i class="fa-light fa-calendar-plus iconleft"></i> -->
+              <input
+                id="datepick"
+                class="form-control flatpickr-input"
+                placeholder="Date"
+                type="date"
+                formControlName="RequiredFrom"
+              />
+            </div>
+          </div>
+
+          <div class="col">
+            <label for="" class="col-form-label">Required To </label>
+            <div class="iconholder">
+              <!-- <i class="fa-light fa-calendar-plus iconleft"></i> -->
+              <input
+                name=""
+                id="datepick"
+                class="form-control flatpickr-input"
+                placeholder="Date"
+                formControlName="RequiredTo"
+                type="date"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        formGroupName="BenefitTypeForm"
+        *ngIf="showInterestFreeLoan"
+        class="border bg-light rounded p-3 mb-3"
+        id="interestfreeloan"
+      >
+        <h5 class="mb-4">Employee Interest Free Loan</h5>
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <p class="silver mb-0">Maximum Loan Available Limit</p>
+          <h6 class="m-0 p-2 border successbg night rounded">
+            PKR {{ availabilityLimit }}
+          </h6>
+        </div>
+        <!-- <div class="d-flex align-items-center justify-content-between mb-3">
+          <p class="silver mb-0">Amount Already Availed</p>
+          <h6 class="m-0 p-2 border skyTransBg night rounded">PKR 30,000</h6>
+        </div> -->
+        <div class="row">
+          <div class="col">
+            <label for="tex" class="form-label"> Amount Required</label>
+            <input
+              class="form-control"
+              type="number"
+              formControlName="AmountRequired"
+            />
+          </div>
+          <div class="col">
+            <label for="tex" class="form-label">Load TIme Period </label>
+            <div class="iconholder">
+              <!-- <i class="fa-light fa-calendar-plus iconleft"></i> -->
+              <input
+                name=""
+                id="datepick"
+                class="form-control flatpickr-input"
+                placeholder="Date"
+                formControlName="TimePeriod"
+                type="date"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        formGroupName="BenefitTypeForm"
+        *ngIf="showMobilePackage"
+        class="border bg-light rounded p-3 mb-3"
+        id="mobilepackage"
+      >
+        <h5 class="mb-4">Official Mobile Package</h5>
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <p class="silver mb-0">Maximum Available Limit</p>
+          <h6 class="m-0 p-2 border successbg rounded">
+            PKR {{ availabilityLimit }}
+          </h6>
+        </div>
+        <div class="mb-3">
+          <label for="tex" class="form-label"
+            >Eligible for Mobile Allowance</label
+          >
+          <select
+            name=""
+            class="form-select"
+            formControlName="EligibleForAllowance"
+          >
+            <option [value]="true">Yes</option>
+            <option [value]="false">No</option>
+          </select>
+        </div>
+      </div>
+      <div
+        formGroupName="BenefitTypeForm"
+        *ngIf="showAllowanceRequest"
+        class="border bg-light rounded p-3 mb-3"
+        id="mobileallowance"
+      >
+        <h5>Mobile Allowance Request</h5>
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <p class="silver mb-0">Maximum Available Limit</p>
+          <h6 class="m-0 p-2 border successbg rounded">
+            PKR {{ availabilityLimit }}
+          </h6>
+        </div>
+        <div class="mb-3">
+          <label for="tex" class="form-label"
+            >Package Topup Required in Current Month</label
+          >
+          <select
+            name=""
+            class="form-select"
+            formControlName="TopupRequiredCurrentMonth"
+          >
+            <option [value]="true">Yes</option>
+            <option [value]="false">No</option>
+          </select>
+        </div>
+      </div>
+
+      <div
+        formGroupName="BenefitTypeForm"
+        *ngIf="showInternetDevice"
+        class="border bg-light rounded p-3 mb-3"
+        id="internetdevice"
+      >
+        <h5 class="mb-4">Internet Device</h5>
+        <div class="mb-3">
+          <label for="text" class="form-label">Type of Device Required</label>
+          <select name="" class="form-control" formControlName="DeviceType">
+            <option value="" disabled>Select Device Type</option>
+            <option value="Data Sim">Data Sim</option>
+            <option value="Dongle">Dongle</option>
+            <option value="4G Device">4G Device</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="tex" class="form-label">ISP Pref 1</label>
+          <input class="form-control" formControlName="Preference1" />
+        </div>
+        <div class="mb-3">
+          <label for="tex" class="form-label">ISP Pref 2</label>
+          <input class="form-control" formControlName="Preference2" />
+        </div>
+      </div>
+
+      <div
+        formArrayName="BenefitTypeForm"
+        *ngIf="showApplyFuelCard"
+        class="border rounded p-3 mb-3"
+        id="applyfuelcard"
+      >
+        <h5>Apply Fuel Card</h5>
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <p class="silver mb-0">Monthly Fuel Limit</p>
+          <h6 class="m-0 p-2 border successbg rounded">
+            {{ availabilityLimit }} Litre
+          </h6>
+        </div>
+        <div class="row align-items-end">
+          <div class="col-11">
+            <div class="table-section">
+              <table class="table mb-0" id="fueltable">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Purchased Liters</th>
+                    <th>Per Liter Amount</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let fuelCardFormGroup of bTAF.controls;
+                      let i = index
+                    "
+                    [formGroupName]="i"
+                  >
+                    <td>
+                      <div class="iconholder">
+                        <!-- <i class="fa-light fa-calendar-plus iconleft"></i> -->
+                        <input
+                          name=""
+                          id="datepick"
+                          class="form-control flatpickr-input"
+                          placeholder="Date"
+                          formControlName="Date"
+                          type="date"
+                        />
+                      </div>
+                    </td>
+                    <td>
+                      <input
+                        class="form-control"
+                        formControlName="PurchasedLiters"
+                        type="number"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        class="form-control"
+                        formControlName="AmountPerLiter"
+                        type="number"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        class="form-control"
+                        formControlName="Total"
+                        type="number"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- <div class="col-1">
+            <span class="iconButton small bg-primary ms-auto mb-2 addrow">
+              <i class="fa-light fa-plus" (click)="addFuelControl()"></i>
+            </span>
+          </div> -->
+        </div>
+      </div>
+      <div
+        formArrayName="BenefitTypeForm"
+        *ngIf="showSubsidizedMedicine"
+        class="border bg-light rounded p-3 mb-3"
+        id="subsidizedmedicine"
+      >
+        <h5>Subsidized Medicine</h5>
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <p class="silver mb-0">Maximum Available Limit</p>
+          <h6 class="m-0 p-2 border successbg rounded">
+            PKR {{ availabilityLimit }}
+          </h6>
+        </div>
+        <div class="filter-container">
+          <div class="row justify-content-between">
+            <div class="col-md-7">
+              <ul class="list-group list-group-horizontal border-0">
+                <li class="list-group-item border-0 p-0 me-2">
+                  <div class="icon-input search_field">
+                    <i class="fa-light fa-magnifying-glass"></i>
+                    <input class="form-control" placeholder="Search.. " />
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive table-scroll">
+          <table class="table table-middle table-sm">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Market Price</th>
+                <th>Subsidized Price</th>
+                <th width="15%">Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let medicineFormGroup of bTAF.controls; let i = index"
+                [formGroupName]="i"
+              >
+                <td>{{ medicineFormGroup.get("Name").value }}</td>
+                <td>PKR. {{ medicineFormGroup.get("MarketPrice").value }}</td>
+                <td>
+                  PKR. {{ medicineFormGroup.get("SubsidizedPrice").value }}
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    class="form-control"
+                    formControlName="Quantity"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="bg-light border p-3 rounded">
+        <strong>Note</strong>
+        <p class="m-0">
+          {{ this.requestForm.get("Notes").value }}
+        </p>
+      </div>
+      <h6 class="my-3 coal">{{ requesterDetails.appliedDate }}</h6>
+
+      <!-- showVehicleRequest = false;
+  showInterestFreeLoan = false;
+  showMobilePackage = false;
+  showAllowanceRequest = false;
+  showInternetDevice = false;
+  showApplyFuelCard = false;
+  showSubsidizedMedicine = false; -->
+
+      <ul *ngIf="showInterestFreeLoan" class="list-inline mx-4">
+        <li
+          class="list-inline-item bg-light border rounded d-inline-flex align-items-center py-2 px-4"
+          *ngFor="let attachment of summaryAttachments"
+        >
+          <span class="text-primary"><i class="fa-light fa-file"></i> </span>
+          <a
+            class="btn btn-link"
+            [href]="imageBaseUrl + '/' + attachment.attachmentUrl"
+            target="_blank"
+            download="{{ attachment.attachmentName }}"
+          >
+            <span class="mx-2">{{ attachment.attachmentName }}</span>
+          </a>
+
+          <span>
+            <i class="fa-light fa-times"></i>
+          </span>
+        </li>
+      </ul>
+      <div *ngIf="showInterestFreeLoan" class="toggle-single card bg-light m-4">
+        <a
+          class="togglebtn d-flex align-items-center px-4 p-3 fw-semibold"
+          data-bs-toggle="collapse"
+          href="#collapseExample"
+          role="button"
+          aria-expanded="false"
+          aria-controls="collapseExample"
+        >
+          <h6 class="m-0">
+            <span>
+              <i class="fa-light fa-receipt pe-2"></i> Payment Breakdown</span
+            >
+          </h6>
+          <span class="toggleicon ms-auto"
+            ><i class="fa-light fa-angle-down"></i
+          ></span>
+        </a>
+        <div class="collapse show" id="collapseExample">
+          <ul class="list-group list-group-flush">
+            <li
+              class="list-group-item d-flex align-items-center justify-content-between px-4"
+            >
+              <h6><span class="night90">Total Loan Returned Amount </span></h6>
+              <h6>
+                <strong>PKR {{ loanDetails.totalLoanReturned }}</strong>
+              </h6>
+            </li>
+            <li
+              class="list-group-item d-flex align-items-center justify-content-between px-4"
+            >
+              <h6><span class="night90">Total Loan Balance</span></h6>
+              <h6>
+                <strong>PKR {{ loanDetails.totalLoan }}</strong>
+              </h6>
+            </li>
+            <li
+              *ngFor="let pBD of loanDetails.paymentBreakDown"
+              class="list-group-item d-flex align-items-center justify-content-between px-4"
+            >
+              <span class="night90"> {{ pBD.monthYear }}</span>
+              <strong>PKR {{ pBD.amount }}</strong>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <ul
+        *ngIf="summaryAttachments.length > 0 && !showInterestFreeLoan"
+        class="list-inline mx-4"
+      >
+        <li
+          class="list-inline-item bg-light border rounded d-inline-flex align-items-center py-2 px-4"
+          *ngFor="let attachment of summaryAttachments"
+        >
+          <span class="text-primary"><i class="fa-light fa-file"></i> </span>
+          <a
+            class="btn btn-link"
+            [href]="imageBaseUrl + '/' + attachment.attachmentUrl"
+            target="_blank"
+            download="{{ attachment.attachmentName }}"
+          >
+            <span class="mx-2">{{ attachment.attachmentName }}</span>
+          </a>
+
+          <span>
+            <i class="fa-light fa-times"></i>
+          </span>
+        </li>
+      </ul>
+      <div class="p-3 skyTransBg night rounded d-flex align-items-center">
+        <span class="iconButton medium skyTrans20 night me-2">
+          <i class="fa-light fa-info"></i>
+        </span>
+        <p *ngIf="showVehicleRequest" class="m-0">
+          You have requested <strong>Official Vehicle </strong> request on
+          {{ requesterDetails.appliedDate }}
+        </p>
+
+        <p *ngIf="showInterestFreeLoan" class="m-0">
+          You have requested <strong>Loan</strong> request on
+          {{ requesterDetails.appliedDate }}
+        </p>
+        <p *ngIf="showMobilePackage" class="m-0">
+          You have requested <strong>Mobile Package</strong> request on
+          {{ requesterDetails.appliedDate }}
+        </p>
+        <p *ngIf="showAllowanceRequest" class="m-0">
+          You have requested <strong>Mobile Allowance </strong> request on
+          {{ requesterDetails.appliedDate }}
+        </p>
+
+        <p *ngIf="showInternetDevice" class="m-0">
+          You have requested <strong>Internet Device</strong> request on
+          {{ requesterDetails.appliedDate }}
+        </p>
+        <p *ngIf="showApplyFuelCard" class="m-0">
+          You have requested <strong>Fuel Card</strong> request on
+          {{ requesterDetails.appliedDate }}
+        </p>
+        <p *ngIf="showSubsidizedMedicine" class="m-0">
+          You have requested <strong>Subsidized Medicine</strong> request on
+          {{ requesterDetails.appliedDate }}
+        </p>
+      </div>
+
+      <div class="list-group-section pe-3 pt-4">
+        <div class="main_timeline">
+          <div class="pb-3 d-flex align-items-start timeline_item">
+            <div class="timeline_icon iconButton medium border">
+              <i class="fa-light coal fa-user"></i>
+            </div>
+            <div class="ps-5 timeline_content">
+              <div class="float-end d-flex align-items-center">
+                <span class="iconButton iconHover medium me-2"
+                  ><i class="fa-light fa-message-lines"></i>
+                </span>
+                <span class="badge badge-md rounded-pill skyTransBg night"
+                  >Applied</span
+                >
+              </div>
+              <strong>{{ requesterDetails.requester }} </strong>
+              <p class="mb-1 metal">
+                <small>{{ requesterDetails.appliedDate }}</small>
+              </p>
+              <div
+                class="bg-light border p-3 rounded"
+                *ngIf="requesterDetails.reason !== ''"
+              >
+                <strong>Note</strong>
+                <p class="m-0">
+                  {{ requesterDetails.notes }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="pb-3 d-flex align-items-start timeline_item"
+            *ngFor="let stage of requestStages"
+          >
+            <div
+              class="timeline_icon iconButton medium border"
+              [ngClass]="{ mintBg: stage.status === 1 }"
+            >
+              <i class="fa-light fa-user-tie"></i>
+            </div>
+            <div class="ps-5 timeline_content">
+              <div class="float-end d-flex align-items-center">
+                <span class="iconButton iconHover medium me-2"
+                  ><i class="fa-light fa-message-lines"></i>
+                </span>
+                <span
+                  *ngIf="stage.status === 1"
+                  class="badge badge-md rounded-pill grayfilled"
+                >
+                  Pending
+                </span>
+                <span
+                  *ngIf="stage.status === 2"
+                  class="badge badge-md rounded-pill successbg"
+                  >Approved</span
+                >
+
+                <span
+                  *ngIf="stage.status === 3"
+                  class="badge badge-md rounded-pill errorbg"
+                >
+                  Rejected
+                </span>
+                <span
+                  *ngIf="stage.status === 5"
+                  class="badge badge-md rounded-pill badgebg"
+                >
+                  On Hold
+                </span>
+              </div>
+              <strong>{{ stage.approver }}<small></small> </strong>
+              <p class="mb-1 metal">
+                <small>{{ stage.modifiedDate }}</small>
+              </p>
+              <div
+                class="bg-light border p-3 rounded"
+                *ngIf="stage.description !== ''"
+              >
+                {{ stage.description }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="bg-light p-3 text-end pe-5">
+      <button
+        class="btn btn-primary btn-small"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+        (click)="closeOffset(addcontents)"
+        style="margin-right: 8px"
+      >
+        Cancel
+      </button>
+      <button  *ngIf="!isAllPending && requesterDetails.statusId != 4"
+        class="btn btn-outline-danger btn-small cancelrequest"
+        data-bs-toggle="modal" data-bs-target="#cancelleaverequest"
+      >
+        Cancel Request
+      </button>
+    </footer>
+  <!-- </div> -->
+</ng-template>
+</form>
+
+<!-- <div [ngClass]="showOffcanvas ? 'modal-backdrop fade show' : ''"></div> -->
+<div
+  class="modal fade"
+  id="cancelleaverequest"
+  tabindex="-1"
+  aria-labelledby="cancelleaverequestLabel"
+  aria-modal="true"
+  role="dialog"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="edittagsLabel">Confirmation</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="py-5 px-4">
+          <div class="d-flex">
+            <span class="iconButton exlarge successdarkbg">
+              <i class="fa-light fa-circle-check fs-4"></i>
+            </span>
+            <div class="ms-3">
+              <h6>Are you sure you want to Cancel the OPD request</h6>
+              <p class="m-0">If you don’t save, your changes will be lost.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer saltBg">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-success closeleavereq"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="cancelRequest(requesterDetails.reimbursementId,addcontents)"
+        >
+          ok
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-toaster></app-toaster>

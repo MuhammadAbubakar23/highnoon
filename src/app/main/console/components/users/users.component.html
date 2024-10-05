@@ -1,0 +1,697 @@
+<div
+  class="team-user-wrap console-body-wrapper inbox-container"
+  data-scrollbar="true"
+  tabindex="-1"
+  style="overflow: hidden; outline: none"
+>
+  <div class="scroll-content">
+    <div class="row h-auto justify-content-center">
+      <div class="col-md-11">
+        <div class="tab-content" id="nav-tabContent">
+          <div
+            id="members"
+            class="tab-pane fade list-group-section active show"
+            role="tabpanel"
+            aria-labelledby="members-tab"
+          >
+            <div class="w-100 inbox-container">
+              <div class="filter-container">
+                <div class="row">
+                  <div class="col-md-5">
+                    <ul class="list-group list-group-horizontal border-0">
+                      <li class="list-group-item border-0 p-0">
+                        <div class="icon-input">
+                          <i class="fa-light fa-magnifying-glass"></i>
+                          <input
+                            class="form-control"
+                            placeholder="Search .. "
+                          />
+                        </div>
+                      </li>
+                      <li
+                        class="list-group-item border-0 refreshicon iconHover iconButton medium rounded-circle"
+                        aria-label="..."
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        data-bs-original-title="Refresh"
+                      >
+                        <i class="fal fa-redo"></i>
+                      </li>
+                      <li
+                        class="list-group-item after-select-fun iconHover iconButton medium rounded-circle"
+                        aria-label="..."
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        data-bs-original-title="Delete"
+                        style="display: none"
+                      >
+                        <i class="fal fa-trash"></i>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-md-7">
+                    <div class="d-flex align-items-center justify-content-end">
+                      <a routerLink='/connect/console/create-user' class="me-2">
+                        <button type="button" class="btn btn-success">
+                          <i class="fal fa-plus me-2"></i>
+                          Create User
+                        </button>
+                      </a>
+                      <!-- <a
+                        class="btn btn-success ice me-2"
+                        data-bs-toggle="offcanvas"
+                        href="#invitemembers"
+                        role="button"
+                        aria-controls="invitemembers"
+                      >
+                        <i class="fa-light fa-plus"></i> Invite Members
+                      </a> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="query-container perfect-scrollbar"
+                data-scrollbar="true"
+                tabindex="-1"
+                style="overflow: hidden; outline: none"
+              >
+                <div class="scroll-content">
+                  <div
+                    class="alert alert-secondary text-center email-info-alert p-2"
+                    role="alert"
+                  >
+                    All <strong>09</strong> candidates on this page are
+                    selected.
+                    <a
+                      href="javascript:void(0);"
+                      class="all-conversation fw-bold sky btn"
+                      >Select all 09 Candidates</a
+                    >
+                    <a
+                      href="javascript:void(0);"
+                      class="clear-selection"
+                      style="display: none"
+                      >Clear selection</a
+                    >
+                  </div>
+                  <div class="table-section">
+                    <table
+                      class="table table-sm table-nowrap table-reset"
+                      id="table"
+                    >
+                      <thead>
+                        <tr>
+                          <th>
+                            <span class="all-check-boxes">
+                              <input
+                                class="form-check-input me-1"
+                                type="checkbox"
+                                aria-label="..."
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="bottom"
+                                data-bs-original-title="Check All"
+                              />
+                            </span>
+                          </th>
+                          <th>User</th>
+                          <th>Email</th>
+                          <th>Role</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <input
+                              class="form-check-input me-1"
+                              type="checkbox"
+                              aria-label="..."
+                            />
+                          </td>
+                          <td>
+                            <span
+                              class="emailer-name"
+                              aria-label="..."
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="bottom"
+                              data-bs-original-title="Fatima Ahmed"
+                            >
+                              <a href="user-details.html">
+                                Fatima Ahmed
+                              </a></span
+                            >
+                          </td>
+                          <td>fatima.ahmed@gmail.com</td>
+                          <td>Recruiter</td>
+                          <td>
+                            <div
+                              class="icons-list d-flex justify-content-end dropstart"
+                            >
+                              <button
+                                class="btn iconButton small iconHover btn-group"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                              >
+                                <i class="far fa-ellipsis-v"></i>
+                              </button>
+                              <ul class="dropdown-menu fade">
+                                <li>
+                                  <a class="dropdown-item" 
+                                    ><i class="fal fa-edit me-2"></i> Edit</a
+                                  >
+                                </li>
+                                <li>
+                                  <a class="dropdown-item delete-dd" 
+                                    ><i class="fal fa-trash me-2"></i> Delete</a
+                                  >
+                                </li>
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <input
+                              class="form-check-input me-1"
+                              type="checkbox"
+                              aria-label="..."
+                            />
+                          </td>
+                          <td>
+                            <span
+                              class="emailer-name"
+                              aria-label="..."
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="bottom"
+                              data-bs-original-title="Ali Raza"
+                            >
+                              <a href="candidate-detail.html">
+                                Ali Raza
+                              </a></span
+                            >
+                          </td>
+                          <td>ali.raza77@gmail.com</td>
+                          <td>Recruiter</td>
+                          <td>
+                            <div
+                              class="icons-list d-flex justify-content-end dropstart"
+                            >
+                              <button
+                                class="btn iconButton small iconHover btn-group"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                              >
+                                <i class="far fa-ellipsis-v"></i>
+                              </button>
+                              <ul class="dropdown-menu fade">
+                                <li>
+                                  <a class="dropdown-item" 
+                                    ><i class="fal fa-edit me-2"></i> Edit</a
+                                  >
+                                </li>
+                                <li>
+                                  <a class="dropdown-item delete-dd" 
+                                    ><i class="fal fa-trash me-2"></i> Delete</a
+                                  >
+                                </li>
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <input
+                              class="form-check-input me-1"
+                              type="checkbox"
+                              aria-label="..."
+                            />
+                          </td>
+                          <td>
+                            <span
+                              class="emailer-name"
+                              aria-label="..."
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="bottom"
+                              data-bs-original-title="Haider ali"
+                            >
+                              <a href="candidate-detail.html">
+                                Haider ali
+                              </a></span
+                            >
+                          </td>
+                          <td>haider.ali24@gmail.com</td>
+                          <td>Agent</td>
+                          <td>
+                            <div
+                              class="icons-list d-flex justify-content-end dropstart"
+                            >
+                              <button
+                                class="btn iconButton small iconHover btn-group"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                              >
+                                <i class="far fa-ellipsis-v"></i>
+                              </button>
+                              <ul class="dropdown-menu fade">
+                                <li>
+                                  <a class="dropdown-item" 
+                                    ><i class="fal fa-edit me-2"></i> Edit</a
+                                  >
+                                </li>
+                                <li>
+                                  <a class="dropdown-item delete-dd" 
+                                    ><i class="fal fa-trash me-2"></i> Delete</a
+                                  >
+                                </li>
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <input
+                              class="form-check-input me-1"
+                              type="checkbox"
+                              aria-label="..."
+                            />
+                          </td>
+                          <td>
+                            <span
+                              class="emailer-name"
+                              aria-label="..."
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="bottom"
+                              data-bs-original-title="Muhammad Ahmed"
+                            >
+                              <a href="candidate-detail.html">
+                                Muhammad Ahmed
+                              </a></span
+                            >
+                          </td>
+                          <td>muhammad.ahmed@gmail.com</td>
+                          <td>
+                            Supervisor, Super Admin
+                            <div
+                              class="d-inline-block dropdown w-auto dropdown-text"
+                            >
+                              <button
+                                class="d-inline-block dropdown w-auto btn ps-0"
+                                type="button"
+                                id="dropdownMenu2"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                              >
+                                <span
+                                  class="btn iconButton small iconHover silver"
+                                  >+4</span
+                                >
+                              </button>
+                              <ul
+                                class="dropdown-menu w-auto"
+                                aria-labelledby="dropdownMenu2"
+                              >
+                                <li>
+                                  <a class="dropdown-item" >
+                                    <span>Recruiter</span>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" 
+                                    >Corporate Recuiter</a
+                                  >
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" 
+                                    >Super Admin</a
+                                  >
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" >
+                                    Hiring Manager
+                                  </a>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" >
+                                    Supervisor
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          </td>
+                          <td>
+                            <div
+                              class="icons-list d-flex justify-content-end dropstart"
+                            >
+                              <button
+                                class="btn iconButton small iconHover btn-group"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                              >
+                                <i class="far fa-ellipsis-v"></i>
+                              </button>
+                              <ul class="dropdown-menu fade">
+                                <li>
+                                  <a class="dropdown-item" 
+                                    ><i class="fal fa-edit me-2"></i> Edit</a
+                                  >
+                                </li>
+                                <li>
+                                  <a class="dropdown-item delete-dd" 
+                                    ><i class="fal fa-trash me-2"></i> Delete</a
+                                  >
+                                </li>
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div
+                  class="scrollbar-track scrollbar-track-x"
+                  style="display: none"
+                >
+                  <div
+                    class="scrollbar-thumb scrollbar-thumb-x"
+                    style="width: 1500px; transform: translate3d(0px, 0px, 0px)"
+                  ></div>
+                </div>
+                <div
+                  class="scrollbar-track scrollbar-track-y"
+                  style="display: block"
+                >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            id="pending"
+            class="tab-pane fade list-group-section"
+            role="tabpanel"
+            aria-labelledby="pending-tab"
+          >
+            <div class="w-100 inbox-container">
+              <div class="filter-container">
+                <div class="row">
+                  <div class="col-md-5">
+                    <ul class="list-group list-group-horizontal border-0">
+                      <li class="list-group-item border-0 p-0">
+                        <div class="icon-input">
+                          <i class="fa-light fa-magnifying-glass"></i>
+                          <input
+                            class="form-control"
+                            placeholder="Search .. "
+                          />
+                        </div>
+                      </li>
+                      <li
+                        class="list-group-item border-0 refreshicon iconHover iconButton medium rounded-circle"
+                        aria-label="..."
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        data-bs-original-title="Refresh"
+                      >
+                        <i class="fal fa-redo"></i>
+                      </li>
+                      <li
+                        class="list-group-item after-select-fun iconHover iconButton medium rounded-circle"
+                        aria-label="..."
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        data-bs-original-title="Delete"
+                        style="display: none"
+                      >
+                        <i class="fal fa-trash"></i>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-md-7">
+                    <div class="d-flex align-items-center justify-content-end">
+                      <a routerLink='/console/create-user' class="me-2">
+                        <button type="button" class="btn btn-success">
+                          <i class="fal fa-plus me-2"></i>
+                          Create User
+                        </button>
+                      </a>
+                      <a
+                        class="btn btn-success ice me-2"
+                        data-bs-toggle="offcanvas"
+                        href="#invitemembers"
+                        role="button"
+                        aria-controls="invitemembers"
+                      >
+                        <i class="fa-light fa-plus"></i> Invite Members
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="query-container perfect-scrollbar"
+                data-scrollbar="true"
+                tabindex="-1"
+                style="overflow: hidden; outline: none"
+              >
+                <div class="scroll-content">
+                  <div
+                    class="alert alert-secondary text-center email-info-alert p-2"
+                    role="alert"
+                  >
+                    All <strong>09</strong> candidates on this page are
+                    selected.
+                    <a
+                      href="javascript:void(0);"
+                      class="all-conversation fw-bold sky btn"
+                      >Select all 09 Candidates</a
+                    >
+                    <a
+                      href="javascript:void(0);"
+                      class="clear-selection"
+                      style="display: none"
+                      >Clear selection</a
+                    >
+                  </div>
+                  <div class="table-section">
+                    <table
+                      class="table table-sm table-nowrap table-reset"
+                      id="table"
+                    >
+                      <thead>
+                        <tr>
+                          <th>
+                            <span class="all-check-boxes">
+                              <input
+                                class="form-check-input me-1"
+                                type="checkbox"
+                                aria-label="..."
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="bottom"
+                                data-bs-original-title="Check All"
+                              />
+                            </span>
+                          </th>
+                          <th>User</th>
+                          <th>Email</th>
+                          <th>Role</th>
+                          <th>Date</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <input
+                              class="form-check-input me-1"
+                              type="checkbox"
+                              aria-label="..."
+                            />
+                          </td>
+                          <td>
+                            <span
+                              class="emailer-name"
+                              aria-label="..."
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="bottom"
+                              data-bs-original-title="Fatima Ahmed"
+                            >
+                              <a href="candidate-detail.html">
+                                Fatima Ahmed
+                              </a></span
+                            >
+                          </td>
+                          <td>fatima.ahmed@gmail.com</td>
+                          <td>
+                            Agent, Admin
+                            <div
+                              class="d-inline-block dropdown w-auto dropdown-text"
+                            >
+                              <button
+                                class="d-inline-block dropdown w-auto btn ps-0"
+                                type="button"
+                                id="dropdownMenu2"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                              >
+                                <span
+                                  class="btn iconButton small iconHover silver"
+                                  >+4</span
+                                >
+                              </button>
+                              <ul
+                                class="dropdown-menu w-auto"
+                                aria-labelledby="dropdownMenu2"
+                              >
+                                <li>
+                                  <a class="dropdown-item" >
+                                    <span>Agent</span>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" >Admin</a>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" >Accounts</a>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" >
+                                    Subscriber
+                                  </a>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" >
+                                    Contributor
+                                  </a>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" > Editor </a>
+                                </li>
+                              </ul>
+                            </div>
+                          </td>
+                          <td>10 days ago</td>
+                          <td>
+                            <div
+                              class="icons-list d-flex justify-content-end dropstart"
+                            >
+                              <button
+                                class="btn iconButton small iconHover btn-group"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                              >
+                                <i class="far fa-ellipsis-v"></i>
+                              </button>
+                              <ul class="dropdown-menu fade">
+                                <li>
+                                  <a class="dropdown-item" 
+                                    ><i class="fal fa-edit me-2"></i> Edit</a
+                                  >
+                                </li>
+                                <li>
+                                  <a class="dropdown-item delete-dd" 
+                                    ><i class="fal fa-trash me-2"></i> Delete</a
+                                  >
+                                </li>
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <input
+                              class="form-check-input me-1"
+                              type="checkbox"
+                              aria-label="..."
+                            />
+                          </td>
+                          <td>
+                            <span
+                              class="emailer-name"
+                              aria-label="..."
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="bottom"
+                              data-bs-original-title="Farooq Shad"
+                            >
+                              <a href="candidate-detail.html">
+                                Farooq Shad
+                              </a></span
+                            >
+                          </td>
+                          <td>farooq.shad@gmail.com</td>
+                          <td>Recruiter</td>
+                          <td>12 days ago</td>
+                          <td>
+                            <div
+                              class="icons-list d-flex justify-content-end dropstart"
+                            >
+                              <button
+                                class="btn iconButton small iconHover btn-group"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                              >
+                                <i class="far fa-ellipsis-v"></i>
+                              </button>
+                              <ul class="dropdown-menu fade">
+                                <li>
+                                  <a class="dropdown-item" 
+                                    ><i class="fal fa-edit me-2"></i> Edit</a
+                                  >
+                                </li>
+                                <li>
+                                  <a class="dropdown-item delete-dd" 
+                                    ><i class="fal fa-trash me-2"></i> Delete</a
+                                  >
+                                </li>
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div
+                  class="scrollbar-track scrollbar-track-x"
+                  style="display: none"
+                >
+                  <div
+                    class="scrollbar-thumb scrollbar-thumb-x"
+                    style="width: 1500px; transform: translate3d(0px, 0px, 0px)"
+                  ></div>
+                </div>
+                <div
+                  class="scrollbar-track scrollbar-track-y"
+                  style="display: none"
+                >
+                  <div
+                    class="scrollbar-thumb scrollbar-thumb-y"
+                    style="height: 755px; transform: translate3d(0px, 0px, 0px)"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scrollbar-track scrollbar-track-x" style="display: block">
+    <div
+      class="scrollbar-thumb scrollbar-thumb-x"
+      style="width: 1627.07px; transform: translate3d(0px, 0px, 0px)"
+    ></div>
+  </div>
+  <div class="scrollbar-track scrollbar-track-y" style="display: none">
+    <div
+      class="scrollbar-thumb scrollbar-thumb-y"
+      style="height: 301px; transform: translate3d(0px, 0px, 0px)"
+    ></div>
+  </div>
+</div>

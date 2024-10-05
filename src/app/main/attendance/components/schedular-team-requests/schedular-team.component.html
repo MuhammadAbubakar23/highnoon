@@ -1,0 +1,1522 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-jelly-box"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+<div class="content-box-wrapper d-flex w-100">
+  <div class="middle-content d-flex">
+    <div class="page-content-wrapper">
+      <div class="agent-page-main-content px-4">
+        <div class="tab-content" id="myTabContent">
+          <div
+            class="tab-pane fade show active"
+            id="teamscheduler"
+            role="tabpanel"
+            aria-labelledby="teamscheduler-tab"
+          >
+            <div class="row mt-4">
+              <div class="col-lg-3 col-md-6">
+                <div class="card dashboard-card">
+                  <div class="card-body d-flex align-items-center">
+                    <div class="iconButton medium me-3 skyTransBg">
+                      <i class="fa-light fa-calendar-xmark"></i>
+                    </div>
+                    <div>
+                      <p class="silver mb-1 text-uppercase">Total Requests</p>
+                      <h5 class="m-0">{{ totalRequest || ""}}</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6">
+                <div class="card dashboard-card">
+                  <div class="card-body d-flex align-items-center">
+                    <div class="iconButton medium me-3 successbg night">
+                      <i class="fa-light fa-calendar-xmark"></i>
+                    </div>
+                    <div>
+                      <p class="silver mb-1 text-uppercase">Approved</p>
+                      <h5 class="m-0">{{ approved || ""}}</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6">
+                <div class="card dashboard-card">
+                  <div class="card-body d-flex align-items-center">
+                    <div class="iconButton medium me-3 grayfilled night">
+                      <i class="fa-light fa-calendar-xmark"></i>
+                    </div>
+                    <div>
+                      <p class="silver mb-1 text-uppercase">Pending</p>
+                      <h5 class="m-0">{{ pending || ""}}</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6">
+                <div class="card dashboard-card">
+                  <div class="card-body d-flex align-items-center">
+                    <div class="iconButton medium me-3 errorbg night">
+                      <i class="fa-light fa-calendar-xmark"></i>
+                    </div>
+                    <div>
+                      <p class="silver mb-1 text-uppercase">Rejected</p>
+                      <h5 class="m-0">{{ rejected || ""}}</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="filter-container">
+              <div class="row justify-content-between">
+                <div class="col-md-7">
+                  <ul class="list-group list-group-horizontal border-0">
+                    <!-- <li class="list-group-item border-0 p-0 me-2">
+                      <div class="icon-input">
+                        <i class="fa-light fa-magnifying-glass"></i>
+                        <input class="form-control" placeholder="Search.. " />
+                      </div>
+                    </li>
+                    <li class="list-group-item border-0 p-0 me-2">
+                      <div class="iconholder ms-2">
+                        <input
+                          [(ngModel)]="startDate"
+                          class="form-control timepicker flatpickr-input"
+                          type="date"
+                          (change)="resetEndDate()"
+                        />
+                      </div>
+                    </li>
+                    <li class="list-group-item border-0 p-0 me-2">
+                      <div class="iconholder ms-2">
+                        <input
+                          [(ngModel)]="endDate"
+                          class="form-control timepicker flatpickr-input"
+                          type="date"
+                          (change)="filterByDate()"
+                        />
+                      </div>
+                    </li> -->
+                    <li class="list-group-item border-0 p-0 me-2">
+                      <div class="icon-input search_field">
+                        <i class="fa-light fa-magnifying-glass"></i>
+                        <input
+                          class="form-control"
+                          placeholder="Search.. "
+                          [(ngModel)]="searchText"
+                        />
+                      </div>
+                    </li>
+                    <li class="list-group-item border-0 ms-2 pe-0">
+                      <span class="coal">From</span>
+                    </li>
+                    <li class="list-group-item border-0 p-0 me-2">
+                      <div class="ms-2">
+                        <input
+                          [(ngModel)]="startDate"
+                          class="form-control timepicker flatpickr-input"
+                          value="From"
+                          type="date"
+                          (change)="resetEndDate()"
+                        />
+                      </div>
+                    </li>
+                    <li class="list-group-item border-0 ms-2 pe-0">
+                      <span class="coal">To</span>
+                    </li>
+                    <li class="list-group-item border-0 p-0 mx-2">
+                      <div class="ms-2">
+                        <input
+                          [(ngModel)]="endDate"
+                          class="form-control timepicker flatpickr-input"
+                          type="date"
+                          (change)="filterByDate()"
+                        />
+                      </div>
+                    </li>
+                    <li
+                      class="list-group-item border-0 iconButton iconHover medium"
+                      aria-label="..."
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="bottom"
+                      data-bs-original-title="Refresh"
+                      (click)="refreshPage()"
+                    >
+                      <i class="fal fa-redo-alt"></i>
+                    </li>
+                    <li
+                      class="list-group-item border-top-0 iconButton medium iconHover border-bottom-0 border-start-0 after-select-fun"
+                      aria-label="..."
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="bottom"
+                      data-bs-original-title="Delete"
+                      style="display: none"
+                    >
+                      <i class="fal fa-trash"></i>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-5">
+                  <div
+                    class="filters-opt d-flex align-items-center justify-content-end"
+                  >
+                    <!-- <div class="dropdown ms-2 me-2 w-auto">
+                      <button
+                        class="btn btn-success ice"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="true"
+                        id="adddd"
+                      >
+                        <i class="fa-light fa-plus"></i> Create Schedule
+                      </button>
+                      <ul
+                        class="dropdown-menu"
+                        aria-labelledby="adddd"
+                        data-popper-placement="bottom-start"
+                        style="
+                          position: absolute;
+                          inset: 0px auto auto 0px;
+                          margin: 0px;
+                          transform: translate(1612px, 239px);
+                        "
+                      >
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            routerLink="/connect/attendance/schedular/team/bulk-upload"
+                          >
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <span class="iconButton medium emeraldTransBg"
+                                  ><i class="fa-light fa-user"></i
+                                ></span>
+                              </div>
+                              <div class="flex-grow-1 ms-2">
+                                <h6 class="m-0">Bulk Schedule Upload</h6>
+                                <small class="silver"
+                                  >Upload bulk Employees (max 150)</small
+                                >
+                              </div>
+                            </div>
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            role="button"
+                            (click)="resetForm()"
+                          >
+                            <div class="d-flex align-items-center">
+                              <div class="flex-shrink-0">
+                                <span class="iconButton medium oceanTransBg">
+                                  <i class="fa-light fa-file-lines"></i>
+                                </span>
+                              </div>
+                              <div class="flex-grow-1 ms-2">
+                                <h6 class="m-0">Create Schedule</h6>
+                                <small class="silver"
+                                  >Create Schedule Manually</small
+                                >
+                              </div>
+                            </div>
+                          </a>
+                        </li>
+                      </ul>
+                    </div> -->
+                    <div class="dropdown w-auto rounded">
+                      <button
+                        class="btn iconButton iconHover medium"
+                        type="button"
+                        id="sorting1"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        <i class="fa-regular fa-arrow-down-short-wide"></i>
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="sorting1">
+                        <li class="saltBg p-2 charcoal">
+                          <strong> Sort By</strong>
+                        </li>
+                        <li *ngFor="let column of sortingColumns">
+                          <a
+                            class="dropdown-item d-flex align-items-center"
+                            (click)="sortDataBy(column)"
+                          >
+                            {{ column }}
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="dropdown w-auto mx-2">
+                      <button
+                        class="btn iconButton iconHover medium"
+                        type="button"
+                        id="columnssort"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        <i class="fa-light fa-table-columns"></i>
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="columnssort">
+                        <li class="saltBg p-2 charcoal">
+                          <strong> Adjust Columns</strong>
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item d-flex align-items-center"
+
+                          >
+                            <div class="form-check">
+                              <input
+                                class="form-check-input"
+                                type="checkbox"
+                                id="flexCheckDefault"
+                              />
+                              <label
+                                class="form-check-label"
+                                for="flexCheckDefault"
+                              >
+                                ID
+                              </label>
+                            </div>
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item d-flex align-items-center"
+
+                          >
+                            <div class="form-check">
+                              <input
+                                class="form-check-input"
+                                type="checkbox"
+                                id="flexCheckDefault"
+                              />
+                              <label
+                                class="form-check-label"
+                                for="flexCheckDefault"
+                              >
+                                Name
+                              </label>
+                            </div>
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item d-flex align-items-center"
+
+                          >
+                            <div class="form-check">
+                              <input
+                                class="form-check-input"
+                                type="checkbox"
+                                id="flexCheckDefault"
+                              />
+                              <label
+                                class="form-check-label"
+                                for="flexCheckDefault"
+                              >
+                                Description
+                              </label>
+                            </div>
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item d-flex align-items-center"
+
+                          >
+                            <div class="form-check">
+                              <input
+                                class="form-check-input"
+                                type="checkbox"
+                                id="flexCheckDefault"
+                              />
+                              <label
+                                class="form-check-label"
+                                for="flexCheckDefault"
+                              >
+                                Status
+                              </label>
+                            </div>
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item d-flex align-items-center"
+
+                          >
+                            <div class="form-check">
+                              <input
+                                class="form-check-input"
+                                type="checkbox"
+                                id="flexCheckDefault"
+                              />
+                              <label
+                                class="form-check-label"
+                                for="flexCheckDefault"
+                              >
+                                Priority
+                              </label>
+                            </div>
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item d-flex align-items-center"
+
+                          >
+                            <div class="form-check">
+                              <input
+                                class="form-check-input"
+                                type="checkbox"
+                                id="flexCheckDefault"
+                              />
+                              <label
+                                class="form-check-label"
+                                for="flexCheckDefault"
+                              >
+                                Date
+                              </label>
+                            </div>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="dropdown w-auto">
+                      <button
+                        class="btn iconButton medium"
+                        type="button"
+                        id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        <i class="fa-regular fa-ellipsis"></i>
+                      </button>
+                      <ul
+                        class="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton1"
+                      >
+                        <li>
+                          <a class="dropdown-item p-1" (click)="exportData()">
+                            <button
+                              class="iconButton dropdown-iconBtn small"
+                              id="dropdownMenuButton1"
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              <i class="fa-solid fa-file-export"></i></button
+                            >Export to CSV
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="query-container perfect-scrollbar"
+              data-scrollbar="true"
+              tabindex="-1"
+              style="overflow-y: auto; outline: none"
+            >
+              <div class="scroll-content">
+                <div class="table-section">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+
+                        <th *ngFor="let column of columnNames">
+                          {{ column }}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of schedularItems; let i = index">
+                        <td *ngIf="pageNumber == 1">
+                          <a (click)="getTeamSummary(item,contentsummary)">{{ i + 1 }}</a>
+                        </td>
+                        <td *ngIf="pageNumber > 1">
+                          <a (click)="getTeamSummary(item,contentsummary)">{{
+                            i + 1 + pageSize * (pageNumber - 1)
+                          }}</a>
+                        </td>
+
+                        <td *ngFor="let column of desColumns" (click)="getTeamSummary(item,contentsummary)">
+                          <a>
+                          <span
+                            [ngClass]="{
+                              'badge badge-md rounded-pill':
+                                item[column] === 'Pending' ||
+                                item[column] === 'Approved' ||
+                                item[column] === 'Rejected',
+                              grayfilled: item[column] === 'Pending',
+                              successbg: item[column] === 'Approved',
+                              errorbg: item[column] === 'Rejected',
+                              '':
+                                item[column] !== 'Pending' &&
+                                item[column] !== 'Approved' &&
+                                item[column] !== 'Rejected'
+                            }"
+                          >
+                            {{ item[column] }}
+                          </span>
+                          </a>
+                        </td>
+                        <ng-container
+                          *ngIf="item.status === 'Pending'; else addemptytd"
+                        >
+                          <td
+                            *ngIf="
+                              item.requestStage.status === 1;
+                              else addemptytd
+                            "
+                          >
+                            <ul class="list-inline m-0">
+                              <li class="list-inline-item">
+                                <button
+                                  class="btn iconButton small mintBg night leaveapprove"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#approveschedule"
+                                  data-bs-title="Approve"
+                                  (click)="
+                                    updateRequestStageId(
+                                      item.requestStage?.requestStageId
+                                    )
+                                  "
+                                >
+                                  <i class="fa-light fa-check"></i>
+                                </button>
+                              </li>
+                              <li
+                                class="list-inline-item"
+                                data-bs-toggle="modal"
+                                data-bs-target="#rejectschedule"
+                              >
+                                <button
+                                  class="btn iconButton small radicalBg night"
+                                  data-bs-toggle="tooltip"
+                                  data-bs-placement="top"
+                                  data-bs-title="Reject"
+                                  (click)="
+                                    updateRequestStageId(
+                                      item.requestStage?.requestStageId
+                                    )
+                                  "
+                                >
+                                  <i class="fa-light fa-times"></i>
+                                </button>
+                              </li>
+                            </ul>
+                          </td>
+                        </ng-container>
+                        <ng-template #addemptytd>
+                          <td></td>
+                        </ng-template>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <ng-container *ngIf="totalRecords > pageSize">
+                <div class="me-5">
+                  <ul class="pagination justify-content-end">
+                    <li class="page-item">
+                      <a
+                        class="page-link"
+                        (click)="prevPage()"
+                        [attr.disabled]="pageNumber === 1"
+                        >Previous</a
+                      >
+                    </li>
+                    <ng-container *ngFor="let page of visiblePages()">
+                      <li
+                        class="page-item"
+                        [ngClass]="{ disabled: page === -1 }"
+                      >
+                        <a
+                          class="page-link"
+                          (click)="changePage(page)"
+                          [class.active]="pageNumber === page"
+                          >{{ page === -1 ? "..." : page }}</a
+                        >
+                      </li>
+                    </ng-container>
+                    <li class="page-item">
+                      <a
+                        class="page-link"
+                        (click)="nextPage()"
+                        [attr.disabled]="pageNumber === totalPages"
+                        >Next</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div
+  class="offcanvas offcanvas-small offcanvas-end"
+  [class.show]="showOffcanvas"
+  tabindex="-1"
+  id="createschedule"
+  aria-labelledby="createscheduleLabel"
+  aria-modal="true"
+  role="dialog"
+>
+  <div class="offcanvas-header bg-light">
+    <div class="row g-0 w-100">
+      <div class="col-md-6 d-flex align-items-center">
+        <h5 class="mb-0">Change Scheduler</h5>
+      </div>
+      <div class="col-md-6 justify-content-end d-flex align-items-center pe-0">
+        <span
+          class="iconButton iconHower medium"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+          (click)="resetForm()"
+          ><i class="fa-light fa-times"></i
+        ></span>
+      </div>
+    </div>
+  </div>
+  <div class="offcanvas-body px-4">
+    <form [formGroup]="scheduleForm">
+      <div class="mb-3">
+        <label for="" class="col-form-label">Employee</label>
+        <select
+          class="form-select"
+          formControlName="userId"
+          [class.is-invalid]="sF['userId'].invalid && sF['userId'].touched"
+          [class.is-valid]="sF['userId'].valid && sF['userId'].touched"
+        >
+          <option disabled selected [value]="null">Select Employee</option>
+          <option *ngFor="let employee of employees" [value]="employee.userId">
+            {{ employee.fullName }}
+          </option>
+        </select>
+        <div class="invalid-feedback">
+          <div *ngIf="sF['userId'].errors?.['required']">
+            Employee is required.
+          </div>
+        </div>
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <div class="mb-3">
+        <div class="row">
+          <div class="col">
+            <div class="mb-3">
+              <div class="d-flex align-items-center justify-content-between">
+                <label for="" class="col-form-label">From</label>
+              </div>
+              <div class="iconholder">
+                <input
+                  formControlName="dateStart"
+                  [class.is-invalid]="
+                    sF['dateStart'].invalid && sF['dateStart'].touched
+                  "
+                  [class.is-valid]="
+                    sF['dateStart'].valid && sF['dateStart'].touched
+                  "
+                  class="form-control timepicker flatpickr-input"
+                  type="date"
+                />
+                <div class="invalid-feedback">
+                  <div *ngIf="sF['dateStart'].errors?.['required']">
+                    Start Date is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3">
+              <div class="d-flex align-items-center justify-content-between">
+                <label for="" class="col-form-label">To</label>
+              </div>
+              <div class="iconholder">
+                <input
+                  formControlName="dateEnd"
+                  [class.is-invalid]="
+                    sF['dateEnd'].invalid && sF['dateEnd'].touched
+                  "
+                  [class.is-valid]="
+                    sF['dateEnd'].valid && sF['dateEnd'].touched
+                  "
+                  class="form-control timepicker flatpickr-input"
+                  type="date"
+                />
+                <div class="invalid-feedback">
+                  <div *ngIf="sF['dateEnd'].errors?.['required']">
+                    End Date is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-body">
+        <div class="row">
+          <div class="col">
+            <div class="mb-3">
+              <div class="d-flex align-items-center justify-content-between">
+                <label for="" class="col-form-label">Check-In</label>
+              </div>
+              <div class="iconholder">
+                <input
+                  formControlName="shiftStart"
+                  class="form-control timepicker flatpickr-input"
+                  type="time"
+                  [class.is-invalid]="
+                    sF['shiftStart'].invalid && sF['shiftStart'].touched
+                  "
+                  [class.is-valid]="
+                    sF['shiftStart'].valid && sF['shiftStart'].touched
+                  "
+                />
+                <div class="invalid-feedback">
+                  <div *ngIf="sF['shiftStart'].errors?.['required']">
+                    Check-In is required.
+                  </div>
+                </div>
+                <div class="valid-feedback">Looks good!</div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3">
+              <div class="d-flex align-items-center justify-content-between">
+                <label for="" class="col-form-label">Check-Out</label>
+              </div>
+              <div class="iconholder">
+                <input
+                  formControlName="shiftEnd"
+                  class="form-control timepicker flatpickr-input"
+                  type="time"
+                  [class.is-invalid]="
+                    sF['shiftEnd'].invalid && sF['shiftEnd'].touched
+                  "
+                  [class.is-valid]="
+                    sF['shiftEnd'].valid && sF['shiftEnd'].touched
+                  "
+                />
+                <div class="invalid-feedback">
+                  <div *ngIf="sF['shiftEnd'].errors?.['required']">
+                    Check-Out is required.
+                  </div>
+                </div>
+                <div class="valid-feedback">Looks good!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="mb-3">
+              <div class="d-flex align-items-center justify-content-between">
+                <label for="" class="col-form-label">Break-In</label>
+                <small class="silver"
+                  ><i class="fa-light fa-stopwatch pe-1"></i> 1Hours</small
+                >
+              </div>
+              <div class="iconholder">
+                <input
+                  formControlName="breakStart"
+                  class="form-control timepicker flatpickr-input"
+                  type="time"
+                  [class.is-invalid]="
+                    sF['breakStart'].invalid && sF['breakStart'].touched
+                  "
+                  [class.is-valid]="
+                    sF['breakStart'].valid &&
+                    sF['breakStart'].touched &&
+                    !isbreakTimeWithinShift
+                  "
+                />
+                <div class="invalid-feedback">
+                  <div *ngIf="sF['breakStart'].errors?.['required']">
+                    Break-Start is required.
+                  </div>
+                </div>
+                <div class="valid-feedback">Looks good!</div>
+                <div *ngIf="isbreakTimeWithinShift" class="text-danger">
+                  Break time should be within shift time.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3">
+              <div class="d-flex align-items-center justify-content-between">
+                <label for="" class="col-form-label">Break-Out</label>
+                <small class="silver"
+                  ><i class="fa-light fa-stopwatch pe-1"></i> 1Hours</small
+                >
+              </div>
+              <div class="iconholder">
+                <input
+                  formControlName="breakEnd"
+                  class="form-control timepicker flatpickr-input"
+                  type="time"
+                  [class.is-invalid]="
+                    sF['breakEnd'].invalid && sF['breakEnd'].touched
+                  "
+                  [class.is-valid]="
+                    sF['breakEnd'].valid &&
+                    sF['breakEnd'].touched &&
+                    !isbreakTimeWithinShift
+                  "
+                />
+                <div class="invalid-feedback">
+                  <div *ngIf="sF['breakEnd'].errors?.['required']">
+                    Break-End is required.
+                  </div>
+                </div>
+                <div class="valid-feedback">Looks good!</div>
+                <div *ngIf="isbreakTimeWithinShift" class="text-danger">
+                  Break time should be within shift time.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="mb-3">
+              <div class="d-flex align-items-center justify-content-between">
+                <label for="" class="col-form-label">Planned Overtime</label>
+                <small class="silver"
+                  ><i class="fa-light fa-stopwatch pe-1"></i> Hours</small
+                >
+              </div>
+              <div class="iconholder">
+                <div class="ngx-timepicker-field-example">
+                  <div class="custom-timepicker-wrapper">
+                    <ngx-timepicker-field
+                      class="custom-timepicker-field"
+                      [format]="24"
+                      [controlOnly]="true"
+                      defaultTime="00:00"
+                      formControlName="overTimeHours"
+                    ></ngx-timepicker-field>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="" class="col-form-label">Notes</label>
+        <textarea
+          formControlName="notes"
+          [class.is-invalid]="sF['notes'].invalid && sF['notes'].touched"
+          [class.is-valid]="sF['notes'].valid && sF['notes'].touched"
+          class="form-control"
+          placeholder="Write a notes"
+          style="height: 100px"
+        ></textarea>
+        <div class="invalid-feedback">
+          <div *ngIf="sF['notes'].errors?.['required']">Note is required.</div>
+        </div>
+      </div>
+      <div
+        class="accordion mb-4"
+        id="accordionExample"
+        formArrayName="scheduleDays"
+      >
+        <div *ngFor="let day of scheduleDays.controls; let i = index">
+          <div class="accordion-item" [formGroupName]="i">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                [attr.data-bs-target]="'#collapse' + i"
+                aria-expanded="false"
+                [attr.aria-controls]="'collapse' + i"
+              >
+                {{ day.value.dayName }}
+              </button>
+            </h2>
+            <div
+              [id]="'collapse' + i"
+              class="accordion-collapse collapse"
+              data-bs-parent="#accordionExample"
+            >
+              <div class="accordion-body">
+                <div class="row">
+                  <div class="col">
+                    <div class="mb-3">
+                      <div
+                        class="d-flex align-items-center justify-content-between"
+                      >
+                        <label for="" class="col-form-label">Check-In</label>
+                      </div>
+                      <div class="iconholder">
+                        <input
+                          formControlName="shiftStart"
+                          class="form-control timepicker flatpickr-input"
+                          type="time"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="mb-3">
+                      <div
+                        class="d-flex align-items-center justify-content-between"
+                      >
+                        <label for="" class="col-form-label">Check-Out</label>
+                      </div>
+                      <div class="iconholder">
+                        <input
+                          formControlName="shiftEnd"
+                          class="form-control timepicker flatpickr-input"
+                          type="time"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    <div class="mb-3">
+                      <div
+                        class="d-flex align-items-center justify-content-between"
+                      >
+                        <label for="" class="col-form-label">Break-In</label>
+                        <small class="silver"
+                          ><i class="fa-light fa-stopwatch pe-1"></i>
+                          1Hours</small
+                        >
+                      </div>
+                      <div class="iconholder">
+                        <input
+                          formControlName="breakStart"
+                          class="form-control timepicker flatpickr-input"
+                          type="time"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="mb-3">
+                      <div
+                        class="d-flex align-items-center justify-content-between"
+                      >
+                        <label for="" class="col-form-label">Break-Out</label>
+                        <small class="silver"
+                          ><i class="fa-light fa-stopwatch pe-1"></i>
+                          1Hours</small
+                        >
+                      </div>
+                      <div class="iconholder">
+                        <input
+                          formControlName="breakEnd"
+                          class="form-control timepicker flatpickr-input"
+                          type="time"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="mb-3">
+                      <div
+                        class="d-flex align-items-center justify-content-between"
+                      >
+                        <label for="" class="col-form-label"
+                          >Planned Overtime</label
+                        >
+                        <small class="silver"
+                          ><i class="fa-light fa-stopwatch pe-1"></i>
+                          1Hours</small
+                        >
+                      </div>
+                      <div class="iconholder">
+                        <div class="ngx-timepicker-field-example">
+                          <div class="custom-timepicker-wrapper">
+                            <ngx-timepicker-field
+                              class="custom-timepicker-field"
+                              [format]="24"
+                              [controlOnly]="true"
+                              formControlName="overTimeHours"
+                              defaultTime="00:00"
+                            ></ngx-timepicker-field>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+ <footer class="bg-light p-3 text-end pe-5">
+    <button
+      type="button"
+      class="btn btn-primary btn-small sendleave"
+      (click)="submitForm()"
+      style="margin-right: 10px"
+    >
+      Submit
+    </button>
+    <button
+      class="btn btn-outline-danger btn-small"
+      data-bs-toggle="offcanvas"
+      (click)="resetForm()"
+    >
+      Cancel
+    </button>
+  </footer>
+</div> -->
+
+<!-- <div
+  [class.show]="summaryToggle"
+  class="offcanvas w-50 offcanvas-end"
+  tabindex="-1"
+  aria-labelledby="approvescheuleLabel"
+  aria-modal="true"
+  role="dialog"
+> -->
+<ng-template #contentsummary let-offcanvas>
+
+  <div class="offcanvas-header bg-light">
+    <div class="row g-0 w-100">
+      <div class="col-md-6 d-flex align-items-center">
+        <h5 class="mb-0">Roster Request Detail</h5>
+      </div>
+      <div class="col-md-6 justify-content-end d-flex align-items-center pe-0">
+        <span class="iconButton iconHower medium" (click)="closeOffset(contentsummary)"
+          ><i class="fa-light fa-times"></i
+        ></span>
+      </div>
+    </div>
+  </div>
+  <div class="offcanvas-body p-0">
+    <div class="py-3 px-4 mb-3">
+      <div class="d-flex">
+        <span class="iconButton large fw-bold me-4">
+          <img
+            src="../images/avatar-3.png"
+            class="rounded-circle img-fluid"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            data-bs-title="Sannan Hussain"
+            alt=""
+          />
+        </span>
+        <div class="w-100">
+          <h5 class="text-dark mb-3">{{ requesterDetails.requester }}</h5>
+          <h6 class="text-primary text-uppercase">Current Roster</h6>
+          <ul class="list-0 justify-content-between checkinrow row h-auto">
+            <li class="col ps-0">
+              <div class="main_timeline bg-light rounded p-3">
+                <div class="pb-3 d-flex align-items-start timeline_item">
+                  <div class="timeline_icon">
+                    <i class="fa-light fa-circle-dashed"></i>
+                  </div>
+                  <div class="ps-4 timeline_content">
+                    <div class="d-flex flex-column">
+                      <small class="coal">Check-In</small>
+                      <strong class="night"
+                        >{{ requesterDetails.currentShiftStart }}
+                      </strong>
+                    </div>
+                  </div>
+                </div>
+                <div class="pb-3 d-flex align-items-start timeline_item">
+                  <div class="timeline_icon">
+                    <i class="fa-light fa-circle"></i>
+                  </div>
+                  <div class="ps-4 timeline_content">
+                    <strong class="badge skyTransBg night rounded-pill"
+                      >{{ requesterDetails.currentShiftHours }} hours</strong
+                    >
+                  </div>
+                </div>
+                <div class="d-flex align-items-start timeline_item">
+                  <div class="timeline_icon">
+                    <i class="fa-solid fa-circle mint"></i>
+                  </div>
+                  <div class="ps-4 timeline_content">
+                    <div class="d-flex flex-column">
+                      <small class="coal">Check-Out </small>
+                      <strong class="night"
+                        >{{ requesterDetails.currentShiftEnd }}
+                      </strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="col">
+              <div class="main_timeline bg-light rounded p-3">
+                <div class="pb-3 d-flex align-items-start timeline_item">
+                  <div class="timeline_icon">
+                    <i class="fa-light fa-circle-dashed"></i>
+                  </div>
+                  <div class="ps-4 timeline_content">
+                    <div class="d-flex flex-column">
+                      <small class="coal">Break-In</small>
+                      <strong class="night"
+                        >{{ requesterDetails.currentBreakStart }}
+                      </strong>
+                    </div>
+                  </div>
+                </div>
+                <div class="pb-3 d-flex align-items-start timeline_item">
+                  <div class="timeline_icon">
+                    <i class="fa-light fa-circle"></i>
+                  </div>
+                  <div class="ps-4 timeline_content">
+                    <strong class="badge skyTransBg night rounded-pill"
+                      >{{ requesterDetails.currentBreakHours }} hours</strong
+                    >
+                  </div>
+                </div>
+                <div class="d-flex align-items-start timeline_item">
+                  <div class="timeline_icon">
+                    <i class="fa-solid fa-circle mint"></i>
+                  </div>
+                  <div class="ps-4 timeline_content">
+                    <div class="d-flex flex-column">
+                      <small class="coal">Break-Out</small>
+                      <strong class="night"
+                        >{{ requesterDetails.currentBreakEnd }}
+                      </strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="col">
+              <div class="main_timeline bg-light rounded p-3">
+                <div class="pb-3 d-flex align-items-start timeline_item">
+                  <div class="timeline_icon">
+                    <i class="fa-light fa-circle-dashed"></i>
+                  </div>
+                  <div class="ps-4 timeline_content">
+                    <div class="d-flex flex-column">
+                      <small class="coal">Overtime In</small>
+                      <strong class="night"></strong>
+                    </div>
+                  </div>
+                </div>
+                <div class="pb-3 d-flex align-items-start timeline_item">
+                  <div class="timeline_icon">
+                    <i class="fa-light fa-circle"></i>
+                  </div>
+                  <div class="ps-4 timeline_content">
+                    <strong class="badge skyTransBg night rounded-pill"
+                      >{{ requesterDetails.currentOverTimeHours }} hours</strong
+                    >
+                  </div>
+                </div>
+                <div class="d-flex align-items-start timeline_item">
+                  <div class="timeline_icon">
+                    <i class="fa-solid fa-circle mint"></i>
+                  </div>
+                  <div class="ps-4 timeline_content">
+                    <div class="d-flex flex-column">
+                      <small class="coal">Overtime-Out</small>
+                      <strong class="night"></strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="list-group-section px-3 pe-3 pt-4">
+      <div class="main_timeline bg-white rounded p-3">
+        <div class="pb-3 d-flex align-items-start timeline_item">
+          <div class="timeline_icon iconButton medium border">
+            <i class="fa-light coal fa-user"></i>
+          </div>
+          <div class="ps-5 timeline_content">
+            <div class="float-end d-flex align-items-center">
+              <span class="iconButton iconHover medium me-2"
+                ><i class="fa-light fa-message-lines"></i>
+              </span>
+              <span class="badge badge-md rounded-pill skyTransBg night"
+                >Applied</span
+              >
+            </div>
+            <strong>{{ requesterDetails.requester }} </strong>
+            <p class="mb-1 metal">
+              <small>{{ requesterDetails.appliedDate }}</small>
+            </p>
+            <div class="mt-4">
+              <h6 class="text-primary text-uppercase">Change Request</h6>
+              <ul class="list-0 justify-content-between checkinrow row h-auto">
+                <li class="col ps-0">
+                  <div class="main_timeline bg-light p-3 rounded">
+                    <div class="pb-3 d-flex align-items-start timeline_item">
+                      <div class="timeline_icon">
+                        <i class="fa-light fa-circle-dashed"></i>
+                      </div>
+                      <div class="ps-4 timeline_content">
+                        <div class="d-flex flex-column">
+                          <small class="coal">Check-In</small>
+                          <strong class="night">{{
+                            requesterDetails.shiftStart
+                          }}</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="pb-3 d-flex align-items-start timeline_item">
+                      <div class="timeline_icon">
+                        <i class="fa-light fa-circle"></i>
+                      </div>
+                      <div class="ps-4 timeline_content">
+                        <strong class="badge grayfilled night rounded-pill"
+                          >{{ requesterDetails.shiftHours }} hours</strong
+                        >
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-start timeline_item">
+                      <div class="timeline_icon">
+                        <i class="fa-solid fa-circle coal"></i>
+                      </div>
+                      <div class="ps-4 timeline_content">
+                        <div class="d-flex flex-column">
+                          <small class="coal">Check-Out </small>
+                          <strong class="night">{{
+                            requesterDetails.shiftEnd
+                          }}</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="col">
+                  <div class="main_timeline bg-light p-3 rounded">
+                    <div class="pb-3 d-flex align-items-start timeline_item">
+                      <div class="timeline_icon">
+                        <i class="fa-light fa-circle-dashed"></i>
+                      </div>
+                      <div class="ps-4 timeline_content">
+                        <div class="d-flex flex-column">
+                          <small class="coal">Break-In</small>
+                          <strong class="night"
+                            >{{ requesterDetails.breakStart }}
+                          </strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="pb-3 d-flex align-items-start timeline_item">
+                      <div class="timeline_icon">
+                        <i class="fa-light fa-circle"></i>
+                      </div>
+                      <div class="ps-4 timeline_content">
+                        <strong class="badge grayfilled night rounded-pill"
+                          >{{ requesterDetails.breakHours }} hours</strong
+                        >
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-start timeline_item">
+                      <div class="timeline_icon">
+                        <i class="fa-solid fa-circle coal"></i>
+                      </div>
+                      <div class="ps-4 timeline_content">
+                        <div class="d-flex flex-column">
+                          <small class="coal">Break-Out</small>
+                          <strong class="night">{{
+                            requesterDetails.breakEnd
+                          }}</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="col">
+                  <div class="main_timeline bg-light p-3 rounded">
+                    <div class="pb-3 d-flex align-items-start timeline_item">
+                      <div class="timeline_icon">
+                        <i class="fa-light fa-circle-dashed"></i>
+                      </div>
+                      <div class="ps-4 timeline_content">
+                        <div class="d-flex flex-column">
+                          <small class="coal">Overtime In</small>
+                          <strong class="night"> </strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="pb-3 d-flex align-items-start timeline_item">
+                      <div class="timeline_icon">
+                        <i class="fa-light fa-circle"></i>
+                      </div>
+                      <div class="ps-4 timeline_content">
+                        <strong class="badge grayfilled night rounded-pill"
+                          >{{ requesterDetails.overTimeHours }} hours</strong
+                        >
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-start timeline_item">
+                      <div class="timeline_icon">
+                        <i class="fa-solid fa-circle coal"></i>
+                      </div>
+                      <div class="ps-4 timeline_content">
+                        <div class="d-flex flex-column">
+                          <small class="coal">Overtime-Out</small>
+                          <strong class="night"> </strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <!-- <div
+              class="bg-light border p-3 rounded mt-3"
+              *ngIf="requesterDetails.notes !== ''"
+            >
+              <strong>Note</strong>
+              <p class="m-0">
+                {{ requesterDetails.notes }}
+              </p>
+            </div> -->
+          </div>
+        </div>
+
+        <div
+          class="pb-3 d-flex align-items-start timeline_item"
+          *ngFor="let stage of requestStages"
+        >
+          <div
+            class="timeline_icon iconButton medium border"
+            [ngClass]="{ mintBg: stage.status === 1 }"
+          >
+            <i class="fa-light fa-user-tie"></i>
+          </div>
+          <div class="ps-5 timeline_content">
+            <div class="float-end d-flex align-items-center">
+              <span class="iconButton iconHover medium me-2"
+                ><i class="fa-light fa-message-lines"></i>
+              </span>
+              <span
+                *ngIf="stage.status === 1"
+                class="badge badge-md rounded-pill grayfilled"
+              >
+                Pending
+              </span>
+              <span
+                *ngIf="stage.status === 2"
+                class="badge badge-md rounded-pill successbg"
+                >Approved</span
+              >
+
+              <span
+                *ngIf="stage.status === 3"
+                class="badge badge-md rounded-pill errorbg"
+              >
+                Rejected
+              </span>
+            </div>
+            <strong>{{ stage.approver }}<small></small> </strong>
+            <p class="mb-1 metal">
+              <small>{{ stage.modifiedDate }}</small>
+            </p>
+            <div
+              class="bg-light border p-3 rounded"
+              *ngIf="stage.description !== ''"
+            >
+              {{ stage.description }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="summaryItem.status !== 'Canceled'&&summaryItem.status !== 'Rejected'">
+    <footer
+      class="bg-light p-3 text-end pe-5"
+      *ngIf="summaryItem.requestStage?.status === 1"
+    >
+      <button
+        class="btn btn-primary leaveapprove btn-small"
+        style="margin-right: 10px"
+        data-bs-toggle="modal"
+        data-bs-placement="top"
+        data-bs-target="#approveschedule"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      >
+        Approve
+      </button>
+      <button
+        class="btn btn-outline-danger btn-small"
+        data-bs-toggle="modal"
+        data-bs-placement="top"
+        data-bs-target="#rejectschedule"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      >
+        Reject
+      </button>
+    </footer>
+  </ng-container>
+</ng-template>
+<!-- </div> -->
+<div
+  class="modal fade"
+  id="approveschedule"
+  tabindex="-1"
+  aria-labelledby="approveschedule"
+  aria-modal="true"
+  role="dialog"
+>
+  <form [formGroup]="teamRequestForm">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Comment</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="py-5 px-4">
+            <div class="mb-3">
+              <label for="" class="col-form-label">Add Notes</label>
+              <textarea
+                class="form-control"
+                placeholder="Write Note here"
+                style="height: 100px"
+                spellcheck="false"
+                formControlName="description"
+                [class.is-invalid]="
+                rF['description'].invalid && rF['description'].touched
+              "
+              [class.is-valid]="
+                rF['description'].valid && rF['description'].touched
+              "
+              >
+              </textarea>
+              <div class="invalid-feedback">
+                <div *ngIf="rF['description'].errors?.['maxlength']">
+                  Description cannot be more than 200 characters.
+                </div>
+                <div *ngIf="rF['description'].errors?.['required']">
+                  Description is required.
+                </div>
+              </div>
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer saltBg">
+          <button
+            type="button"
+            class="btn btn-outline-secondary closerejectleave"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            (click)="updateRequest(currentRequestStageId, 2,contentsummary)"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div
+  class="modal fade"
+  id="rejectschedule"
+  tabindex="-1"
+  aria-labelledby="rejectschedule"
+  aria-modal="true"
+  role="dialog"
+>
+  <form [formGroup]="teamRequestForm">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Rejection Comment</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="py-5 px-4">
+            <div class="mb-3">
+              <label for="" class="col-form-label">Add Notes</label>
+              <textarea
+                class="form-control"
+                placeholder="Write Note here"
+                style="height: 100px"
+                spellcheck="false"
+                formControlName="description"
+                [class.is-invalid]="
+                rF['description'].invalid && rF['description'].touched
+              "
+              [class.is-valid]="
+                rF['description'].valid && rF['description'].touched
+              "
+              >
+              </textarea>
+              <div class="invalid-feedback">
+                <div *ngIf="rF['description'].errors?.['maxlength']">
+                  Description cannot be more than 200 characters.
+                </div>
+                <div *ngIf="rF['description'].errors?.['required']">
+                  Description is required.
+                </div>
+              </div>
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer saltBg">
+          <button
+            type="button"
+            class="btn btn-outline-secondary closerejectleave"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            (click)="updateRequest(currentRequestStageId, 3,contentsummary)"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<app-toaster></app-toaster>

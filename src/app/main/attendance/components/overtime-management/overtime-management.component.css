@@ -1,0 +1,14 @@
+.query-container {
+  height: calc(100vh - 290px);
+}
+.custom-timepicker-wrapper {
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  padding: 5px; /* Reset padding to remove extra space */
+}
+::ng-deep .ngx-timepicker {
+  border-bottom: none !important;
+}
+.custom-timepicker-field {
+  width: calc(100% - 2px); /* Adjust width to consider border width */
+}
